@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getValidLocale, type Locale } from "@/lib/config";
+import { type Locale } from "@/lib/config";
+import { getValidLocale } from "@/lib/i18n/get-dict";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
@@ -39,14 +40,14 @@ export async function generateMetadata({
 
   return {
     title: post.title,
-    description: post.description,
+    description: post.excerpt,
     openGraph: {
       title: post.title,
-      description: post.description,
+      description: post.excerpt,
       url: `${siteConfig.url}/${locale}/blog/${post.slug}`,
       type: "article",
-      publishedTime: post.date.toISOString(),
-      authors: [post.author],
+      publishedTime: new Date(post.publishedAt).toISOString(),
+      authors: [post.author.name],
     },
     alternates: {
       canonical: `/${locale}/blog/${post.slug}`,
@@ -66,7 +67,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
   const relatedPosts = getRelatedBlogPosts(slug, 3);
   const readingTime = Math.ceil(post.content.split(/\s+/).length / 200);
 
-  const formatDate = (date: Date) => {
+  const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
@@ -78,12 +79,12 @@ export default async function BlogPage({ params }: BlogPageProps) {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
-    description: post.description,
+    description: post.excerpt,
     image: `${siteConfig.url}/og-image.jpg`,
-    datePublished: post.date.toISOString(),
+    datePublished: new Date(post.publishedAt).toISOString(),
     author: {
       "@type": "Person",
-      name: post.author,
+      name: post.author.name,
     },
     publisher: {
       "@type": "Organization",
@@ -101,14 +102,16 @@ export default async function BlogPage({ params }: BlogPageProps) {
       <JsonLd data={articleSchema} />
 
       {/* Hero Section */}
-      <Section padding="lg" className="bg-gradient-to-b from-muted/50 to-background">
+      <Section
+        padding="lg"
+        className="bg-gradient-to-b from-muted/50 to-background"
+      >
         <Container size="sm">
           <Breadcrumbs
             items={[
               { label: "Blog", href: `/${locale}/blog` },
               { label: post.title, href: `/${locale}/blog/${post.slug}` },
             ]}
-            locale={locale}
           />
 
           <div className="mt-8">
@@ -119,19 +122,19 @@ export default async function BlogPage({ params }: BlogPageProps) {
               {post.title}
             </h1>
             <p className="text-lg text-muted-foreground mb-6 max-w-2xl text-pretty">
-              {post.description}
+              {post.excerpt}
             </p>
 
             {/* Article Meta */}
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground border-t border-b border-border py-4">
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4" />
-                <span>{post.author}</span>
+                <span>{post.author.name}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
-                <time dateTime={post.date.toISOString()}>
-                  {formatDate(post.date)}
+                <time dateTime={new Date(post.publishedAt).toISOString()}>
+                  {formatDate(post.publishedAt)}
                 </time>
               </div>
               <div className="flex items-center gap-2">
@@ -154,7 +157,9 @@ export default async function BlogPage({ params }: BlogPageProps) {
               </p>
               <div className="bg-secondary/20 rounded-lg p-6 border border-border">
                 <p className="text-sm text-muted-foreground">
-                  <strong>Note:</strong> This is a placeholder article. In production, render full MDX or HTML content here with proper formatting, code blocks, and embeds.
+                  <strong>Note:</strong> This is a placeholder article. In
+                  production, render full MDX or HTML content here with proper
+                  formatting, code blocks, and embeds.
                 </p>
               </div>
             </div>
@@ -166,7 +171,9 @@ export default async function BlogPage({ params }: BlogPageProps) {
       <Section background="muted">
         <Container size="sm">
           <div className="flex items-center justify-between gap-4">
-            <p className="text-sm font-medium text-foreground">Share this article</p>
+            <p className="text-sm font-medium text-foreground">
+              Share this article
+            </p>
             <div className="flex gap-2">
               <Button variant="outline" size="sm">
                 <Share2 className="h-4 w-4 mr-2" />
@@ -181,10 +188,15 @@ export default async function BlogPage({ params }: BlogPageProps) {
       {relatedPosts.length > 0 && (
         <Section>
           <Container>
-            <h2 className="text-3xl font-bold text-foreground mb-8">Related Articles</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-8">
+              Related Articles
+            </h2>
             <div className="grid gap-6 md:grid-cols-3">
               {relatedPosts.map((relatedPost) => (
-                <Link key={relatedPost.slug} href={`/${locale}/blog/${relatedPost.slug}`}>
+                <Link
+                  key={relatedPost.slug}
+                  href={`/${locale}/blog/${relatedPost.slug}`}
+                >
                   <Card className="h-full glass hover:shadow-lg transition-shadow cursor-pointer">
                     <div className="h-40 bg-gradient-to-br from-accent/20 to-secondary/20" />
                     <CardContent className="pt-6">
@@ -195,7 +207,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
                         {relatedPost.title}
                       </h3>
                       <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                        {relatedPost.description}
+                        {relatedPost.excerpt}
                       </p>
                       <div className="text-accent text-sm font-medium">
                         Read Article →

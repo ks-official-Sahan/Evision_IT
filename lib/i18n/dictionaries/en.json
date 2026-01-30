@@ -1,8 +1,8 @@
 {
   "common": {
     "appName": "Evision IT",
-    "tagline": "Digital Product Engineering for Global Brands",
-    "description": "Premium web development, digital products, and IT infrastructure solutions.",
+    "tagline": "Serving Sri Lanka & Global Clients",
+    "description": "High-performance websites, apps, e-commerce and digital marketing—backed by enterprise-grade infrastructure and security expertise.",
     "language": "English",
     "selectLanguage": "Select Language"
   },
@@ -19,31 +19,228 @@
     "terms": "Terms of Service"
   },
   "hero": {
-    "headline": "Empowering Businesses with Secure, High-Performance Digital Experiences",
-    "tagline": "From concept to market-leading solutions",
-    "cta": "Get a Quote",
-    "secondary": "Explore Solutions"
+    "headline": "Digital transformation for",
+    "tagline": "growing businesses",
+    "cta": "Book Free Consultation",
+    "secondary": "View Our Work",
+    "projectsDelivered": "Projects Delivered",
+    "activeClients": "Active Clients",
+    "yearsExperience": "Years Experience",
+    "supportAvailable": "Support Available"
+  },
+  "trust": {
+    "clients": "500+ Projects Delivered",
+    "uptime": "99.9% Uptime",
+    "response": "24-hour Response",
+    "projectsDelivered": "200+ Projects Delivered",
+    "projectsDeliveredDesc": "Proven track record of successful implementations",
+    "activeClients": "50+ Active Clients",
+    "activeClientsDesc": "Trusted by businesses across industries",
+    "uptimeSLA": "99.9% Uptime SLA",
+    "uptimeSLADesc": "Enterprise-grade reliability and support",
+    "isoCertified": "ISO 27001 Certified",
+    "isoCertifiedDesc": "Security and compliance standards met",
+    "trustedBy": "Trusted by leading companies"
   },
   "solutions": {
     "title": "Solutions That Drive Growth",
+    "badge": "Solutions",
+    "sectionTitle": "Comprehensive IT solutions for every need",
+    "sectionDescription": "From digital products to enterprise security, we have the expertise to help your business thrive.",
+    "exploreSolutions": "Explore solutions",
+    "viewAllSolutions": "View All Solutions",
+    "primaryFocus": "Primary Focus",
     "digitalProducts": {
       "name": "Digital Products & Growth",
-      "description": "Custom web and mobile applications built for scale",
-      "features": ["Web Applications", "Mobile Apps", "E-commerce Platforms", "Marketing Automation"]
+      "description": "Websites, apps, e-commerce, and digital marketing to launch and grow your online presence.",
+      "features": [
+        "Web Development",
+        "Mobile Apps",
+        "E-commerce",
+        "SEO & Marketing"
+      ]
+    },
+    "cloudInfrastructure": {
+      "name": "Cloud & Infrastructure",
+      "description": "Scalable cloud solutions and network infrastructure for reliable, high-performance operations.",
+      "features": ["Cloud Migration", "Network Design", "DevOps", "Monitoring"]
+    },
+    "cybersecurity": {
+      "name": "Cybersecurity",
+      "description": "Protect your business with comprehensive security assessments, compliance, and monitoring.",
+      "features": [
+        "Security Audits",
+        "Penetration Testing",
+        "Compliance",
+        "Training"
+      ]
+    },
+    "managedIT": {
+      "name": "Managed IT Services",
+      "description": "Proactive IT management and support so you can focus on your core business.",
+      "features": [
+        "24/7 Support",
+        "Maintenance",
+        "Help Desk",
+        "Strategic Consulting"
+      ]
     },
     "itInfrastructure": {
       "name": "IT Infrastructure & Security",
       "description": "Enterprise-grade systems and security expertise",
-      "features": ["Cloud Migration", "Cybersecurity", "Networking", "Disaster Recovery"]
+      "features": [
+        "Cloud Migration",
+        "Cybersecurity",
+        "Networking",
+        "Disaster Recovery"
+      ]
     },
     "managedSupport": {
       "name": "Managed Support",
       "description": "24/7 monitoring and proactive maintenance",
-      "features": ["24/7 Monitoring", "Managed Services", "Technical Support", "Performance Optimization"]
+      "features": [
+        "24/7 Monitoring",
+        "Managed Services",
+        "Technical Support",
+        "Performance Optimization"
+      ]
     }
+  },
+  "quiz": {
+    "step": "Step",
+    "of": "of",
+    "whatAreYouBuilding": "What are you building?",
+    "whatAreYouBuildingDesc": "Select the primary digital product or solution you need.",
+    "webApp": "Web App",
+    "mobileApp": "Mobile App",
+    "marketingPlatform": "Marketing Platform",
+    "itInfrastructure": "IT Infrastructure",
+    "whatsYourTimeline": "What's your timeline?",
+    "whatsYourTimelineDesc": "How soon do you need the solution completed?",
+    "asap": "ASAP (1-2 months)",
+    "soon": "Soon (2-6 months)",
+    "planned": "Planned (6-12 months)",
+    "flexible": "Flexible timeline",
+    "whatOutcome": "What outcome matters most?",
+    "whatOutcomeDesc": "What's your primary business objective?",
+    "revenueGrowth": "Revenue Growth",
+    "securityCompliance": "Security & Compliance",
+    "operationalEfficiency": "Operational Efficiency",
+    "timeToMarket": "Time-to-Market Speed",
+    "back": "Back",
+    "next": "Next",
+    "getRecommendation": "Get Recommendation",
+    "recommendedSolution": "Recommended Solution",
+    "recommendedSolutionDesc": "Based on your answers, here's what we recommend for your project.",
+    "whatsIncluded": "What's included:",
+    "startOver": "Start Over",
+    "getQuoteForProject": "Get a Quote for This Project",
+    "customWebApp": "Custom Web Application Development",
+    "customWebAppDesc": "We'll build a high-performance, scalable web app tailored to your business needs with modern tech stack.",
+    "crossPlatformMobile": "Cross-Platform Mobile App",
+    "crossPlatformMobileDesc": "Native or cross-platform apps for iOS and Android built with the latest frameworks and best practices.",
+    "digitalMarketing": "Digital Marketing Solution",
+    "digitalMarketingDesc": "SEO, content marketing, paid ads, and conversion optimization to drive sustainable growth.",
+    "itInfrastructureSolution": "IT Infrastructure & Cloud Solutions",
+    "itInfrastructureSolutionDesc": "Scalable, secure cloud infrastructure and managed IT services for your growing business."
+  },
+  "outcomes": {
+    "badge": "Results & Impact",
+    "title": "Real outcomes from real projects",
+    "description": "Here's what our clients have achieved by partnering with us.",
+    "trafficGrowth": "Average Traffic Growth",
+    "trafficGrowthDesc": "Client websites see significant organic traffic increases within 6 months",
+    "performanceImprovement": "Performance Improvement",
+    "performanceDesc": "Pages load 80% faster with our optimization techniques",
+    "conversionIncrease": "Conversion Rate Increase",
+    "conversionDesc": "Better UX and design lead to higher conversion rates",
+    "fasterTimeToMarket": "Faster Time-to-Market",
+    "fasterTimeDesc": "Agile development methodology accelerates product launches",
+    "howWeDeliver": "How we deliver these results",
+    "technicalExcellence": "Technical Excellence:",
+    "technicalExcellenceDesc": "Modern tech stacks, best practices, and continuous optimization",
+    "dataDrivenStrategy": "Data-Driven Strategy:",
+    "dataDrivenStrategyDesc": "Every decision backed by analytics and user research",
+    "ongoingOptimization": "Ongoing Optimization:",
+    "ongoingOptimizationDesc": "Continuous monitoring, testing, and improvements post-launch"
+  },
+  "caseStudies": {
+    "title": "Case Studies",
+    "badge": "Case Studies",
+    "subtitle": "Real results from real projects",
+    "sectionTitle": "Results that speak for themselves",
+    "sectionDescription": "See how we've helped businesses like yours achieve measurable growth.",
+    "viewAllCaseStudies": "View All Case Studies",
+    "filterByIndustry": "Filter by Industry",
+    "filterByService": "Filter by Service",
+    "allIndustries": "All Industries",
+    "allServices": "All Services",
+    "readCaseStudy": "Read Case Study"
+  },
+  "process": {
+    "title": "Our Process",
+    "badge": "Our Process",
+    "sectionTitle": "How we deliver results",
+    "sectionDescription": "A proven methodology that ensures successful project outcomes.",
+    "discovery": "Discovery",
+    "discoveryDesc": "We learn about your business, goals, and challenges through in-depth consultation.",
+    "strategy": "Strategy",
+    "strategyDesc": "We develop a tailored solution plan with clear milestones and deliverables.",
+    "build": "Build",
+    "buildDesc": "Our team executes with agile methodology, keeping you informed throughout.",
+    "launchSupport": "Launch & Support",
+    "launchSupportDesc": "We deploy your solution and provide ongoing maintenance and optimization.",
+    "discover": "Discover",
+    "discoverDesc": "Understanding your goals and requirements",
+    "design": "Design",
+    "designDesc": "Creating beautiful and functional interfaces",
+    "develop": "Develop",
+    "developDesc": "Building scalable and performant solutions",
+    "optimize": "Optimize",
+    "optimizeDesc": "Continuous improvement and support"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "badge": "FAQ",
+    "sectionTitle": "Frequently asked questions",
+    "sectionDescription": "Quick answers to common questions about working with us.",
+    "quickAnswers": "Quick Answers",
+    "typicalTimeline": "Typical timeline?",
+    "typicalTimelineAnswer": "4-8 weeks for websites, 3-6 months for complex apps.",
+    "whatsIncluded": "What's included?",
+    "whatsIncludedAnswer": "Design, development, testing, training, and 30-day support.",
+    "afterConsult": "After the consult?",
+    "afterConsultAnswer": "You receive a proposal with scope, timeline, and pricing.",
+    "q1": "What is your typical project timeline?",
+    "a1": "Project timelines vary based on scope. Simple websites take 4-6 weeks, while complex applications may take 3-6 months. We'll provide a detailed timeline during the discovery phase.",
+    "q2": "Do you offer ongoing support?",
+    "a2": "Yes, we offer comprehensive managed support packages including 24/7 monitoring, security updates, and performance optimization.",
+    "q3": "What technologies do you use?",
+    "a3": "We specialize in modern web technologies: Next.js, React, Node.js, MongoDB, AWS, and cloud-native architectures.",
+    "q4": "Can you migrate our existing system?",
+    "a4": "Absolutely. We have extensive experience migrating legacy systems to modern architectures with zero downtime.",
+    "q5": "How do you approach security?",
+    "a5": "Security is built into every stage: secure architecture design, code scanning, penetration testing, and ongoing monitoring.",
+    "q6": "Do you provide training for our team?",
+    "a6": "Yes, we include knowledge transfer sessions and documentation to ensure your team can maintain the solution effectively."
+  },
+  "finalCta": {
+    "title": "Ready to transform your digital presence?",
+    "description": "Let's discuss your project and explore how we can help you achieve your business goals.",
+    "cta": "Book Free Consultation",
+    "noObligation": "No obligation consultation",
+    "clearRoadmap": "Clear project roadmap",
+    "transparentPricing": "Transparent pricing"
   },
   "services": {
     "title": "Our Services",
+    "badge": "Services",
+    "sectionTitle": "Full-spectrum IT services",
+    "sectionDescription": "From digital products to enterprise infrastructure, we deliver expert services tailored to your business needs.",
+    "digitalProductsGrowth": "Digital Products & Growth",
+    "cloudInfrastructure": "Cloud & Infrastructure",
+    "cybersecurity": "Cybersecurity",
+    "managedIT": "Managed IT",
     "webDevelopment": {
       "title": "Web Development",
       "description": "Custom web applications built with Next.js and React",
@@ -69,31 +266,31 @@
       "description": "Secure migration to AWS, Google Cloud, or Azure",
       "details": "Zero-downtime migrations with comprehensive planning and support."
     },
-    "cybersecurity": {
+    "cybersecurityService": {
       "title": "Cybersecurity",
       "description": "Threat assessment, penetration testing, and compliance",
       "details": "Comprehensive security solutions protecting your digital assets."
     }
   },
-  "caseStudies": {
-    "title": "Case Studies",
-    "subtitle": "Real results from real projects",
-    "filterByIndustry": "Filter by Industry",
-    "filterByService": "Filter by Service",
-    "allIndustries": "All Industries",
-    "allServices": "All Services",
-    "readCaseStudy": "Read Case Study"
-  },
   "blog": {
     "title": "Blog",
     "subtitle": "Insights, trends, and technical expertise",
+    "sectionTitle": "Latest insights and tips",
+    "sectionDescription": "Stay updated with our latest articles on digital transformation, IT strategy, and industry trends.",
     "filterByCategory": "Filter by Category",
-    "searchPosts": "Search articles",
+    "searchPosts": "Search articles...",
+    "allArticles": "All Articles",
     "readMore": "Read Article",
     "relatedPosts": "Related Articles",
     "authorBy": "By",
     "publishedOn": "Published on",
-    "readingTime": "min read"
+    "readingTime": "min read",
+    "noArticlesFound": "No articles found.",
+    "clearFilters": "Clear Filters",
+    "articleImage": "Article Image",
+    "shareArticle": "Share this article",
+    "share": "Share",
+    "backToBlog": "Back to Blog"
   },
   "company": {
     "title": "About Evision IT",
@@ -115,6 +312,18 @@
   "contact": {
     "title": "Get in Touch",
     "subtitle": "Let's discuss how we can help your business",
+    "badge": "Get In Touch",
+    "heroTitle": "Let's discuss your project",
+    "heroDescription": "Have a question or ready to start? We'd love to hear from you. Get in touch with our team today.",
+    "contactInfo": "Contact Information",
+    "sendMessage": "Send us a Message",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "businessHours": "Business Hours",
+    "mondayFriday": "Monday - Friday: 9:00 AM - 6:00 PM",
+    "saturday": "Saturday: 10:00 AM - 2:00 PM",
+    "sunday": "Sunday: Closed",
     "form": {
       "name": "Full Name",
       "email": "Email Address",
@@ -126,42 +335,7 @@
       "submitting": "Sending...",
       "success": "Thank you! We'll be in touch soon.",
       "error": "Something went wrong. Please try again."
-    },
-    "email": "Email",
-    "phone": "Phone",
-    "address": "Address",
-    "businessHours": "Business Hours"
-  },
-  "trust": {
-    "clients": "500+ Projects Delivered",
-    "uptime": "99.9% Uptime",
-    "response": "24-hour Response"
-  },
-  "process": {
-    "title": "Our Process",
-    "discover": "Discover",
-    "discoverDesc": "Understanding your goals and requirements",
-    "design": "Design",
-    "designDesc": "Creating beautiful and functional interfaces",
-    "develop": "Develop",
-    "developDesc": "Building scalable and performant solutions",
-    "optimize": "Optimize",
-    "optimizeDesc": "Continuous improvement and support"
-  },
-  "faq": {
-    "title": "Frequently Asked Questions",
-    "q1": "What is your typical project timeline?",
-    "a1": "Project timelines vary based on scope. Simple websites take 4-6 weeks, while complex applications may take 3-6 months. We'll provide a detailed timeline during the discovery phase.",
-    "q2": "Do you offer ongoing support?",
-    "a2": "Yes, we offer comprehensive managed support packages including 24/7 monitoring, security updates, and performance optimization.",
-    "q3": "What technologies do you use?",
-    "a3": "We specialize in modern web technologies: Next.js, React, Node.js, MongoDB, AWS, and cloud-native architectures.",
-    "q4": "Can you migrate our existing system?",
-    "a4": "Absolutely. We have extensive experience migrating legacy systems to modern architectures with zero downtime.",
-    "q5": "How do you approach security?",
-    "a5": "Security is built into every stage: secure architecture design, code scanning, penetration testing, and ongoing monitoring.",
-    "q6": "Do you provide training for our team?",
-    "a6": "Yes, we include knowledge transfer sessions and documentation to ensure your team can maintain the solution effectively."
+    }
   },
   "pricing": {
     "title": "Transparent Pricing",
@@ -215,5 +389,23 @@
     "serverErrorDesc": "Something went wrong on our end",
     "returnHome": "Return to Home",
     "goBack": "Go Back"
+  },
+  "resources": {
+    "title": "Resources",
+    "badge": "Resources",
+    "sectionTitle": "Learning Resources",
+    "sectionDescription": "Guides, documentation, and tools to help you succeed",
+    "items": "items",
+    "item": "item",
+    "implementationGuides": "Implementation Guides",
+    "implementationGuidesDesc": "Step-by-step guides for implementing digital solutions",
+    "webinarsWorkshops": "Webinars & Workshops",
+    "webinarsWorkshopsDesc": "Live training sessions and recorded workshops",
+    "technicalDocs": "Technical Documentation",
+    "technicalDocsDesc": "Comprehensive API and integration documentation",
+    "whitepapers": "Whitepapers",
+    "whitepapersDesc": "In-depth research and industry insights",
+    "templates": "Templates & Checklists",
+    "templatesDesc": "Ready-to-use templates for planning and execution"
   }
 }

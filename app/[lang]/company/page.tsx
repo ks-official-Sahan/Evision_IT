@@ -1,12 +1,12 @@
-import { getValidLocale, type Locale } from '@/lib/config';
-import { getDictionary } from '@/lib/i18n/get-dict';
-import CompanyClient from './client';
+import { type Locale } from "@/lib/config";
+import { getDictionary, getValidLocale } from "@/lib/i18n/get-dict";
+import CompanyClient from "./client";
 
 interface PageProps {
   params: Promise<{ lang: string }>;
 }
 
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 
 export async function generateMetadata({ params }: PageProps) {
   const { lang } = await params;
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: PageProps) {
     openGraph: {
       title: dict.company.title,
       description: dict.company.subtitle,
-      type: 'website',
+      type: "website",
     },
   };
 }

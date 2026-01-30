@@ -6,22 +6,33 @@ import { Container } from "@/components/ui/container";
 import { CTAGroup } from "@/components/ui/cta-group";
 import { MetricStrip } from "@/components/ui/metric-strip";
 import { CheckCircle2 } from "lucide-react";
+import { type Dictionary } from "@/lib/i18n/get-dict";
+import { type Locale } from "@/lib/config";
 
-const trustBadges = [
-  "200+ projects delivered",
-  "50+ active clients",
-  "99.9% uptime SLA",
-];
+interface HeroSectionProps {
+  dict?: Dictionary;
+  locale?: Locale;
+}
 
-const metrics = [
-  { value: "200+", label: "Projects Delivered" },
-  { value: "50+", label: "Active Clients" },
-  { value: "8+", label: "Years Experience" },
-  { value: "24/7", label: "Support Available" },
-];
-
-export function HeroSection() {
+export function HeroSection({ dict, locale = "en" }: HeroSectionProps) {
   const prefersReducedMotion = useReducedMotion();
+
+  // Get translations with fallbacks
+  const hero = dict?.hero || {};
+  const trust = dict?.trust || {};
+
+  const trustBadges = [
+    trust.clients || "500+ Projects Delivered",
+    trust.uptime || "99.9% Uptime",
+    trust.response || "24-hour Response",
+  ];
+
+  const metrics = [
+    { value: "200+", label: hero.projectsDelivered || "Projects Delivered" },
+    { value: "50+", label: hero.activeClients || "Active Clients" },
+    { value: "8+", label: hero.yearsExperience || "Years Experience" },
+    { value: "24/7", label: hero.supportAvailable || "Support Available" },
+  ];
 
   const containerVariants = prefersReducedMotion
     ? {}
@@ -55,7 +66,7 @@ export function HeroSection() {
           {/* Announcement Badge */}
           <motion.div variants={itemVariants}>
             <Badge variant="secondary" className="mb-6">
-              Serving Sri Lanka & Global Clients
+              {dict?.common?.tagline || "Serving Sri Lanka & Global Clients"}
             </Badge>
           </motion.div>
 
@@ -64,8 +75,10 @@ export function HeroSection() {
             variants={itemVariants}
             className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance"
           >
-            Digital transformation for{" "}
-            <span className="text-accent">growing businesses</span>
+            {hero.headline || "Digital transformation for"}{" "}
+            <span className="text-accent">
+              {hero.tagline || "growing businesses"}
+            </span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -73,18 +86,17 @@ export function HeroSection() {
             variants={itemVariants}
             className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed text-pretty"
           >
-            High-performance websites, apps, e-commerce and digital
-            marketing—backed by enterprise-grade infrastructure and security
-            expertise.
+            {dict?.common?.description ||
+              "High-performance websites, apps, e-commerce and digital marketing—backed by enterprise-grade infrastructure and security expertise."}
           </motion.p>
 
           {/* CTA Buttons */}
           <motion.div variants={itemVariants} className="mt-8">
             <CTAGroup
-              primaryText="Book Free Consultation"
-              primaryHref="/contact"
-              secondaryText="View Our Work"
-              secondaryHref="/case-studies"
+              primaryText={hero.cta || "Book Free Consultation"}
+              primaryHref={`/${locale}/contact`}
+              secondaryText={hero.secondary || "View Our Work"}
+              secondaryHref={`/${locale}/case-studies`}
               showWhatsApp
               align="center"
               size="lg"

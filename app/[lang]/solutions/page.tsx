@@ -1,10 +1,16 @@
 import { Suspense } from "react";
-import { getValidLocale, type Locale } from "@/lib/config";
-import { getDictionary } from "@/lib/i18n/get-dict";
+import { type Locale } from "@/lib/config";
+import { getDictionary, getValidLocale } from "@/lib/i18n/get-dict";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { organizationSchema } from "@/lib/json-ld";
@@ -69,7 +75,10 @@ export default async function SolutionsPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
       />
 
-      <Section padding="lg" className="bg-gradient-to-b from-muted/50 to-background">
+      <Section
+        padding="lg"
+        className="bg-gradient-to-b from-muted/50 to-background"
+      >
         <Container size="sm">
           <Breadcrumbs
             items={[
@@ -96,7 +105,10 @@ export default async function SolutionsPage({ params }: PageProps) {
         <Container>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {solutions.map((solution) => (
-              <Card key={solution.id} className="glass hover:shadow-lg transition-all">
+              <Card
+                key={solution.id}
+                className="glass hover:shadow-lg transition-all"
+              >
                 <CardHeader>
                   <div className="text-4xl mb-2">{solution.icon}</div>
                   <CardTitle>{solution.title}</CardTitle>

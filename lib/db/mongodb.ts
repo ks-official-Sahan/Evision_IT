@@ -56,7 +56,16 @@ export async function connectToDatabase(): Promise<MongoConnection> {
     await client.connect();
 
     // Get database reference
-    const db = client.db("evision-it");
+    // const db = client.db("evision-it");
+    const dbName = process.env.MONGODB_DB;
+
+    if (!dbName) {
+      throw new Error(
+        "MONGODB_DB environment variable is not defined. Please add it to your .env.local file.",
+      );
+    }
+
+    const db = client.db(dbName);
 
     // Verify connection with a ping
     await db.admin().ping();

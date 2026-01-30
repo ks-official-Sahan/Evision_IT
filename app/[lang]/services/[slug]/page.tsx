@@ -2,7 +2,8 @@ import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getValidLocale, type Locale } from "@/lib/config";
+import { type Locale } from "@/lib/config";
+import { getValidLocale } from "@/lib/i18n/get-dict";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -71,7 +72,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
     notFound();
   }
 
-  const relatedServices = getRelatedServices(service.id, 3);
+  const relatedServices = getRelatedServices(service.relatedServices);
 
   return (
     <>
@@ -79,12 +80,18 @@ export default async function ServicePage({ params }: ServicePageProps) {
       <JsonLd data={serviceSchema(service, locale)} />
 
       {/* Hero Section */}
-      <Section padding="lg" className="bg-gradient-to-b from-muted/50 to-background">
+      <Section
+        padding="lg"
+        className="bg-gradient-to-b from-muted/50 to-background"
+      >
         <Container size="sm">
           <Breadcrumbs
             items={[
-              { label: "Services", href: `/${locale}/services` },
-              { label: service.title, href: `/${locale}/services/${service.slug}` },
+              { label: "Services", href: `/services` },
+              {
+                label: service.title,
+                href: `/services/${service.slug}`,
+              },
             ]}
             locale={locale}
           />
@@ -106,7 +113,9 @@ export default async function ServicePage({ params }: ServicePageProps) {
       {/* Problems We Solve */}
       <Section>
         <Container size="sm">
-          <h2 className="text-3xl font-bold text-foreground mb-8">Problems We Solve</h2>
+          <h2 className="text-3xl font-bold text-foreground mb-8">
+            Problems We Solve
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2">
             {service.problems?.map((problem, idx) => (
               <Card key={idx}>
@@ -140,8 +149,12 @@ export default async function ServicePage({ params }: ServicePageProps) {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <h3 className="font-semibold text-foreground mb-2">{step.title}</h3>
-                    <p className="text-sm text-muted-foreground">{step.description}</p>
+                    <h3 className="font-semibold text-foreground mb-2">
+                      {step.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {step.description}
+                    </p>
                   </CardContent>
                 </Card>
               ))}
@@ -154,7 +167,9 @@ export default async function ServicePage({ params }: ServicePageProps) {
       {service.deliverables && service.deliverables.length > 0 && (
         <Section>
           <Container size="sm">
-            <h2 className="text-3xl font-bold text-foreground mb-8">Deliverables</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-8">
+              Deliverables
+            </h2>
             <div className="space-y-3">
               {service.deliverables.map((deliverable, idx) => (
                 <div

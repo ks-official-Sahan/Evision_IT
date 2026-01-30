@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { getValidLocale, type Locale } from "@/lib/config";
+import { type Locale } from "@/lib/config";
+import { getValidLocale } from "@/lib/i18n/get-dict";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
@@ -11,7 +12,9 @@ interface PageProps {
   params: Promise<{ lang: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { lang } = await params;
   const locale = getValidLocale(lang) as Locale;
 
@@ -46,13 +49,16 @@ export default async function ServicesPage({ params }: PageProps) {
       acc[service.category].push(service);
       return acc;
     },
-    {} as Record<string, typeof services>
+    {} as Record<string, typeof services>,
   );
 
   return (
     <>
       {/* Hero */}
-      <Section padding="lg" className="bg-gradient-to-b from-muted/50 to-background">
+      <Section
+        padding="lg"
+        className="bg-gradient-to-b from-muted/50 to-background"
+      >
         <Container size="sm">
           <Breadcrumbs
             items={[{ label: "Services", href: `/${locale}/services` }]}
@@ -66,8 +72,8 @@ export default async function ServicesPage({ params }: PageProps) {
               Full-spectrum IT services
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              From digital products to enterprise infrastructure, we deliver expert services
-              tailored to your business needs.
+              From digital products to enterprise infrastructure, we deliver
+              expert services tailored to your business needs.
             </p>
           </div>
         </Container>
@@ -76,22 +82,25 @@ export default async function ServicesPage({ params }: PageProps) {
       {/* Services by Category */}
       <Section>
         <Container>
-          {Object.entries(groupedServices).map(([category, categoryServices]) => (
-            <div key={category} className="mb-16 last:mb-0">
-              <h2 className="text-3xl font-bold text-foreground mb-8">
-                {categoryLabels[category as keyof typeof categoryLabels] || category}
-              </h2>
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {categoryServices.map((service) => (
-                  <ServiceCard
-                    key={service.slug}
-                    service={service}
-                    href={`/${locale}/services/${service.slug}`}
-                  />
-                ))}
+          {Object.entries(groupedServices).map(
+            ([category, categoryServices]) => (
+              <div key={category} className="mb-16 last:mb-0">
+                <h2 className="text-3xl font-bold text-foreground mb-8">
+                  {categoryLabels[category as keyof typeof categoryLabels] ||
+                    category}
+                </h2>
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {categoryServices.map((service) => (
+                    <ServiceCard
+                      key={service.slug}
+                      service={service}
+                      href={`/${locale}/services/${service.slug}`}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ),
+          )}
         </Container>
       </Section>
     </>

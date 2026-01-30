@@ -1,4 +1,8 @@
-import { getDictionary, getValidLocale } from "@/lib/i18n/get-dict";
+import {
+  getDictionary,
+  getValidLocale,
+  type Dictionary,
+} from "@/lib/i18n/get-dict";
 import { type Locale } from "@/lib/config";
 import { HeroSection } from "@/components/home/hero-section";
 import { TrustBar } from "@/components/home/trust-bar";
@@ -9,7 +13,6 @@ import { CaseStudiesPreview } from "@/components/home/case-studies-preview";
 import { ProcessSection } from "@/components/home/process-section";
 import { FAQSection } from "@/components/home/faq-section";
 import { FinalCTASection } from "@/components/home/final-cta-section";
-import { GoalSelector } from "@/components/home/goal-selector"; // Added import for GoalSelector
 
 interface PageProps {
   params: Promise<{ lang: string }>;
@@ -21,8 +24,9 @@ export async function generateMetadata({ params }: PageProps) {
   const dict = await getDictionary(locale);
 
   return {
-    title: "Home",
-    description: dict.hero?.headline || "Empowering Businesses with Digital Excellence",
+    title: dict.nav?.home || "Home",
+    description:
+      dict.hero?.headline || "Empowering Businesses with Digital Excellence",
   };
 }
 
@@ -33,15 +37,15 @@ export default async function HomePage({ params }: PageProps) {
 
   return (
     <>
-      <HeroSection />
-      <TrustBar locale={locale} />
-      <SolutionFinderQuiz />
-      <SolutionsOverview />
-      <OutcomesMetrics />
-      <CaseStudiesPreview />
-      <ProcessSection />
-      <FAQSection />
-      <FinalCTASection />
+      <HeroSection dict={dict} locale={locale} />
+      <TrustBar dict={dict} locale={locale} />
+      <SolutionFinderQuiz dict={dict} locale={locale} />
+      <SolutionsOverview dict={dict} locale={locale} />
+      <OutcomesMetrics dict={dict} locale={locale} />
+      <CaseStudiesPreview dict={dict} locale={locale} />
+      <ProcessSection dict={dict} locale={locale} />
+      <FAQSection dict={dict} locale={locale} />
+      <FinalCTASection dict={dict} locale={locale} />
     </>
   );
 }

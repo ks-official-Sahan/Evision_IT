@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { getValidLocale, type Locale } from "@/lib/config";
+import { type Locale } from "@/lib/config";
+import { getValidLocale } from "@/lib/i18n/get-dict";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
@@ -12,16 +13,20 @@ interface PageProps {
   params: Promise<{ lang: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { lang } = await params;
   const locale = getValidLocale(lang) as Locale;
 
   return {
     title: "Contact Us",
-    description: "Get in touch with Evision IT. We'd love to hear about your project.",
+    description:
+      "Get in touch with Evision IT. We'd love to hear about your project.",
     openGraph: {
       title: "Contact Us | Evision IT",
-      description: "Get in touch with Evision IT. We'd love to hear about your project.",
+      description:
+        "Get in touch with Evision IT. We'd love to hear about your project.",
       url: `${siteConfig.url}/${locale}/contact`,
     },
   };
@@ -34,7 +39,10 @@ export default async function ContactPage({ params }: PageProps) {
   return (
     <>
       {/* Hero Section */}
-      <Section padding="lg" className="bg-gradient-to-b from-muted/50 to-background">
+      <Section
+        padding="lg"
+        className="bg-gradient-to-b from-muted/50 to-background"
+      >
         <Container size="sm">
           <Breadcrumbs
             items={[{ label: "Contact", href: `/${locale}/contact` }]}
@@ -49,7 +57,8 @@ export default async function ContactPage({ params }: PageProps) {
               Let's discuss your project
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              Have a question or ready to start? We'd love to hear from you. Get in touch with our team today.
+              Have a question or ready to start? We'd love to hear from you. Get
+              in touch with our team today.
             </p>
           </div>
         </Container>
@@ -61,8 +70,10 @@ export default async function ContactPage({ params }: PageProps) {
           <div className="grid gap-12 md:grid-cols-2">
             {/* Contact Information */}
             <div>
-              <h2 className="text-3xl font-bold text-foreground mb-8">Contact Information</h2>
-              
+              <h2 className="text-3xl font-bold text-foreground mb-8">
+                Contact Information
+              </h2>
+
               <div className="space-y-6">
                 {/* Phone */}
                 <div className="flex gap-4">
@@ -70,7 +81,9 @@ export default async function ContactPage({ params }: PageProps) {
                     <Phone className="h-6 w-6 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground mb-1">Phone</h3>
+                    <h3 className="font-semibold text-foreground mb-1">
+                      Phone
+                    </h3>
                     <a
                       href={`tel:${siteConfig.contact.phone}`}
                       className="text-muted-foreground hover:text-accent transition-colors"
@@ -86,7 +99,9 @@ export default async function ContactPage({ params }: PageProps) {
                     <Mail className="h-6 w-6 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground mb-1">Email</h3>
+                    <h3 className="font-semibold text-foreground mb-1">
+                      Email
+                    </h3>
                     <a
                       href={`mailto:${siteConfig.contact.email}`}
                       className="text-muted-foreground hover:text-accent transition-colors"
@@ -102,8 +117,12 @@ export default async function ContactPage({ params }: PageProps) {
                     <MapPin className="h-6 w-6 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground mb-1">Address</h3>
-                    <p className="text-muted-foreground">{siteConfig.contact.address}</p>
+                    <h3 className="font-semibold text-foreground mb-1">
+                      Address
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {siteConfig.contact.address}
+                    </p>
                   </div>
                 </div>
 
@@ -113,9 +132,15 @@ export default async function ContactPage({ params }: PageProps) {
                     <Clock className="h-6 w-6 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground mb-1">Business Hours</h3>
-                    <p className="text-muted-foreground">Monday - Friday: 9:00 AM - 6:00 PM</p>
-                    <p className="text-muted-foreground">Saturday: 10:00 AM - 2:00 PM</p>
+                    <h3 className="font-semibold text-foreground mb-1">
+                      Business Hours
+                    </h3>
+                    <p className="text-muted-foreground">
+                      Monday - Friday: 9:00 AM - 6:00 PM
+                    </p>
+                    <p className="text-muted-foreground">
+                      Saturday: 10:00 AM - 2:00 PM
+                    </p>
                     <p className="text-muted-foreground">Sunday: Closed</p>
                   </div>
                 </div>
@@ -124,7 +149,9 @@ export default async function ContactPage({ params }: PageProps) {
 
             {/* Contact Form */}
             <div>
-              <h2 className="text-3xl font-bold text-foreground mb-8">Send us a Message</h2>
+              <h2 className="text-3xl font-bold text-foreground mb-8">
+                Send us a Message
+              </h2>
               <ContactForm locale={locale} />
             </div>
           </div>

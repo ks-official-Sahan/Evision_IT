@@ -21,14 +21,24 @@ export const siteConfig = {
     "High-performance websites, apps, e-commerce and digital marketing—backed by enterprise-grade infrastructure and security expertise.",
   url: "https://evision-it.com",
   ogImage: "https://evision-it.com/og-image.jpg",
-  
+
   /* Brand Colors - Used across components */
   brand: {
-    primary: "#0A1665",      /* Evision Blue */
-    accent: "#25BBE8",       /* Cyan */
-    secondary: "#005A5A",    /* Teal */
+    primary: "#0A1665" /* Evision Blue */,
+    accent: "#25BBE8" /* Cyan */,
+    secondary: "#005A5A" /* Teal */,
   },
-  
+
+  contact: {
+    name: "Sri Lanka",
+    countryCode: "LK",
+    phone: "+94 77 712 3456",
+    email: "hello@evision-it.com",
+    address: "123 Tech Park, Colombo 03, Sri Lanka",
+    timezone: "Asia/Colombo",
+    currency: "LKR",
+  },
+
   /* Multi-Region Contact Information */
   regions: {
     lk: {
@@ -59,7 +69,7 @@ export const siteConfig = {
       currency: "SGD",
     },
   },
-  
+
   /* Social Links */
   links: {
     whatsapp: "https://wa.me/94777123456",
@@ -69,7 +79,7 @@ export const siteConfig = {
     github: "https://github.com/evision-it",
     clutch: "https://clutch.co/profile/evision-it",
   },
-  
+
   /* Sitemap & Navigation */
   navigation: {
     main: [
@@ -88,7 +98,7 @@ export const siteConfig = {
       { href: "/sitemap", label: "Sitemap" },
     ],
   },
-  
+
   /* Analytics Configuration */
   analytics: {
     gtmId: process.env.NEXT_PUBLIC_GTM_ID || "",
@@ -96,23 +106,24 @@ export const siteConfig = {
     bingVerification: process.env.NEXT_PUBLIC_BING_VERIFICATION || "",
     bingUetId: process.env.NEXT_PUBLIC_BING_UET_ID || "",
   },
-  
+
   /* Cloud/Media Configuration */
   cloudinary: {
     cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "evision",
   },
-  
+
   /* Database Configuration (MongoDB) */
   database: {
     mongoUri: process.env.MONGODB_URI || "mongodb://localhost:27017/evision-it",
   },
-  
+
   /* SEO Configuration */
   seo: {
     siteName: "Evision IT",
     twitterHandle: "@evisionit",
     locale: "en_US",
-    searchConsoleVerification: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "",
+    searchConsoleVerification:
+      process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "",
   },
 };
 

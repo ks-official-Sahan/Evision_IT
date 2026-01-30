@@ -1,52 +1,14 @@
 "use client";
 
-import React from "react"
+import React, { useEffect } from "react";
 
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Container } from "@/components/ui/container";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TrendingUp, Zap, BarChart3, Clock } from "lucide-react";
-import { motion, useMotionValue, useTransform, useEffect } from "framer-motion";
-
-interface OutcomeMetric {
-  icon: React.ReactNode;
-  value: string;
-  label: string;
-  description: string;
-  color: "accent" | "secondary" | "primary";
-}
-
-const outcomeMetrics: OutcomeMetric[] = [
-  {
-    icon: <TrendingUp className="h-6 w-6" />,
-    value: "204%",
-    label: "Average Traffic Growth",
-    description: "Client websites see significant organic traffic increases within 6 months",
-    color: "accent",
-  },
-  {
-    icon: <Zap className="h-6 w-6" />,
-    value: "80%",
-    label: "Performance Improvement",
-    description: "Pages load 80% faster with our optimization techniques",
-    color: "secondary",
-  },
-  {
-    icon: <BarChart3 className="h-6 w-6" />,
-    value: "3.5x",
-    label: "Conversion Rate Increase",
-    description: "Better UX and design lead to higher conversion rates",
-    color: "primary",
-  },
-  {
-    icon: <Clock className="h-6 w-6" />,
-    value: "50%",
-    label: "Faster Time-to-Market",
-    description: "Agile development methodology accelerates product launches",
-    color: "accent",
-  },
-];
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { type Locale } from "@/lib/config";
 
 interface CounterProps {
   value: string;
@@ -62,22 +24,71 @@ function AnimatedCounter({ value, duration = 2 }: CounterProps) {
   });
 
   useEffect(() => {
-    const animation = {
+    const controls = animate(count, numericValue, {
       duration,
-    };
-    count.set(numericValue, animation);
+    });
+    return controls.stop;
   }, [count, numericValue, duration]);
 
   return <motion.span>{displayValue}</motion.span>;
 }
 
-export function OutcomesMetrics() {
+interface OutcomesMetricsProps {
+  dict?: any;
+  locale?: Locale;
+}
+
+export function OutcomesMetrics({ dict, locale = "en" }: OutcomesMetricsProps) {
+  const outcomes = dict?.outcomes || {};
+
+  const outcomeMetrics = [
+    {
+      icon: <TrendingUp className="h-6 w-6" />,
+      value: "204%",
+      label: outcomes.trafficGrowth || "Average Traffic Growth",
+      description:
+        outcomes.trafficGrowthDesc ||
+        "Client websites see significant organic traffic increases within 6 months",
+      color: "accent" as const,
+    },
+    {
+      icon: <Zap className="h-6 w-6" />,
+      value: "80%",
+      label: outcomes.performanceImprovement || "Performance Improvement",
+      description:
+        outcomes.performanceDesc ||
+        "Pages load 80% faster with our optimization techniques",
+      color: "secondary" as const,
+    },
+    {
+      icon: <BarChart3 className="h-6 w-6" />,
+      value: "3.5x",
+      label: outcomes.conversionIncrease || "Conversion Rate Increase",
+      description:
+        outcomes.conversionDesc ||
+        "Better UX and design lead to higher conversion rates",
+      color: "primary" as const,
+    },
+    {
+      icon: <Clock className="h-6 w-6" />,
+      value: "50%",
+      label: outcomes.fasterTimeToMarket || "Faster Time-to-Market",
+      description:
+        outcomes.fasterTimeDesc ||
+        "Agile development methodology accelerates product launches",
+      color: "accent" as const,
+    },
+  ];
+
   return (
     <Section background="muted">
       <SectionHeader
-        badge="Results & Impact"
-        title="Real outcomes from real projects"
-        description="Here's what our clients have achieved by partnering with us."
+        badge={outcomes.badge || "Results & Impact"}
+        title={outcomes.title || "Real outcomes from real projects"}
+        description={
+          outcomes.description ||
+          "Here's what our clients have achieved by partnering with us."
+        }
       />
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -134,28 +145,37 @@ export function OutcomesMetrics() {
         <Container>
           <div className="max-w-3xl mx-auto">
             <h3 className="text-2xl font-bold text-foreground mb-4">
-              How we deliver these results
+              {outcomes.howWeDeliver || "How we deliver these results"}
             </h3>
             <ul className="space-y-3 text-muted-foreground">
               <li className="flex items-start gap-3">
                 <span className="text-accent font-bold mt-1">→</span>
                 <span>
-                  <strong className="text-foreground">Technical Excellence:</strong> Modern
-                  tech stacks, best practices, and continuous optimization
+                  <strong className="text-foreground">
+                    {outcomes.technicalExcellence || "Technical Excellence:"}
+                  </strong>{" "}
+                  {outcomes.technicalExcellenceDesc ||
+                    "Modern tech stacks, best practices, and continuous optimization"}
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-accent font-bold mt-1">→</span>
                 <span>
-                  <strong className="text-foreground">Data-Driven Strategy:</strong> Every
-                  decision backed by analytics and user research
+                  <strong className="text-foreground">
+                    {outcomes.dataDrivenStrategy || "Data-Driven Strategy:"}
+                  </strong>{" "}
+                  {outcomes.dataDrivenStrategyDesc ||
+                    "Every decision backed by analytics and user research"}
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-accent font-bold mt-1">→</span>
                 <span>
-                  <strong className="text-foreground">Ongoing Optimization:</strong>
-                  Continuous monitoring, testing, and improvements post-launch
+                  <strong className="text-foreground">
+                    {outcomes.ongoingOptimization || "Ongoing Optimization:"}
+                  </strong>{" "}
+                  {outcomes.ongoingOptimizationDesc ||
+                    "Continuous monitoring, testing, and improvements post-launch"}
                 </span>
               </li>
             </ul>

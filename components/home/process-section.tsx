@@ -6,47 +6,62 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { MessageSquare, Lightbulb, Code2, Rocket } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { type Locale } from "@/lib/config";
+import { type Dictionary } from "@/lib/i18n/get-dict";
 
-const steps = [
-  {
-    number: "01",
-    icon: MessageSquare,
-    title: "Discovery",
-    description:
-      "We learn about your business, goals, and challenges through in-depth consultation.",
-  },
-  {
-    number: "02",
-    icon: Lightbulb,
-    title: "Strategy",
-    description:
-      "We develop a tailored solution plan with clear milestones and deliverables.",
-  },
-  {
-    number: "03",
-    icon: Code2,
-    title: "Build",
-    description:
-      "Our team executes with agile methodology, keeping you informed throughout.",
-  },
-  {
-    number: "04",
-    icon: Rocket,
-    title: "Launch & Support",
-    description:
-      "We deploy your solution and provide ongoing maintenance and optimization.",
-  },
-];
+interface ProcessSectionProps {
+  dict?: Dictionary;
+  locale?: Locale;
+}
 
-export function ProcessSection() {
+export function ProcessSection({ dict, locale = "en" }: ProcessSectionProps) {
   const prefersReducedMotion = useReducedMotion();
+  const process = dict?.process || {};
+
+  const steps = [
+    {
+      number: "01",
+      icon: MessageSquare,
+      title: process.discovery || "Discovery",
+      description:
+        process.discoveryDesc ||
+        "We learn about your business, goals, and challenges through in-depth consultation.",
+    },
+    {
+      number: "02",
+      icon: Lightbulb,
+      title: process.strategy || "Strategy",
+      description:
+        process.strategyDesc ||
+        "We develop a tailored solution plan with clear milestones and deliverables.",
+    },
+    {
+      number: "03",
+      icon: Code2,
+      title: process.build || "Build",
+      description:
+        process.buildDesc ||
+        "Our team executes with agile methodology, keeping you informed throughout.",
+    },
+    {
+      number: "04",
+      icon: Rocket,
+      title: process.launchSupport || "Launch & Support",
+      description:
+        process.launchSupportDesc ||
+        "We deploy your solution and provide ongoing maintenance and optimization.",
+    },
+  ];
 
   return (
     <Section>
       <SectionHeader
-        badge="Our Process"
-        title="How we deliver results"
-        description="A proven methodology that ensures successful project outcomes."
+        badge={process.badge || "Our Process"}
+        title={process.sectionTitle || "How we deliver results"}
+        description={
+          process.sectionDescription ||
+          "A proven methodology that ensures successful project outcomes."
+        }
       />
 
       <div className="relative">

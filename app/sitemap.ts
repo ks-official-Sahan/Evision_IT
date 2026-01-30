@@ -29,7 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
       lastModified: new Date(),
-    }))
+    })),
   );
 
   // Blog posts
@@ -38,8 +38,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/${locale}/blog/${post.slug}`,
       changeFrequency: "monthly" as const,
       priority: 0.7,
-      lastModified: new Date(post.date),
-    }))
+      lastModified: new Date(post.publishedAt),
+    })),
   );
 
   // Case studies
@@ -49,7 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
       lastModified: new Date(),
-    }))
+    })),
   );
 
   // Main section pages

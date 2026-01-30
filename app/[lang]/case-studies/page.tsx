@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { CardContent } from "@/components/ui/card";
 import { CardDescription } from "@/components/ui/card";
@@ -8,7 +8,8 @@ import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Suspense } from "react";
-import { getValidLocale, type Locale } from "@/lib/config";
+import { type Locale } from "@/lib/config";
+import { getValidLocale } from "@/lib/i18n/get-dict";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
@@ -42,7 +43,10 @@ export default async function CaseStudiesPage({ params }: PageProps) {
   return (
     <>
       {/* Hero Section */}
-      <Section padding="lg" className="bg-gradient-to-b from-muted/50 to-background">
+      <Section
+        padding="lg"
+        className="bg-gradient-to-b from-muted/50 to-background"
+      >
         <Container size="sm">
           <Breadcrumbs
             items={[{ label: "Case Studies", href: `/${locale}/case-studies` }]}
@@ -57,8 +61,8 @@ export default async function CaseStudiesPage({ params }: PageProps) {
               Real results from real projects
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              See how we've helped businesses across industries achieve their digital transformation
-              goals.
+              See how we've helped businesses across industries achieve their
+              digital transformation goals.
             </p>
           </div>
         </Container>

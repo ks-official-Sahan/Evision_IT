@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -9,73 +9,77 @@
 
 :root {
   /* Brand Core Colors */
-  --brand-primary: #0A1665;      /* Evision Blue - Trust, Stability */
-  --brand-accent: #25BBE8;        /* Cyan - Innovation, Action */
-  --brand-secondary: #005A5A;     /* Teal - Balance, Sophistication */
-  
+  --brand-primary: #0a1665; /* Evision Blue - Trust, Stability */
+  --brand-accent: #25bbe8; /* Cyan - Innovation, Action */
+  --brand-secondary: #005a5a; /* Teal - Balance, Sophistication */
+
   /* Semantic Neutral - Light Mode */
-  --background: #F5F5F5;          /* Soft Neutral White (not pure white) */
-  --foreground: #0A1665;          /* Evision Blue for text */
-  --card: #FFFFFF;                /* Pure white for card backgrounds */
-  --card-foreground: #0A1665;     /* Text on cards */
-  --popover: #FFFFFF;
-  --popover-foreground: #0A1665;
-  
+  --background: #f5f5f5; /* Soft Neutral White (not pure white) */
+  --foreground: #0a1665; /* Evision Blue for text */
+  --card: #ffffff; /* Pure white for card backgrounds */
+  --card-foreground: #0a1665; /* Text on cards */
+  --popover: #ffffff;
+  --popover-foreground: #0a1665;
+
   /* Primary Actions */
-  --primary: #0A1665;             /* Evision Blue */
-  --primary-foreground: #FFFFFF;
-  
+  --primary: #0a1665; /* Evision Blue */
+  --primary-foreground: #ffffff;
+
   /* Secondary Actions */
-  --secondary: #F0F4F8;           /* Very Light Blue-Gray */
-  --secondary-foreground: #0A1665;
-  
+  --secondary: #f0f4f8; /* Very Light Blue-Gray */
+  --secondary-foreground: #0a1665;
+
   /* Muted/Inactive States */
-  --muted: #E8EDF5;               /* Light Blue-Gray */
-  --muted-foreground: #5A6B8C;    /* Muted Blue-Gray text */
-  
+  --muted: #e8edf5; /* Light Blue-Gray */
+  --muted-foreground: #5a6b8c; /* Muted Blue-Gray text */
+
   /* Accent (CTA, highlights) */
-  --accent: #25BBE8;              /* Cyan */
-  --accent-foreground: #0A1665;   /* Dark text on cyan */
-  
+  --accent: #25bbe8; /* Cyan */
+  --accent-foreground: #0a1665; /* Dark text on cyan */
+
   /* Destructive (Errors, warnings) */
-  --destructive: #DC2626;         /* Red */
-  --destructive-foreground: #FFFFFF;
-  
+  --destructive: #dc2626; /* Red */
+  --destructive-foreground: #ffffff;
+
   /* Borders & Inputs */
-  --border: #E0E8F5;              /* Light Blue-Gray border */
-  --input: #F0F4F8;               /* Input background (light) */
-  --ring: #25BBE8;                /* Focus ring color (Cyan) */
-  
+  --border: #e0e8f5; /* Light Blue-Gray border */
+  --input: #f0f4f8; /* Input background (light) */
+  --ring: #25bbe8; /* Focus ring color (Cyan) */
+
   /* Chart Colors */
-  --chart-1: #25BBE8;             /* Cyan */
-  --chart-2: #0A1665;             /* Blue */
-  --chart-3: #005A5A;             /* Teal */
-  --chart-4: #10B981;             /* Green (success) */
-  --chart-5: #EB9606;             /* Orange (warning) */
-  
+  --chart-1: #25bbe8; /* Cyan */
+  --chart-2: #0a1665; /* Blue */
+  --chart-3: #005a5a; /* Teal */
+  --chart-4: #10b981; /* Green (success) */
+  --chart-5: #eb9606; /* Orange (warning) */
+
   /* Border Radius */
   --radius: 0.5rem;
-  
+
   /* Sidebar (Navigation) */
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #0A1665;
-  --sidebar-primary: #0A1665;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F0F4F8;
-  --sidebar-accent-foreground: #0A1665;
-  --sidebar-border: #E0E8F5;
-  --sidebar-ring: #25BBE8;
-  
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0a1665;
+  --sidebar-primary: #0a1665;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f0f4f8;
+  --sidebar-accent-foreground: #0a1665;
+  --sidebar-border: #e0e8f5;
+  --sidebar-ring: #25bbe8;
+
   /* Typography Tokens */
-  --font-sans: 'Geist', 'Geist Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Courier, monospace;
-  
+  --font-sans:
+    "Geist", "Geist Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-mono:
+    "Geist Mono", "Geist Mono Fallback", "SF Mono", Monaco, "Cascadia Code",
+    "Roboto Mono", Courier, monospace;
+
   /* Shadows & Depth */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-  
+
   /* Glassmorphism */
   --glass-blur: blur(10px);
   --glass-bg: rgba(255, 255, 255, 0.7);
@@ -88,69 +92,69 @@
 
 .dark {
   /* Brand Core Colors - Dark Variants */
-  --brand-primary: #919FBA;       /* Muted Blue (not bright) */
-  --brand-accent: #25BBE8;        /* Cyan (kept vibrant for contrast) */
-  --brand-secondary: #80ACAC;     /* Muted Teal */
-  
+  --brand-primary: #919fba; /* Muted Blue (not bright) */
+  --brand-accent: #25bbe8; /* Cyan (kept vibrant for contrast) */
+  --brand-secondary: #80acac; /* Muted Teal */
+
   /* Semantic Neutral - Dark Mode (OLED-Friendly) */
-  --background: #121212;          /* Raisin Black (not pure #000000) */
-  --foreground: #E8E8E8;          /* Off-white text */
-  --card: #1A1A1A;                /* Slightly lighter than background */
-  --card-foreground: #E8E8E8;
-  --popover: #1A1A1A;
-  --popover-foreground: #E8E8E8;
-  
+  --background: #121212; /* Raisin Black (not pure #000000) */
+  --foreground: #e8e8e8; /* Off-white text */
+  --card: #1a1a1a; /* Slightly lighter than background */
+  --card-foreground: #e8e8e8;
+  --popover: #1a1a1a;
+  --popover-foreground: #e8e8e8;
+
   /* Primary Actions */
-  --primary: #E8E8E8;             /* Off-white buttons */
-  --primary-foreground: #121212;  /* Dark text on light buttons */
-  
+  --primary: #e8e8e8; /* Off-white buttons */
+  --primary-foreground: #121212; /* Dark text on light buttons */
+
   /* Secondary Actions */
-  --secondary: #2A2A2A;           /* Slightly elevated surface */
-  --secondary-foreground: #E8E8E8;
-  
+  --secondary: #2a2a2a; /* Slightly elevated surface */
+  --secondary-foreground: #e8e8e8;
+
   /* Muted/Inactive States */
-  --muted: #3A3A3A;               /* Mid-gray */
-  --muted-foreground: #A0A0A0;    /* Gray text */
-  
+  --muted: #3a3a3a; /* Mid-gray */
+  --muted-foreground: #a0a0a0; /* Gray text */
+
   /* Accent (CTA, highlights) */
-  --accent: #25BBE8;              /* Cyan (vibrant for dark mode) */
-  --accent-foreground: #121212;   /* Dark text on cyan */
-  
+  --accent: #25bbe8; /* Cyan (vibrant for dark mode) */
+  --accent-foreground: #121212; /* Dark text on cyan */
+
   /* Destructive */
-  --destructive: #FCA5A5;         /* Light Red (better visibility on dark) */
+  --destructive: #fca5a5; /* Light Red (better visibility on dark) */
   --destructive-foreground: #121212;
-  
+
   /* Borders & Inputs */
-  --border: #3A3A3A;              /* Dark gray border */
-  --input: #2A2A2A;               /* Dark input background */
-  --ring: #25BBE8;                /* Focus ring (Cyan) */
-  
+  --border: #3a3a3a; /* Dark gray border */
+  --input: #2a2a2a; /* Dark input background */
+  --ring: #25bbe8; /* Focus ring (Cyan) */
+
   /* Chart Colors */
-  --chart-1: #25BBE8;             /* Cyan */
-  --chart-2: #919FBA;             /* Muted Blue */
-  --chart-3: #80ACAC;             /* Muted Teal */
-  --chart-4: #6EE7B7;             /* Light Green */
-  --chart-5: #EB9606;             /* Orange */
-  
+  --chart-1: #25bbe8; /* Cyan */
+  --chart-2: #919fba; /* Muted Blue */
+  --chart-3: #80acac; /* Muted Teal */
+  --chart-4: #6ee7b7; /* Light Green */
+  --chart-5: #eb9606; /* Orange */
+
   /* Sidebar */
-  --sidebar: #1A1A1A;
-  --sidebar-foreground: #E8E8E8;
-  --sidebar-primary: #25BBE8;
+  --sidebar: #1a1a1a;
+  --sidebar-foreground: #e8e8e8;
+  --sidebar-primary: #25bbe8;
   --sidebar-primary-foreground: #121212;
-  --sidebar-accent: #2A2A2A;
-  --sidebar-accent-foreground: #E8E8E8;
-  --sidebar-border: #3A3A3A;
-  --sidebar-ring: #25BBE8;
-  
+  --sidebar-accent: #2a2a2a;
+  --sidebar-accent-foreground: #e8e8e8;
+  --sidebar-border: #3a3a3a;
+  --sidebar-ring: #25bbe8;
+
   /* Shadows & Depth (lighter on dark) */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.6);
-  
+
   /* Glassmorphism - Dark Mode */
   --glass-blur: blur(10px);
-  --glass-bg: rgba(26, 26, 26, 0.6);     /* Semi-transparent dark */
+  --glass-bg: rgba(26, 26, 26, 0.6); /* Semi-transparent dark */
   --glass-border: rgba(255, 255, 255, 0.1);
 }
 
@@ -201,60 +205,70 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
+    outline-color: hsl(var(--ring) / 0.5);
   }
-  
+
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
   }
-  
+
   /* Responsive Typography - Fluid Sizing */
   h1 {
     @apply text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight;
     line-height: 1.2;
   }
-  
+
   h2 {
     @apply text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight;
     line-height: 1.3;
   }
-  
+
   h3 {
     @apply text-2xl sm:text-3xl font-semibold tracking-tight;
     line-height: 1.4;
   }
-  
+
   h4 {
     @apply text-xl font-semibold;
     line-height: 1.4;
   }
-  
-  body, p, span, li {
+
+  body,
+  p,
+  span,
+  li {
     font-size: clamp(0.875rem, 2vw, 1.125rem);
     line-height: 1.5;
   }
-  
+
   /* Screen Reader Only */
   .sr-only {
     @apply absolute w-1 h-1 p-0 -m-1 overflow-hidden whitespace-nowrap border-0 bg-transparent;
   }
-  
+
   /* Focus Visible States (Accessibility) */
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 2px;
   }
-  
+
   /* Smooth Transitions */
-  button, a, input, select, textarea {
+  button,
+  a,
+  input,
+  select,
+  textarea {
     transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   /* Text Selection */
   ::selection {
     background-color: var(--accent);
@@ -266,140 +280,148 @@
   /* ========================================================================
      Glassmorphism Components
      ======================================================================== */
-  
+
   /* Light Mode Glassmorphism */
   .glass {
     @apply bg-white/40 backdrop-blur-md border border-white/20 shadow-lg rounded-2xl;
   }
-  
+
   .glass-light {
     @apply bg-white/60 backdrop-blur-lg border border-white/30 rounded-2xl;
   }
-  
+
   .glass-subtle {
     @apply bg-white/20 backdrop-blur-sm border border-white/10 rounded-lg;
   }
-  
+
   /* Dark Mode Glassmorphism */
   .dark .glass {
     @apply bg-[#2A2A2A]/60 backdrop-blur-md border border-white/10 shadow-lg rounded-2xl;
   }
-  
+
   .dark .glass-light {
     @apply bg-[#3A3A3A]/70 backdrop-blur-lg border border-white/15 rounded-2xl;
   }
-  
+
   .dark .glass-subtle {
     @apply bg-white/5 backdrop-blur-sm border border-white/5 rounded-lg;
   }
-  
+
   /* Liquid Glass (Premium Effect) */
   .liquid-glass {
     @apply relative overflow-hidden;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.15),
+      rgba(255, 255, 255, 0.05)
+    );
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
-  
+
   .dark .liquid-glass {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.02)
+    );
     border-color: rgba(255, 255, 255, 0.1);
   }
-  
+
   /* ========================================================================
      Button Micro-Interactions
      ======================================================================== */
-  
+
   .btn-elevated {
     @apply relative shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200;
   }
-  
+
   .btn-ghost-dark {
     @apply bg-transparent text-foreground hover:bg-muted transition-colors;
   }
-  
+
   .btn-cta {
     @apply bg-accent text-accent-foreground font-semibold px-6 py-3 rounded-lg;
     @apply hover:shadow-lg hover:-translate-y-1 active:translate-y-0 transition-all;
   }
-  
+
   /* ========================================================================
      Card Elevation & Hover Effects
      ======================================================================== */
-  
+
   .card-elevated {
     @apply bg-card rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300;
   }
-  
+
   .card-hover {
     @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer;
   }
-  
+
   .card-interactive {
-    @apply card-hover relative overflow-hidden group;
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer relative overflow-hidden;
   }
-  
+
   /* ========================================================================
      Container & Layout Utilities
      ======================================================================== */
-  
+
   .container-max {
     @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
   }
-  
+
   .container-sm {
     @apply mx-auto max-w-4xl px-4 sm:px-6;
   }
-  
+
   .container-lg {
     @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
   }
-  
+
   /* Section Spacing */
   .section-padding {
     @apply py-12 sm:py-16 md:py-20 lg:py-24;
   }
-  
+
   .section-padding-sm {
     @apply py-8 sm:py-12 md:py-16;
   }
-  
+
   /* ========================================================================
      Typography Utilities
      ======================================================================== */
-  
+
   .text-balance {
     text-wrap: balance;
   }
-  
+
   .text-pretty {
     text-wrap: pretty;
   }
-  
+
   .font-heading {
     @apply font-sans font-bold tracking-tight;
   }
-  
+
   .font-body {
     @apply font-sans font-normal;
   }
-  
+
   /* ========================================================================
      Accessibility & Visibility
      ======================================================================== */
-  
+
   .reduce-motion {
     @apply motion-reduce:transition-none motion-reduce:animate-none;
   }
-  
+
   .dark-mode-toggle::-webkit-scrollbar {
     width: 8px;
   }
-  
+
   .dark-mode-toggle::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   .dark-mode-toggle::-webkit-scrollbar-thumb {
     background: var(--muted);
     border-radius: 4px;
@@ -415,28 +437,28 @@
   .animate-fade-in {
     animation: fadeIn 0.6s ease-in-out;
   }
-  
+
   .animate-slide-up {
     animation: slideUp 0.6s ease-out;
   }
-  
+
   .animate-scale-in {
     animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  
+
   /* Hover Effects */
   .hover-lift {
     @apply hover:translate-y-[-4px] hover:shadow-lg transition-all duration-200;
   }
-  
+
   .hover-scale {
     @apply hover:scale-105 transition-transform duration-200;
   }
-  
+
   .hover-glow {
     @apply hover:shadow-[0_0_20px_rgba(37,187,232,0.5)] transition-shadow duration-200;
   }
-  
+
   /* Reduced Motion Support */
   @media (prefers-reduced-motion: reduce) {
     * {

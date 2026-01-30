@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -14,6 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { siteConfig, navLinks, type Locale } from "@/lib/config";
 import { cn } from "@/lib/utils";
 
@@ -41,7 +42,7 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
         "sticky top-0 z-50 w-full transition-all duration-200",
         isScrolled
           ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border"
-          : "bg-transparent"
+          : "bg-transparent",
       )}
     >
       <Container>
@@ -60,7 +61,8 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
                 link.href === "/"
                   ? pathname === `/${locale}`
                   : pathname.startsWith(`/${locale}${link.href}`);
-              const href = link.href === "/" ? `/${locale}` : `/${locale}${link.href}`;
+              const href =
+                link.href === "/" ? `/${locale}` : `/${locale}${link.href}`;
               return (
                 <Link
                   key={link.href}
@@ -69,7 +71,7 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
                     "px-3 py-2 text-sm font-medium rounded-md transition-colors",
                     isActive
                       ? "text-accent"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted",
                   )}
                 >
                   {link.label}
@@ -80,6 +82,7 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-2">
+            <LanguageSwitcher currentLocale={locale} />
             <Button
               variant="ghost"
               size="icon"
@@ -96,6 +99,7 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
 
           {/* Mobile Actions */}
           <div className="flex lg:hidden items-center gap-2">
+            <LanguageSwitcher currentLocale={locale} />
             <Button
               variant="ghost"
               size="icon"
@@ -121,7 +125,10 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
                       link.href === "/"
                         ? pathname === `/${locale}`
                         : pathname.startsWith(`/${locale}${link.href}`);
-                    const href = link.href === "/" ? `/${locale}` : `/${locale}${link.href}`;
+                    const href =
+                      link.href === "/"
+                        ? `/${locale}`
+                        : `/${locale}${link.href}`;
                     return (
                       <Link
                         key={link.href}
@@ -131,7 +138,7 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
                           "px-4 py-3 text-base font-medium rounded-md transition-colors",
                           isActive
                             ? "bg-accent text-accent-foreground"
-                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted",
                         )}
                       >
                         {link.label}
@@ -140,7 +147,10 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
                   })}
                   <div className="mt-4 pt-4 border-t border-border">
                     <Button asChild className="w-full">
-                      <Link href={`/${locale}/contact`} onClick={() => setIsOpen(false)}>
+                      <Link
+                        href={`/${locale}/contact`}
+                        onClick={() => setIsOpen(false)}
+                      >
                         Get Started
                       </Link>
                     </Button>

@@ -1,16 +1,16 @@
-import { getValidLocale, type Locale } from '@/lib/config';
-import { getDictionary } from '@/lib/i18n/get-dict';
-import { Section } from '@/components/ui/section';
-import { Container } from '@/components/ui/container';
-import { Badge } from '@/components/ui/badge';
-import { Breadcrumbs } from '@/components/seo/breadcrumbs';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { type Locale } from "@/lib/config";
+import { getDictionary, getValidLocale } from "@/lib/i18n/get-dict";
+import { Section } from "@/components/ui/section";
+import { Container } from "@/components/ui/container";
+import { Badge } from "@/components/ui/badge";
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface PageProps {
   params: Promise<{ lang: string }>;
 }
 
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 
 export async function generateMetadata({ params }: PageProps) {
   const { lang } = await params;
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: PageProps) {
   return {
     title: `${dict.terms.title} | Evision IT`,
     description: dict.terms.acceptance,
-    robots: 'noindex,follow',
+    robots: "noindex,follow",
   };
 }
 
@@ -31,11 +31,13 @@ export default async function TermsPage({ params }: PageProps) {
 
   return (
     <>
-      <Section padding="lg" className="bg-gradient-to-b from-muted/50 to-background">
+      <Section
+        padding="lg"
+        className="bg-gradient-to-b from-muted/50 to-background"
+      >
         <Container size="sm">
           <Breadcrumbs
             items={[{ label: dict.terms.title, href: `/${locale}/terms` }]}
-            locale={locale}
           />
 
           <div className="mt-8">
@@ -56,25 +58,45 @@ export default async function TermsPage({ params }: PageProps) {
         <Container size="sm">
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-bold mb-4">{dict.terms.acceptance}</h2>
+              <h2 className="text-2xl font-bold mb-4">
+                {dict.terms.acceptance}
+              </h2>
               <p className="text-muted-foreground leading-relaxed">
-                By accessing and using this website, you accept and agree to be bound by the terms 
-                and provision of this agreement.
+                By accessing and using this website, you accept and agree to be
+                bound by the terms and provision of this agreement.
               </p>
             </div>
 
             {[
-              { title: dict.terms.acceptanceUse, content: 'You agree to use this website only for lawful purposes and in a way that does not infringe upon the rights of others or restrict their use and enjoyment.' },
-              { title: dict.terms.intellectualProperty, content: 'All content on this website, including text, graphics, logos, images, and software, is the property of Evision IT or its content suppliers.' },
-              { title: dict.terms.limitation, content: 'In no event shall Evision IT be liable for any damages (including, without limitation, damages for loss of data or profit) arising out of the use or inability to use the materials.' },
-              { title: dict.terms.changes, content: 'Evision IT reserves the right to modify these terms and conditions at any time. Changes will be effective immediately upon posting.' },
+              {
+                title: dict.terms.acceptanceUse,
+                content:
+                  "You agree to use this website only for lawful purposes and in a way that does not infringe upon the rights of others or restrict their use and enjoyment.",
+              },
+              {
+                title: dict.terms.intellectualProperty,
+                content:
+                  "All content on this website, including text, graphics, logos, images, and software, is the property of Evision IT or its content suppliers.",
+              },
+              {
+                title: dict.terms.limitation,
+                content:
+                  "In no event shall Evision IT be liable for any damages (including, without limitation, damages for loss of data or profit) arising out of the use or inability to use the materials.",
+              },
+              {
+                title: dict.terms.changes,
+                content:
+                  "Evision IT reserves the right to modify these terms and conditions at any time. Changes will be effective immediately upon posting.",
+              },
             ].map((section, idx) => (
               <Card key={idx} className="glass">
                 <CardHeader>
                   <CardTitle>{section.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground leading-relaxed">{section.content}</p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {section.content}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -85,7 +107,8 @@ export default async function TermsPage({ params }: PageProps) {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground leading-relaxed">
-                  For questions about these terms, contact us at legal@evisionit.com
+                  For questions about these terms, contact us at
+                  legal@evisionit.com
                 </p>
               </CardContent>
             </Card>

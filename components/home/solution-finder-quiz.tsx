@@ -3,7 +3,13 @@
 import * as React from "react";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -16,6 +22,12 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { type Locale } from "@/lib/config";
+
+interface SolutionFinderQuizProps {
+  dict?: any;
+  locale?: Locale;
+}
 
 interface QuizStep {
   id: number;
@@ -200,7 +212,11 @@ const getRecommendation = (answers: QuizAnswers): Recommendation => {
   };
 };
 
-export function SolutionFinderQuiz() {
+export function SolutionFinderQuiz({
+  dict,
+  locale = "en",
+}: SolutionFinderQuizProps) {
+  const quiz = dict?.quiz || {};
   const [currentStep, setCurrentStep] = React.useState(1);
   const [answers, setAnswers] = React.useState<QuizAnswers>({});
   const [showRecommendation, setShowRecommendation] = React.useState(false);
@@ -267,7 +283,7 @@ export function SolutionFinderQuiz() {
   };
 
   return (
-    <Section background="secondary">
+    <Section background="muted">
       <div className="max-w-3xl mx-auto">
         <AnimatePresence mode="wait">
           {!showRecommendation ? (
@@ -279,9 +295,9 @@ export function SolutionFinderQuiz() {
               transition={{ duration: 0.3 }}
             >
               <SectionHeader
-                badge={`Step ${currentStep} of ${quizSteps.length}`}
-                title={currentQuestion?.title}
-                description={currentQuestion?.description}
+                badge={`${quiz.step || "Step"} ${currentStep} ${quiz.of || "of"} ${quizSteps.length}`}
+                title={currentQuestion?.title || ""}
+                description={currentQuestion?.description || ""}
               />
 
               {/* Progress Bar */}
@@ -292,7 +308,7 @@ export function SolutionFinderQuiz() {
                       key={step.id}
                       className={cn(
                         "h-2 flex-1 rounded-full transition-colors",
-                        step.id <= currentStep ? "bg-accent" : "bg-muted"
+                        step.id <= currentStep ? "bg-accent" : "bg-muted",
                       )}
                     />
                   ))}
@@ -311,7 +327,7 @@ export function SolutionFinderQuiz() {
                       className={cn(
                         "group h-full cursor-pointer transition-all hover:shadow-md hover:border-accent",
                         answers[`step${currentStep}`] === option.id &&
-                          "border-accent border-2 bg-accent/5"
+                          "border-accent border-2 bg-accent/5",
                       )}
                     >
                       <CardContent className="pt-6">
@@ -321,7 +337,7 @@ export function SolutionFinderQuiz() {
                               "flex h-12 w-12 items-center justify-center rounded-lg transition-colors flex-shrink-0",
                               answers[`step${currentStep}`] === option.id
                                 ? "bg-accent text-accent-foreground"
-                                : "bg-muted text-foreground group-hover:bg-accent group-hover:text-accent-foreground"
+                                : "bg-muted text-foreground group-hover:bg-accent group-hover:text-accent-foreground",
                             )}
                           >
                             {option.icon}
@@ -348,14 +364,16 @@ export function SolutionFinderQuiz() {
                   onClick={handleBack}
                   disabled={currentStep === 1}
                 >
-                  Back
+                  {quiz.back || "Back"}
                 </Button>
                 <Button
                   onClick={handleNext}
                   disabled={!isAnswered || isSubmitting}
                   className="min-w-[150px]"
                 >
-                  {currentStep === quizSteps.length ? "Get Recommendation" : "Next"}
+                  {currentStep === quizSteps.length
+                    ? quiz.getRecommendation || "Get Recommendation"
+                    : quiz.next || "Next"}
                 </Button>
               </div>
             </motion.div>
@@ -368,10 +386,11 @@ export function SolutionFinderQuiz() {
             >
               <div className="text-center mb-8">
                 <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-                  Recommended Solution
+                  {quiz.recommendedSolution || "Recommended Solution"}
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Based on your answers, here's what we recommend for your project.
+                  {quiz.recommendedSolutionDesc ||
+                    "Based on your answers, here's what we recommend for your project."}
                 </p>
               </div>
 
@@ -388,7 +407,7 @@ export function SolutionFinderQuiz() {
                       </p>
                       <div>
                         <h4 className="font-semibold text-foreground mb-3">
-                          What's included:
+                          {quiz.whatsIncluded || "What's included:"}
                         </h4>
                         <ul className="space-y-2">
                           {recommendation.services.map((service, idx) => (
@@ -406,10 +425,12 @@ export function SolutionFinderQuiz() {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button onClick={handleReset} variant="outline">
-                  Start Over
+                  {quiz.startOver || "Start Over"}
                 </Button>
                 <Button asChild className="btn-cta">
-                  <a href="/contact?recommended=true">Get a Quote for This Project</a>
+                  <a href={`/${locale}/contact?recommended=true`}>
+                    {quiz.getQuoteForProject || "Get a Quote for This Project"}
+                  </a>
                 </Button>
               </div>
             </motion.div>

@@ -1,10 +1,16 @@
 import { Suspense } from "react";
-import { getValidLocale, type Locale } from "@/lib/config";
-import { getDictionary } from "@/lib/i18n/get-dict";
+import { type Locale } from "@/lib/config";
+import { getDictionary, getValidLocale } from "@/lib/i18n/get-dict";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
@@ -24,7 +30,8 @@ export async function generateMetadata({ params }: PageProps) {
     description: "Educational resources and guides for digital transformation",
     openGraph: {
       title: "Resources",
-      description: "Educational resources and guides for digital transformation",
+      description:
+        "Educational resources and guides for digital transformation",
       type: "website",
     },
   };
@@ -76,12 +83,13 @@ export default async function ResourcesPage({ params }: PageProps) {
 
   return (
     <>
-      <Section padding="lg" className="bg-gradient-to-b from-muted/50 to-background">
+      <Section
+        padding="lg"
+        className="bg-gradient-to-b from-muted/50 to-background"
+      >
         <Container size="sm">
           <Breadcrumbs
-            items={[
-              { label: "Resources", href: `/${locale}/resources` },
-            ]}
+            items={[{ label: "Resources", href: `/${locale}/resources` }]}
             locale={locale}
           />
 
@@ -103,7 +111,10 @@ export default async function ResourcesPage({ params }: PageProps) {
         <Container>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {resources.map((resource) => (
-              <Card key={resource.id} className="glass hover:shadow-lg transition-all">
+              <Card
+                key={resource.id}
+                className="glass hover:shadow-lg transition-all"
+              >
                 <CardHeader>
                   <CardTitle>{resource.title}</CardTitle>
                   <CardDescription>{resource.description}</CardDescription>

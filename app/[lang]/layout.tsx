@@ -170,11 +170,11 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
           </a>
 
           <div className="relative flex min-h-screen flex-col">
-            <SiteHeader locale={locale} />
+            {/* <SiteHeader locale={locale} /> */}
             <main id="main-content" className="flex-1">
               {children}
             </main>
-            <SiteFooter locale={locale} />
+            {/* <SiteFooter locale={locale} /> */}
           </div>
         </ThemeProvider>
         <Analytics />

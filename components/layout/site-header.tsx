@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -24,9 +25,14 @@ interface SiteHeaderProps {
 
 export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [isOpen, setIsOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -35,6 +41,12 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Use dark logo for light theme, light logo for dark theme
+  const logoSrc =
+    mounted && resolvedTheme === "dark"
+      ? "/logo/logo_light.png"
+      : "/logo/logo_dark.png";
 
   return (
     <header
@@ -49,9 +61,20 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href={`/${locale}`} className="flex items-center gap-2">
-            <span className="text-xl font-bold text-foreground">
-              {siteConfig.name}
-            </span>
+            {mounted ? (
+              <Image
+                src={logoSrc}
+                alt={siteConfig.name}
+                width={140}
+                height={40}
+                className="h-8 w-auto"
+                priority
+              />
+            ) : (
+              <span className="text-xl font-bold text-foreground">
+                {siteConfig.name}
+              </span>
+            )}
           </Link>
 
           {/* Desktop Navigation */}

@@ -1,27 +1,19 @@
 # Robots.txt for Evision IT
-# https://evision.lk/
+# https://evision-it.com/
 
 # Default rule for all crawlers
 User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /_next/
 Disallow: /*.json$
-Disallow: /*.xml$
+
+# Locale-specific admin paths
 Disallow: /en/admin/
 Disallow: /si/admin/
 Disallow: /ta/admin/
 Disallow: /ar/admin/
-
-# Crawl delay (optional)
-Crawl-delay: 1
-
-# Sitemaps
-Sitemap: https://evision.lk/sitemap.xml
-Sitemap: https://evision.lk/sitemap-en.xml
-Sitemap: https://evision.lk/sitemap-si.xml
-Sitemap: https://evision.lk/sitemap-ta.xml
-Sitemap: https://evision.lk/sitemap-ar.xml
 
 # Google
 User-agent: Googlebot
@@ -32,3 +24,22 @@ Crawl-delay: 0
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
+
+# AI Crawlers (for GEO optimization)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Sitemap
+Sitemap: https://evision-it.com/sitemap.xml

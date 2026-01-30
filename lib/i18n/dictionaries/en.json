@@ -164,18 +164,13 @@
     "ongoingOptimization": "Ongoing Optimization:",
     "ongoingOptimizationDesc": "Continuous monitoring, testing, and improvements post-launch"
   },
-  "caseStudies": {
+  "caseStudiesPreview": {
     "title": "Case Studies",
     "badge": "Case Studies",
     "subtitle": "Real results from real projects",
     "sectionTitle": "Results that speak for themselves",
     "sectionDescription": "See how we've helped businesses like yours achieve measurable growth.",
-    "viewAllCaseStudies": "View All Case Studies",
-    "filterByIndustry": "Filter by Industry",
-    "filterByService": "Filter by Service",
-    "allIndustries": "All Industries",
-    "allServices": "All Services",
-    "readCaseStudy": "Read Case Study"
+    "viewAllCaseStudies": "View All Case Studies"
   },
   "process": {
     "title": "Our Process",
@@ -407,5 +402,25 @@
     "whitepapersDesc": "In-depth research and industry insights",
     "templates": "Templates & Checklists",
     "templatesDesc": "Ready-to-use templates for planning and execution"
+  },
+  "caseStudies": {
+    "title": "Case Studies",
+    "badge": "Case Studies",
+    "headline": "Real results from real projects",
+    "subheadline": "See how we've helped businesses across industries achieve their digital transformation goals.",
+    "filterByCategory": "Filter by Category",
+    "filterByService": "Filter by Service",
+    "allCategories": "All Categories",
+    "allServices": "All Services",
+    "projectImage": "Project Image",
+    "results": "Results",
+    "readCaseStudy": "Read Case Study",
+    "noResults": "No case studies found matching your criteria.",
+    "clearFilters": "Clear Filters",
+    "viewAll": "View All Case Studies"
+  },
+  "loading": {
+    "text": "Loading...",
+    "pleaseWait": "Please wait..."
   }
 }

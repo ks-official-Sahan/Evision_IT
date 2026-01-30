@@ -5,7 +5,10 @@
 export const SUPPORTED_LOCALES = ["en", "si", "ta", "ar"] as const;
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
 
-export const LOCALE_LABELS: Record<Locale, { label: string; nativeName: string; dir: "ltr" | "rtl" }> = {
+export const LOCALE_LABELS: Record<
+  Locale,
+  { label: string; nativeName: string; dir: "ltr" | "rtl" }
+> = {
   en: { label: "English", nativeName: "English", dir: "ltr" },
   si: { label: "සිංහල", nativeName: "Sinhala", dir: "ltr" },
   ta: { label: "தமிழ்", nativeName: "Tamil", dir: "ltr" },
@@ -15,12 +18,17 @@ export const LOCALE_LABELS: Record<Locale, { label: string; nativeName: string; 
 export const DEFAULT_LOCALE: Locale = "en";
 
 export const siteConfig = {
+  /* Company Identity */
   name: "Evision IT",
+  legalName: "Evision IT (PVT) Ltd.",
   tagline: "Crafting Digital Excellence",
   description:
     "High-performance websites, apps, e-commerce and digital marketing—backed by enterprise-grade infrastructure and security expertise.",
+
+  /* Domain & URLs */
   url: "https://evision-it.com",
-  ogImage: "https://evision-it.com/og-image.jpg",
+  domain: "evision-it.com",
+  ogImage: "https://evision-it.com/og-image.png",
 
   /* Brand Colors - Used across components */
   brand: {
@@ -29,14 +37,26 @@ export const siteConfig = {
     secondary: "#005A5A" /* Teal */,
   },
 
+  /* Primary Contact Information */
   contact: {
     name: "Sri Lanka",
     countryCode: "LK",
-    phone: "+94 77 712 3456",
-    email: "hello@evision-it.com",
-    address: "123 Tech Park, Colombo 03, Sri Lanka",
+    phone: "+94740178700",
+    phoneDisplay: "+94 74 017 8700",
+    email: "contact.evisionit@gmail.com",
+    /* Registered Address */
+    registeredAddress: "83/1, Raja Mawatha, Nugegoda, 10250, Sri Lanka",
+    /* Company/Office Address */
+    address: "Evision IT, Mirihana, Nugegoda, 10250, Sri Lanka",
+    addressLocality: "Nugegoda",
+    addressRegion: "Western Province",
+    postalCode: "10250",
     timezone: "Asia/Colombo",
     currency: "LKR",
+    coordinates: {
+      lat: 6.8649,
+      lng: 79.8997,
+    },
   },
 
   /* Multi-Region Contact Information */
@@ -44,9 +64,11 @@ export const siteConfig = {
     lk: {
       name: "Sri Lanka",
       countryCode: "LK",
-      phone: "+94 77 712 3456",
-      email: "hello@evision-it.com",
-      address: "123 Tech Park, Colombo 03, Sri Lanka",
+      phone: "+94740178700",
+      email: "contact.evisionit@gmail.com",
+      address: "Evision IT, Mirihana, Nugegoda, 10250, Sri Lanka",
+      addressLocality: "Nugegoda",
+      postalCode: "10250",
       timezone: "Asia/Colombo",
       currency: "LKR",
     },
@@ -72,12 +94,28 @@ export const siteConfig = {
 
   /* Social Links */
   links: {
-    whatsapp: "https://wa.me/94777123456",
-    linkedin: "https://linkedin.com/company/evision",
-    facebook: "https://facebook.com/evisionit",
-    twitter: "https://twitter.com/evisionit",
-    github: "https://github.com/evision-it",
+    whatsapp: "https://wa.me/94740178700",
+    linkedin: "https://www.linkedin.com/company/evision-it-lk",
+    facebook: "https://www.facebook.com/EVisionIt1",
+    twitter: "https://x.com/evision-it",
+    github: "https://github.com/Evision-IT",
     clutch: "https://clutch.co/profile/evision-it",
+  },
+
+  /* Logo & Assets */
+  assets: {
+    logo: {
+      light: "/logo/logo_light.png",
+      dark: "/logo/logo_dark.png",
+      white: "/logo/logo_white.png",
+      square: {
+        light: "/logo/square/logo_light.png",
+        dark: "/logo/square/logo_dark.png",
+        white: "/logo/square/logo_white.png",
+      },
+    },
+    favicon: "/favicon.ico",
+    appleTouchIcon: "/apple-touch-icon.png",
   },
 
   /* Sitemap & Navigation */
@@ -124,6 +162,18 @@ export const siteConfig = {
     locale: "en_US",
     searchConsoleVerification:
       process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "",
+    keywords: [
+      "web development Sri Lanka",
+      "mobile app development",
+      "e-commerce solutions",
+      "digital marketing agency",
+      "IT services Colombo",
+      "software development",
+      "cloud solutions",
+      "cybersecurity services",
+      "SEO optimization",
+      "Evision IT",
+    ],
   },
 };
 

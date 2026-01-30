@@ -5,6 +5,8 @@
 import type { Locale } from "@/lib/config";
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE } from "@/lib/config";
 
+import { cacheLife } from "next/cache";
+
 // Type-safe dictionary structure
 export type Dictionary = {
   nav: Record<string, string>;
@@ -16,37 +18,35 @@ export type Dictionary = {
   [key: string]: any;
 };
 
-// Cache for loaded dictionaries to avoid repeated imports
-const dictionaryCache: Map<Locale, Dictionary> = new Map();
-
 /**
  * Load translation dictionary for a given locale
- * Uses dynamic imports with caching for performance
+ * Uses Next.js 16 "use cache" for Data Cache integration
  */
 export async function getDictionary(locale: Locale): Promise<Dictionary> {
-  // Return from cache if available
-  if (dictionaryCache.has(locale)) {
-    return dictionaryCache.get(locale)!;
-  }
+  "use cache";
+  // Cache dictionaries for 24 hours (stale after 1 hour)
+  cacheLife({ stale: 3600, revalidate: 86400, expire: 604800 });
 
   try {
     // Dynamically import the locale-specific JSON file
     const dictionary = await import(`./dictionaries/${locale}.json`).then(
-      (module) => module.default as Dictionary
+      (module) => module.default as Dictionary,
     );
 
-    // Cache the dictionary
-    dictionaryCache.set(locale, dictionary);
     return dictionary;
   } catch (error) {
     console.error(`[i18n] Failed to load dictionary for locale: ${locale}`);
 
-    // Fallback to English if locale fails
+    // Recursive fallback check to prevent infinite loop
     if (locale !== DEFAULT_LOCALE) {
-      return getDictionary(DEFAULT_LOCALE);
+      // Create a non-cached way to get default locale to avoid recursion issues if possible
+      // or just assume standard import works
+      const defaultDict = await import(
+        `./dictionaries/${DEFAULT_LOCALE}.json`
+      ).then((module) => module.default as Dictionary);
+      return defaultDict;
     }
 
-    // Return empty dictionary as last resort
     return {} as Dictionary;
   }
 }
@@ -56,7 +56,10 @@ export async function getDictionary(locale: Locale): Promise<Dictionary> {
  * Returns default locale if invalid
  */
 export function getValidLocale(locale: unknown): Locale {
-  if (typeof locale === "string" && SUPPORTED_LOCALES.includes(locale as Locale)) {
+  if (
+    typeof locale === "string" &&
+    SUPPORTED_LOCALES.includes(locale as Locale)
+  ) {
     return locale as Locale;
   }
   return DEFAULT_LOCALE;
@@ -73,5 +76,7 @@ export function getAllLocales(): Locale[] {
  * Check if a locale is supported
  */
 export function isSupportedLocale(locale: unknown): locale is Locale {
-  return typeof locale === "string" && SUPPORTED_LOCALES.includes(locale as Locale);
+  return (
+    typeof locale === "string" && SUPPORTED_LOCALES.includes(locale as Locale)
+  );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -18,8 +18,8 @@ import {
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { JsonLd } from "@/components/seo/json-ld";
 import { ServiceCard } from "@/components/cards/service-card";
-import { serviceSchema, faqSchema } from "@/lib/json-ld";
-import { siteConfig } from "@/lib/config";
+import { serviceSchema, faqSchema, answerEngineSchema } from "@/lib/json-ld";
+import { siteConfig, SUPPORTED_LOCALES } from "@/lib/config";
 import { services, getServiceBySlug, getRelatedServices } from "@/lib/data";
 import { ArrowRight, Check, MessageCircle } from "lucide-react";
 
@@ -53,12 +53,33 @@ export async function generateMetadata({
     title: service.title,
     description: service.description,
     openGraph: {
-      title: `${service.title}`,
+      title: `${service.title} | ${siteConfig.name}`,
       description: service.description,
       url: `${siteConfig.url}/${locale}/services/${service.slug}`,
+      siteName: siteConfig.name,
+      type: "website",
+      locale:
+        locale === "ar"
+          ? "ar_AE"
+          : locale === "si"
+            ? "si_LK"
+            : locale === "ta"
+              ? "ta_LK"
+              : "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: service.title,
+      description: service.description,
     },
     alternates: {
-      canonical: `/${locale}/services/${service.slug}`,
+      canonical: `${siteConfig.url}/${locale}/services/${service.slug}`,
+      languages: Object.fromEntries(
+        SUPPORTED_LOCALES.map((l) => [
+          l,
+          `${siteConfig.url}/${l}/services/${service.slug}`,
+        ]),
+      ),
     },
   };
 }
@@ -78,6 +99,9 @@ export default async function ServicePage({ params }: ServicePageProps) {
     <>
       {/* JSON-LD Markup */}
       <JsonLd data={serviceSchema(service, locale)} />
+      {service.faqs && service.faqs.length > 0 && (
+        <JsonLd data={faqSchema(service.faqs)} />
+      )}
 
       {/* Hero Section */}
       <Section
@@ -185,6 +209,29 @@ export default async function ServicePage({ params }: ServicePageProps) {
         </Section>
       )}
 
+      {/* FAQ Section - For AEO/Featured Snippets */}
+      {service.faqs && service.faqs.length > 0 && (
+        <Section>
+          <Container size="sm">
+            <h2 className="text-3xl font-bold text-foreground mb-8">
+              Frequently Asked Questions
+            </h2>
+            <Accordion type="single" collapsible className="w-full">
+              {service.faqs.map((faq, idx) => (
+                <AccordionItem key={idx} value={`faq-${idx}`}>
+                  <AccordionTrigger className="text-left text-foreground hover:text-accent">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </Container>
+        </Section>
+      )}
+
       {/* Related Services */}
       {relatedServices.length > 0 && (
         <Section background="muted">
@@ -197,7 +244,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
                 <ServiceCard
                   key={relatedService.slug}
                   service={relatedService}
-                  href={`/${locale}/services/${relatedService.slug}`}
+                  locale={locale}
                 />
               ))}
             </div>

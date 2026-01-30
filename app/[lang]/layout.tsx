@@ -1,22 +1,23 @@
-import React from "react";
-import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
+import React, { Suspense } from "react";
+import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
-import {
-  GoogleTagManager,
-  GoogleTagManagerNoScript,
-} from "@/components/analytics/google-tag-manager";
 import { JsonLd } from "@/components/seo/json-ld";
-import { organizationSchema, websiteSchema } from "@/lib/json-ld";
-import { siteConfig, SUPPORTED_LOCALES, DEFAULT_LOCALE, LOCALE_LABELS, type Locale } from "@/lib/config";
+import {
+  organizationSchema,
+  websiteSchema,
+  localBusinessSchema,
+  entityAuthoritySchema,
+} from "@/lib/json-ld";
+import {
+  siteConfig,
+  SUPPORTED_LOCALES,
+  DEFAULT_LOCALE,
+  LOCALE_LABELS,
+  type Locale,
+} from "@/lib/config";
 import { getValidLocale } from "@/lib/i18n/get-dict";
-import "@/app/globals.css";
-
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 interface LocaleLayoutProps {
   children: React.ReactNode;
@@ -40,7 +41,7 @@ export async function generateMetadata({
       template: `%s | ${siteConfig.name}`,
     },
     description: siteConfig.description,
-    keywords: [
+    keywords: siteConfig.seo?.keywords || [
       "web development",
       "mobile apps",
       "e-commerce",
@@ -50,6 +51,7 @@ export async function generateMetadata({
       "cybersecurity",
       "IT services",
       "Sri Lanka",
+      "Evision IT",
     ],
     authors: [{ name: siteConfig.name }],
     creator: siteConfig.name,
@@ -95,12 +97,20 @@ export async function generateMetadata({
     },
     icons: {
       icon: [
-        { url: "/icon-light-32x32.png", media: "(prefers-color-scheme: light)" },
-        { url: "/icon-dark-32x32.png", media: "(prefers-color-scheme: dark)" },
+        {
+          url: "/light-favicon-32x32.png",
+          media: "(prefers-color-scheme: light)",
+        },
+        {
+          url: "/dark-favicon-32x32.png",
+          media: "(prefers-color-scheme: dark)",
+        },
+        { url: "/favicon.ico", type: "image/x-icon" },
         { url: "/icon.svg", type: "image/svg+xml" },
       ],
       apple: "/apple-icon.png",
     },
+    manifest: "/site.webmanifest",
     alternates: {
       canonical: `${siteConfig.url}/${locale}`,
       languages: SUPPORTED_LOCALES.reduce(
@@ -108,77 +118,67 @@ export async function generateMetadata({
           ...acc,
           [l]: `${siteConfig.url}/${l}`,
         }),
-        {}
+        { "x-default": `${siteConfig.url}/en` },
       ),
     },
   };
 }
-
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f5f5f7" },
-    { media: "(prefers-color-scheme: dark)", color: "#1c1c1e" },
-  ],
-  width: "device-width",
-  initialScale: 1,
-  colorScheme: "light dark",
-};
 
 // Generate static params for all supported locales
 export async function generateStaticParams() {
   return SUPPORTED_LOCALES.map((lang) => ({ lang }));
 }
 
-export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: LocaleLayoutProps) {
   const { lang } = await params;
   const locale = getValidLocale(lang) as Locale;
   const localeLabel = LOCALE_LABELS[locale];
   const direction = localeLabel.dir;
 
   return (
-    <html lang={locale} dir={direction} suppressHydrationWarning>
-      <head>
-        <JsonLd data={organizationSchema()} />
-        <JsonLd data={websiteSchema()} />
-        <GoogleTagManager />
-        {/* Alternate language links for SEO */}
-        {SUPPORTED_LOCALES.map((altLocale) => (
-          <link
-            key={altLocale}
-            rel="alternate"
-            hrefLang={altLocale}
-            href={`${siteConfig.url}/${altLocale}`}
-          />
-        ))}
-        {/* Canonical URL */}
-        <link rel="canonical" href={`${siteConfig.url}/${locale}`} />
-      </head>
-      <body className="font-sans antialiased">
-        <GoogleTagManagerNoScript />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {/* Skip to content link for accessibility */}
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-accent focus:text-accent-foreground focus:rounded-md focus:outline-none"
-          >
-            Skip to main content
-          </a>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      storageKey="evision-theme"
+      disableTransitionOnChange={false}
+    >
+      {/* Skip to content link for accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-accent focus:text-accent-foreground focus:rounded-md focus:outline-none"
+      >
+        Skip to main content
+      </a>
 
-          <div className="relative flex min-h-screen flex-col">
-            {/* <SiteHeader locale={locale} /> */}
-            <main id="main-content" className="flex-1">
-              {children}
-            </main>
-            {/* <SiteFooter locale={locale} /> */}
-          </div>
-        </ThemeProvider>
-        <Analytics />
-      </body>
-    </html>
+      {/* Structured Data */}
+      <JsonLd data={organizationSchema(locale)} />
+      <JsonLd data={websiteSchema()} />
+      <JsonLd data={localBusinessSchema()} />
+      <JsonLd data={entityAuthoritySchema()} />
+
+      {/* Alternate language links for SEO - kept here as they depend on config */}
+      {SUPPORTED_LOCALES.map((altLocale) => (
+        <React.Fragment key={altLocale}>
+          {/* Link tags inside body/div are not ideal but Next.js deduplicates head tags if Metadata API used. 
+               However, manual <link> in body is ignored for head purposes.
+               We should rely on generateMetadata for these. 
+               The generateMetadata function ALREADY handles alternates.
+               So we can remove these manual link tags as they are redundant and misplaced in a child layout.
+           */}
+        </React.Fragment>
+      ))}
+
+      <div dir={direction} className="relative flex min-h-screen flex-col">
+        <SiteHeader locale={locale} />
+        <main id="main-content" className="flex-1">
+          {children}
+        </main>
+        <SiteFooter locale={locale} />
+      </div>
+    </ThemeProvider>
   );
 }

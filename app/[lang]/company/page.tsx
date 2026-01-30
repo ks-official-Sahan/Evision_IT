@@ -6,8 +6,6 @@ interface PageProps {
   params: Promise<{ lang: string }>;
 }
 
-export const dynamic = "force-static";
-
 export async function generateMetadata({ params }: PageProps) {
   const { lang } = await params;
   const locale = getValidLocale(lang) as Locale;

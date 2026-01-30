@@ -6,7 +6,7 @@ export default function middleware(request: NextRequest) {
 
   // Check if locale is in pathname
   const localeInPathname = SUPPORTED_LOCALES.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
   );
 
   if (localeInPathname) {
@@ -31,13 +31,13 @@ export default function middleware(request: NextRequest) {
 
   // Redirect other paths to locale-prefixed versions
   return NextResponse.redirect(
-    new URL(`/${preferredLocale}${pathname}`, request.url)
+    new URL(`/${preferredLocale}${pathname}`, request.url),
   );
 }
 
 export const config = {
   matcher: [
-    // Match all paths except static assets, api routes, etc.
-    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap).*)",
+    // Match all paths except static assets, api routes, public files, etc.
+    "/((?!api|_next/static|_next/image|favicon.ico|favicon|robots.txt|sitemap|logo|images|fonts|android-chrome|apple-icon|site.webmanifest|icon.svg|placeholder.svg|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.gif$|.*\\.svg$|.*\\.ico$|.*\\.webp$).*)",
   ],
 };

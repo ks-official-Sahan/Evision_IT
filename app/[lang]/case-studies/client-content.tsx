@@ -8,39 +8,55 @@ import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { caseStudies } from "@/lib/data";
 import { ArrowRight, Filter } from "lucide-react";
 
 interface CaseStudiesClientContentProps {
   locale: Locale;
+  dict?: any;
 }
 
-export function CaseStudiesClientContent({ locale }: CaseStudiesClientContentProps) {
+export function CaseStudiesClientContent({
+  locale,
+  dict,
+}: CaseStudiesClientContentProps) {
   const searchParams = useSearchParams();
-  const selectedIndustry = searchParams.get("industry");
+  const selectedCategory = searchParams.get("category");
   const selectedService = searchParams.get("service");
 
-  const [activeIndustry, setActiveIndustry] = useState<string | null>(selectedIndustry);
-  const [activeService, setActiveService] = useState<string | null>(selectedService);
+  const [activeCategory, setActiveCategory] = useState<string | null>(
+    selectedCategory,
+  );
+  const [activeService, setActiveService] = useState<string | null>(
+    selectedService,
+  );
 
-  // Get unique industries and services for filters
-  const industries = useMemo(() => {
-    return Array.from(new Set(caseStudies.map((cs) => cs.industry)));
+  const caseStudiesDict = dict?.caseStudies || {};
+
+  // Get unique categories and services for filters
+  const categories = useMemo(() => {
+    return Array.from(new Set(caseStudies.map((cs) => cs.category)));
   }, []);
 
   const availableServices = useMemo(() => {
-    return Array.from(new Set(caseStudies.map((cs) => cs.service)));
+    return Array.from(new Set(caseStudies.flatMap((cs) => cs.services)));
   }, []);
 
   // Filter case studies
   const filteredCaseStudies = useMemo(() => {
     return caseStudies.filter((cs) => {
-      if (activeIndustry && cs.industry !== activeIndustry) return false;
-      if (activeService && cs.service !== activeService) return false;
+      if (activeCategory && cs.category !== activeCategory) return false;
+      if (activeService && !cs.services.includes(activeService)) return false;
       return true;
     });
-  }, [activeIndustry, activeService]);
+  }, [activeCategory, activeService]);
 
   return (
     <>
@@ -51,24 +67,26 @@ export function CaseStudiesClientContent({ locale }: CaseStudiesClientContentPro
             <div>
               <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
                 <Filter className="h-4 w-4" />
-                Filter by Industry
+                {caseStudiesDict.filterByCategory || "Filter by Category"}
               </h3>
               <div className="flex flex-wrap gap-2">
                 <Button
-                  variant={activeIndustry === null ? "default" : "outline"}
-                  onClick={() => setActiveIndustry(null)}
+                  variant={activeCategory === null ? "default" : "outline"}
+                  onClick={() => setActiveCategory(null)}
                   className="text-sm"
                 >
-                  All Industries
+                  {caseStudiesDict.allCategories || "All Categories"}
                 </Button>
-                {industries.map((industry) => (
+                {categories.map((category) => (
                   <Button
-                    key={industry}
-                    variant={activeIndustry === industry ? "default" : "outline"}
-                    onClick={() => setActiveIndustry(industry)}
+                    key={category}
+                    variant={
+                      activeCategory === category ? "default" : "outline"
+                    }
+                    onClick={() => setActiveCategory(category)}
                     className="text-sm"
                   >
-                    {industry}
+                    {category}
                   </Button>
                 ))}
               </div>
@@ -77,7 +95,7 @@ export function CaseStudiesClientContent({ locale }: CaseStudiesClientContentPro
             <div>
               <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
                 <Filter className="h-4 w-4" />
-                Filter by Service
+                {caseStudiesDict.filterByService || "Filter by Service"}
               </h3>
               <div className="flex flex-wrap gap-2">
                 <Button
@@ -85,7 +103,7 @@ export function CaseStudiesClientContent({ locale }: CaseStudiesClientContentPro
                   onClick={() => setActiveService(null)}
                   className="text-sm"
                 >
-                  All Services
+                  {caseStudiesDict.allServices || "All Services"}
                 </Button>
                 {availableServices.map((service) => (
                   <Button
@@ -109,40 +127,51 @@ export function CaseStudiesClientContent({ locale }: CaseStudiesClientContentPro
           {filteredCaseStudies.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {filteredCaseStudies.map((caseStudy) => (
-                <Link key={caseStudy.slug} href={`/${locale}/case-studies/${caseStudy.slug}`}>
+                <Link
+                  key={caseStudy.slug}
+                  href={`/${locale}/case-studies/${caseStudy.slug}`}
+                >
                   <Card className="h-full glass hover:shadow-lg transition-shadow cursor-pointer">
                     {/* Image Placeholder */}
                     <div className="h-48 bg-gradient-to-br from-accent/20 to-secondary/20 flex items-center justify-center">
-                      <span className="text-muted-foreground text-sm">Project Image</span>
+                      <span className="text-muted-foreground text-sm">
+                        {caseStudiesDict.projectImage || "Project Image"}
+                      </span>
                     </div>
 
                     <CardHeader>
                       <div className="flex flex-wrap gap-2 mb-2">
                         <Badge variant="secondary" className="text-xs">
-                          {caseStudy.industry}
+                          {caseStudy.category}
                         </Badge>
-                        <Badge variant="outline" className="text-xs">
-                          {caseStudy.service}
-                        </Badge>
+                        {caseStudy.services[0] && (
+                          <Badge variant="outline" className="text-xs">
+                            {caseStudy.services[0]}
+                          </Badge>
+                        )}
                       </div>
-                      <CardTitle className="text-lg">{caseStudy.title}</CardTitle>
+                      <CardTitle className="text-lg">
+                        {caseStudy.title}
+                      </CardTitle>
                       <CardDescription className="line-clamp-2">
-                        {caseStudy.description}
+                        {caseStudy.excerpt}
                       </CardDescription>
                     </CardHeader>
 
                     <CardContent>
                       <div className="space-y-3">
-                        <div>
-                          <p className="text-xs font-semibold text-muted-foreground uppercase">
-                            Results
-                          </p>
-                          <p className="text-sm font-bold text-accent">
-                            {caseStudy.results[0]}
-                          </p>
-                        </div>
+                        {caseStudy.results[0] && (
+                          <div>
+                            <p className="text-xs font-semibold text-muted-foreground uppercase">
+                              {caseStudy.results[0].metric}
+                            </p>
+                            <p className="text-sm font-bold text-accent">
+                              {caseStudy.results[0].value}
+                            </p>
+                          </div>
+                        )}
                         <div className="flex items-center gap-2 text-accent text-sm font-medium">
-                          Read Case Study
+                          {caseStudiesDict.readCaseStudy || "Read Case Study"}
                           <ArrowRight className="h-4 w-4" />
                         </div>
                       </div>
@@ -153,15 +182,17 @@ export function CaseStudiesClientContent({ locale }: CaseStudiesClientContentPro
             </div>
           ) : (
             <div className="text-center py-12">
-              <p className="text-lg text-muted-foreground mb-4">No case studies found.</p>
+              <p className="text-lg text-muted-foreground mb-4">
+                {caseStudiesDict.noResults || "No case studies found."}
+              </p>
               <Button
                 variant="outline"
                 onClick={() => {
-                  setActiveIndustry(null);
+                  setActiveCategory(null);
                   setActiveService(null);
                 }}
               >
-                Clear Filters
+                {caseStudiesDict.clearFilters || "Clear Filters"}
               </Button>
             </div>
           )}

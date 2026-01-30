@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react"
+import React from "react";
 
 import Link from "next/link";
+import type { Route } from "next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
@@ -14,19 +15,29 @@ interface ServiceCardProps {
   service: Service;
   variant?: "default" | "compact" | "featured";
   className?: string;
+  locale?: string;
 }
 
 export function ServiceCard({
   service,
   variant = "default",
   className,
+  locale = "en",
 }: ServiceCardProps) {
-  const IconComponent = Icons[service.icon as keyof typeof Icons] as React.ElementType;
+  const IconComponent = Icons[
+    service.icon as keyof typeof Icons
+  ] as React.ElementType;
+  const href = `/${locale}/services/${service.slug}`;
 
   if (variant === "compact") {
     return (
-      <Link href={`/services/${service.slug}`}>
-        <Card className={cn("group h-full transition-colors hover:border-accent", className)}>
+      <Link href={href as Route}>
+        <Card
+          className={cn(
+            "group h-full transition-colors hover:border-accent",
+            className,
+          )}
+        >
           <CardContent className="flex items-center gap-4 p-4">
             {IconComponent && (
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground group-hover:bg-accent group-hover:text-accent-foreground transition-colors">
@@ -49,14 +60,14 @@ export function ServiceCard({
   }
 
   return (
-    <Link href={`/services/${service.slug}`}>
+    <Link href={href as Route}>
       <Card
         className={cn(
           "group h-full transition-all hover:shadow-lg hover:border-accent",
           {
             "border-accent bg-accent/5": variant === "featured",
           },
-          className
+          className,
         )}
       >
         <CardHeader>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { type Locale } from "@/lib/config";
+import { type Locale, SUPPORTED_LOCALES } from "@/lib/config";
 import { getValidLocale } from "@/lib/i18n/get-dict";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { JsonLd } from "@/components/seo/json-ld";
+import { articleSchema } from "@/lib/json-ld";
 import { blogPosts, getRelatedBlogPosts } from "@/lib/data";
 import { siteConfig } from "@/lib/config";
 import { Calendar, User, Clock, Share2, ArrowLeft } from "lucide-react";
@@ -42,15 +43,38 @@ export async function generateMetadata({
     title: post.title,
     description: post.excerpt,
     openGraph: {
-      title: post.title,
+      title: `${post.title} | ${siteConfig.name}`,
       description: post.excerpt,
       url: `${siteConfig.url}/${locale}/blog/${post.slug}`,
+      siteName: siteConfig.name,
       type: "article",
       publishedTime: new Date(post.publishedAt).toISOString(),
+      modifiedTime: post.updatedAt
+        ? new Date(post.updatedAt).toISOString()
+        : undefined,
       authors: [post.author.name],
+      locale:
+        locale === "ar"
+          ? "ar_AE"
+          : locale === "si"
+            ? "si_LK"
+            : locale === "ta"
+              ? "ta_LK"
+              : "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
     },
     alternates: {
-      canonical: `/${locale}/blog/${post.slug}`,
+      canonical: `${siteConfig.url}/${locale}/blog/${post.slug}`,
+      languages: Object.fromEntries(
+        SUPPORTED_LOCALES.map((l) => [
+          l,
+          `${siteConfig.url}/${l}/blog/${post.slug}`,
+        ]),
+      ),
     },
   };
 }
@@ -75,31 +99,10 @@ export default async function BlogPage({ params }: BlogPageProps) {
     });
   };
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: post.excerpt,
-    image: `${siteConfig.url}/og-image.jpg`,
-    datePublished: new Date(post.publishedAt).toISOString(),
-    author: {
-      "@type": "Person",
-      name: post.author.name,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      logo: {
-        "@type": "ImageObject",
-        url: `${siteConfig.url}/logo.png`,
-      },
-    },
-  };
-
   return (
     <>
       {/* JSON-LD Markup */}
-      <JsonLd data={articleSchema} />
+      <JsonLd data={articleSchema(post, locale)} />
 
       {/* Hero Section */}
       <Section
@@ -109,9 +112,10 @@ export default async function BlogPage({ params }: BlogPageProps) {
         <Container size="sm">
           <Breadcrumbs
             items={[
-              { label: "Blog", href: `/${locale}/blog` },
-              { label: post.title, href: `/${locale}/blog/${post.slug}` },
+              { label: "Blog", href: `/blog` },
+              { label: post.title, href: `/blog/${post.slug}` },
             ]}
+            locale={locale}
           />
 
           <div className="mt-8">

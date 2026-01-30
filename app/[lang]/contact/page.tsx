@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { type Locale } from "@/lib/config";
+import { type Locale, SUPPORTED_LOCALES } from "@/lib/config";
 import { getValidLocale } from "@/lib/i18n/get-dict";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { JsonLd } from "@/components/seo/json-ld";
 import { ContactForm } from "@/components/forms/contact-form";
+import { contactPageSchema } from "@/lib/json-ld";
 import { siteConfig } from "@/lib/config";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
@@ -24,10 +26,32 @@ export async function generateMetadata({
     description:
       "Get in touch with Evision IT. We'd love to hear about your project.",
     openGraph: {
-      title: "Contact Us | Evision IT",
+      title: `Contact Us | ${siteConfig.name}`,
       description:
         "Get in touch with Evision IT. We'd love to hear about your project.",
       url: `${siteConfig.url}/${locale}/contact`,
+      siteName: siteConfig.name,
+      type: "website",
+      locale:
+        locale === "ar"
+          ? "ar_AE"
+          : locale === "si"
+            ? "si_LK"
+            : locale === "ta"
+              ? "ta_LK"
+              : "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Contact Us | Evision IT",
+      description:
+        "Get in touch with Evision IT. We'd love to hear about your project.",
+    },
+    alternates: {
+      canonical: `${siteConfig.url}/${locale}/contact`,
+      languages: Object.fromEntries(
+        SUPPORTED_LOCALES.map((l) => [l, `${siteConfig.url}/${l}/contact`]),
+      ),
     },
   };
 }
@@ -38,6 +62,9 @@ export default async function ContactPage({ params }: PageProps) {
 
   return (
     <>
+      {/* JSON-LD Markup */}
+      <JsonLd data={contactPageSchema(locale)} />
+
       {/* Hero Section */}
       <Section
         padding="lg"
@@ -45,7 +72,7 @@ export default async function ContactPage({ params }: PageProps) {
       >
         <Container size="sm">
           <Breadcrumbs
-            items={[{ label: "Contact", href: `/${locale}/contact` }]}
+            items={[{ label: "Contact", href: `/contact` }]}
             locale={locale}
           />
 

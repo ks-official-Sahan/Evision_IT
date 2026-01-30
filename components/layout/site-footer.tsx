@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { cacheLife } from "next/cache";
+import Image from "next/image";
 import { Container } from "@/components/ui/container";
 import { siteConfig, type Locale } from "@/lib/config";
 import { Linkedin, Facebook, Twitter, Mail, Phone, MapPin } from "lucide-react";
@@ -18,7 +20,10 @@ const getFooterLinks = (locale: Locale) => ({
     { label: "Web Development", href: `/${locale}/services/web-development` },
     { label: "Mobile Apps", href: `/${locale}/services/mobile-apps` },
     { label: "E-commerce", href: `/${locale}/services/e-commerce` },
-    { label: "Digital Marketing", href: `/${locale}/services/digital-marketing` },
+    {
+      label: "Digital Marketing",
+      href: `/${locale}/services/digital-marketing`,
+    },
   ],
   company: [
     { label: "About Us", href: `/${locale}/company` },
@@ -50,7 +55,10 @@ const socialLinks = [
   },
 ];
 
-export function SiteFooter({ locale = "en" }: SiteFooterProps) {
+export async function SiteFooter({ locale = "en" }: SiteFooterProps) {
+  "use cache";
+  cacheLife({ stale: 86400, revalidate: 604800, expire: 2592000 });
+
   const footerLinks = getFooterLinks(locale);
   return (
     <footer className="border-t border-border bg-muted/30">
@@ -60,9 +68,22 @@ export function SiteFooter({ locale = "en" }: SiteFooterProps) {
             {/* Brand Column */}
             <div className="lg:col-span-2">
               <Link href={`/${locale}`} className="inline-block">
-                <span className="text-2xl font-bold text-foreground">
-                  {siteConfig.name}
-                </span>
+                {/* Light theme logo (shown in light mode) */}
+                <Image
+                  src="/logo/logo_dark.png"
+                  alt={siteConfig.name}
+                  width={160}
+                  height={50}
+                  className="h-10 w-auto dark:hidden"
+                />
+                {/* Dark theme logo (shown in dark mode) */}
+                <Image
+                  src="/logo/logo_light.png"
+                  alt={siteConfig.name}
+                  width={160}
+                  height={50}
+                  className="h-10 w-auto hidden dark:block"
+                />
               </Link>
               <p className="mt-4 max-w-sm text-sm text-muted-foreground leading-relaxed">
                 {siteConfig.description}

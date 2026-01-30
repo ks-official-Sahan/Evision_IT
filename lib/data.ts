@@ -15,6 +15,10 @@ export interface Service {
   faqs: { question: string; answer: string }[];
   relatedServices: string[];
   isFeatured?: boolean;
+  // Optional extended properties for service detail pages
+  problems?: string[];
+  process?: { title: string; description: string }[];
+  deliverables?: string[];
 }
 
 export const services: Service[] = [
@@ -137,7 +141,11 @@ export const services: Service[] = [
           "Yes, we handle full migrations including products, customers, and order history with minimal downtime.",
       },
     ],
-    relatedServices: ["web-development", "digital-marketing", "cloud-solutions"],
+    relatedServices: [
+      "web-development",
+      "digital-marketing",
+      "cloud-solutions",
+    ],
   },
   {
     slug: "digital-marketing",
@@ -249,8 +257,7 @@ export const services: Service[] = [
     shortTitle: "Networks",
     description:
       "Enterprise networking solutions including design, implementation, and ongoing management for reliable connectivity.",
-    excerpt:
-      "Enterprise networking design, implementation, and management.",
+    excerpt: "Enterprise networking design, implementation, and management.",
     icon: "Network",
     category: "infrastructure",
     features: [
@@ -282,8 +289,7 @@ export const services: Service[] = [
     shortTitle: "Security",
     description:
       "Comprehensive security solutions including assessments, implementation, and ongoing monitoring to protect your business.",
-    excerpt:
-      "Security assessments, implementation, and 24/7 monitoring.",
+    excerpt: "Security assessments, implementation, and 24/7 monitoring.",
     icon: "Shield",
     category: "security",
     features: [
@@ -307,7 +313,11 @@ export const services: Service[] = [
           "Annual comprehensive assessments minimum, with quarterly vulnerability scans and continuous monitoring.",
       },
     ],
-    relatedServices: ["cloud-solutions", "managed-it", "network-infrastructure"],
+    relatedServices: [
+      "cloud-solutions",
+      "managed-it",
+      "network-infrastructure",
+    ],
   },
   {
     slug: "managed-it",
@@ -340,7 +350,11 @@ export const services: Service[] = [
           "Managed IT is proactive—we prevent issues before they happen. Break-fix is reactive—you call when something breaks.",
       },
     ],
-    relatedServices: ["cloud-solutions", "cybersecurity", "network-infrastructure"],
+    relatedServices: [
+      "cloud-solutions",
+      "cybersecurity",
+      "network-infrastructure",
+    ],
   },
 ];
 
@@ -348,7 +362,9 @@ export function getServiceBySlug(slug: string): Service | undefined {
   return services.find((s) => s.slug === slug);
 }
 
-export function getServicesByCategory(category: Service["category"]): Service[] {
+export function getServicesByCategory(
+  category: Service["category"],
+): Service[] {
   return services.filter((s) => s.category === category);
 }
 
@@ -488,14 +504,17 @@ export function getPostsByCategory(category: string): BlogPost[] {
 export function getRelatedPosts(currentSlug: string, limit = 3): BlogPost[] {
   const current = getBlogPostBySlug(currentSlug);
   if (!current) return [];
-  
+
   return blogPosts
     .filter((p) => p.slug !== currentSlug && p.category === current.category)
     .slice(0, limit);
 }
 
 // Alias for blog detail page
-export function getRelatedBlogPosts(currentSlug: string, limit = 3): BlogPost[] {
+export function getRelatedBlogPosts(
+  currentSlug: string,
+  limit = 3,
+): BlogPost[] {
   return getRelatedPosts(currentSlug, limit);
 }
 
@@ -534,7 +553,11 @@ export const caseStudies: CaseStudy[] = [
     category: "E-commerce",
     services: ["e-commerce", "ui-ux-design", "digital-marketing"],
     results: [
-      { metric: "Revenue", value: "+340%", description: "Year-over-year growth" },
+      {
+        metric: "Revenue",
+        value: "+340%",
+        description: "Year-over-year growth",
+      },
       { metric: "Conversion", value: "4.2%", description: "Up from 1.1%" },
       { metric: "AOV", value: "+65%", description: "Average order value" },
     ],
@@ -558,8 +581,16 @@ export const caseStudies: CaseStudy[] = [
     category: "Digital Transformation",
     services: ["web-development", "mobile-apps", "cloud-solutions"],
     results: [
-      { metric: "Efficiency", value: "+45%", description: "Operational efficiency" },
-      { metric: "Support", value: "-60%", description: "Customer support tickets" },
+      {
+        metric: "Efficiency",
+        value: "+45%",
+        description: "Operational efficiency",
+      },
+      {
+        metric: "Support",
+        value: "-60%",
+        description: "Customer support tickets",
+      },
       { metric: "NPS", value: "72", description: "Up from 34" },
     ],
     publishedAt: "2024-11-15",
@@ -576,7 +607,11 @@ export const caseStudies: CaseStudy[] = [
     category: "Security",
     services: ["cybersecurity", "cloud-solutions", "managed-it"],
     results: [
-      { metric: "Timeline", value: "8 weeks", description: "To full compliance" },
+      {
+        metric: "Timeline",
+        value: "8 weeks",
+        description: "To full compliance",
+      },
       { metric: "Audit", value: "100%", description: "First-time audit pass" },
       { metric: "Cost", value: "-40%", description: "vs. industry average" },
     ],

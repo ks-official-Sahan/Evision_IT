@@ -20,71 +20,78 @@ export const BackgroundBeamsWithCollision = ({
       duration: 7,
       repeatDelay: 3,
       delay: 2,
+      className: "h-4", // Small beam
     },
     {
       initialX: 600,
       translateX: 600,
-      duration: 5,
-      repeatDelay: 3,
-      delay: 2.5,
-    },
-    {
-      initialX: 350,
-      translateX: 350,
       duration: 3,
-      repeatDelay: 2,
-      delay: 5,
-    },
-    {
-      initialX: 200,
-      translateX: 200,
-      duration: 3,
-      repeatDelay: 5,
+      repeatDelay: 7,
       delay: 4,
+      className: "h-16", // Medium-large beam
     },
     {
       initialX: 100,
       translateX: 100,
-      duration: 7,
-      repeatDelay: 7,
+      duration: 9, // Slower duration
+      repeatDelay: 2,
+      delay: 1,
       className: "h-6",
     },
     {
       initialX: 400,
       translateX: 400,
-      duration: 5,
-      repeatDelay: 14,
-      delay: 4,
+      duration: 4, // Fast
+      repeatDelay: 15, // Long pause
+      delay: 0,
+      className: "h-24", // Very large beam
     },
     {
-      initialX: 800,
-      translateX: 800,
-      duration: 11,
+      initialX: 700,
+      translateX: 700,
+      duration: 11, // Very slow
       repeatDelay: 2,
       className: "h-20",
     },
     {
-      initialX: 1000,
-      translateX: 1000,
-      duration: 4,
-      repeatDelay: 2,
+      initialX: 900,
+      translateX: 700,
+      duration: 5,
+      repeatDelay: 5,
+      delay: 3,
+      className: "h-8",
+    },
+    {
+      initialX: 900,
+      translateX: 1100,
+      duration: 8,
+      repeatDelay: 9,
+      delay: 5, // Late start
       className: "h-12",
     },
     {
-      initialX: 1200,
-      translateX: 1200,
+      initialX: 1400,
+      translateX: 1400,
       duration: 6,
       repeatDelay: 4,
-      delay: 2,
-      className: "h-6",
+      delay: 1,
+      className: "h-10",
+    },
+    {
+      initialX: 1600,
+      translateX: 1600,
+      duration: 10,
+      repeatDelay: 6,
+      delay: 6,
+      className: "h-32", // Largest beam
     },
   ];
-
+  
   return (
     <div
       ref={parentRef}
       className={cn(
-        "min-h-screen relative flex flex-col w-full justify-center overflow-hidden",
+        "relative flex flex-col w-full justify-center overflow-hidden",
         // h-screen if you want bigger
         className,
       )}

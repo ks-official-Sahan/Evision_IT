@@ -41,7 +41,7 @@ export default async function HomePage({ params }: PageProps) {
     <>
       <BackgroundBeamsWithCollision>
         <HeroSection dict={dict} locale={locale} />
-        <TrustBar dict={dict} locale={locale} />
+      <TrustBar dict={dict} locale={locale} />
       </BackgroundBeamsWithCollision>
       <div className="relative antialiased">
         <SolutionFinderQuiz dict={dict} locale={locale} />

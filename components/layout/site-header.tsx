@@ -46,7 +46,7 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
   // Use dark logo for light theme, light logo for dark theme
   const logoSrc =
     mounted && resolvedTheme === "dark"
-      ? "/logo/logo_light.png"
+      ? "/logo/logo_white.png"
       : "/logo/logo_dark.png";
 
   return (

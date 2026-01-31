@@ -104,6 +104,8 @@ const nextConfig = {
       "framer-motion",
       "@radix-ui/react-icons",
       "clsx",
+      "gsap",
+      "@tabler/icons-react",
       "tailwind-merge",
       "@radix-ui/react-slot",
       "@radix-ui/react-accordion",

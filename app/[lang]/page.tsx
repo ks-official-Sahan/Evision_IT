@@ -13,6 +13,8 @@ import { CaseStudiesPreview } from "@/components/home/case-studies-preview";
 import { ProcessSection } from "@/components/home/process-section";
 import { FAQSection } from "@/components/home/faq-section";
 import { FinalCTASection } from "@/components/home/final-cta-section";
+import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
+import { BackgroundBeams } from "@/components/ui/background-beams";
 
 interface PageProps {
   params: Promise<{ lang: string }>;
@@ -37,15 +39,29 @@ export default async function HomePage({ params }: PageProps) {
 
   return (
     <>
-      <HeroSection dict={dict} locale={locale} />
-      <TrustBar dict={dict} locale={locale} />
-      <SolutionFinderQuiz dict={dict} locale={locale} />
-      <SolutionsOverview dict={dict} locale={locale} />
+      <BackgroundBeamsWithCollision>
+        <HeroSection dict={dict} locale={locale} />
+        <TrustBar dict={dict} locale={locale} />
+      </BackgroundBeamsWithCollision>
+      <div className="relative antialiased">
+        <SolutionFinderQuiz dict={dict} locale={locale} />
+        <SolutionsOverview dict={dict} locale={locale} />
+        <BackgroundBeams />
+      </div>
+      {/* <div className="relative antialiased"> */}
       <OutcomesMetrics dict={dict} locale={locale} />
+      {/* <BackgroundBeams />
+      </div>
+      <div className="relative antialiased"> */}
       <CaseStudiesPreview dict={dict} locale={locale} />
       <ProcessSection dict={dict} locale={locale} />
-      <FAQSection dict={dict} locale={locale} />
-      <FinalCTASection dict={dict} locale={locale} />
+      {/* <BackgroundBeams />
+      </div> */}
+      <div className="relative antialiased">
+        <FAQSection dict={dict} locale={locale} />
+        <FinalCTASection dict={dict} locale={locale} />
+        <BackgroundBeams />
+      </div>
     </>
   );
 }

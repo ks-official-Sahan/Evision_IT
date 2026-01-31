@@ -141,8 +141,8 @@ export default async function LocaleLayout({
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="system"
-      enableSystem
+      defaultTheme="dark"
+      // enableSystem
       storageKey="evision-theme"
       disableTransitionOnChange={false}
     >

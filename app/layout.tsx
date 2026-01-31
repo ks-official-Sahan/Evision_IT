@@ -6,6 +6,8 @@ import {
   GoogleTagManagerNoScript,
 } from "@/components/analytics/google-tag-manager";
 import "@/app/globals.css";
+import { ClientEffects } from "@/components/layout/client-effects";
+import { Suspense } from "react";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
 const geistMono = Geist_Mono({
@@ -38,6 +40,9 @@ export default function RootLayout({
       <body
         className={`${geist.variable} ${geistMono.variable} font-sans antialiased`}
       >
+        <Suspense fallback={null}>
+          <ClientEffects />
+        </Suspense>
         <GoogleTagManagerNoScript />
         {children}
         <Analytics />

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function Loading() {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background">
+    <div className="flex min-h-[50vh] w-full items-center justify-center py-12">
       <div className="flex flex-col items-center gap-6">
         {/* Animated Logo/Spinner */}
         <motion.div

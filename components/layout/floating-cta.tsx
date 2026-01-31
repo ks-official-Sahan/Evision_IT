@@ -139,6 +139,8 @@ export function FloatingCTA({ locale = "en", className }: FloatingCTAProps) {
                 }
                 className={cn(
                   "group flex items-center gap-3 rounded-full shadow-lg transition-all duration-200",
+                  "min-h-11", // WCAG 2.5.8: 44px minimum touch target
+                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                   action.color,
                   "text-white px-4 py-3",
                 )}
@@ -166,6 +168,7 @@ export function FloatingCTA({ locale = "en", className }: FloatingCTAProps) {
           "flex h-14 w-14 items-center justify-center rounded-full shadow-xl",
           "bg-accent text-accent-foreground",
           "transition-all duration-300 hover:shadow-2xl",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background",
           isOpen
             ? "hover:bg-destructive hover:text-destructive-foreground"
             : "btn-glow animate-pulse-subtle",

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/container";
 import { CTAGroup } from "@/components/ui/cta-group";
@@ -33,8 +33,9 @@ export function HeroSection({ dict, locale = "en" }: HeroSectionProps) {
     { value: "24/7", label: hero.supportAvailable || "Support Available" },
   ];
 
-  const containerVariants = prefersReducedMotion
-    ? {}
+  // Animation variants with proper typing (undefined for reduced motion)
+  const containerVariants: Variants | undefined = prefersReducedMotion
+    ? undefined
     : {
         hidden: { opacity: 0 },
         visible: {
@@ -43,8 +44,8 @@ export function HeroSection({ dict, locale = "en" }: HeroSectionProps) {
         },
       };
 
-  const itemVariants = prefersReducedMotion
-    ? {}
+  const itemVariants: Variants | undefined = prefersReducedMotion
+    ? undefined
     : {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -87,12 +88,17 @@ export function HeroSection({ dict, locale = "en" }: HeroSectionProps) {
               Team | Custom Business Solutions | Enterprise Web Applications
             </span>
             {hero.headline || "Digital transformation for"}{" "}
-            <span className="text-gradient-accent inline-block">
+            {/* Gradient text with accessible fallback color */}
+            <span
+              className="text-gradient-accent inline-block"
+              style={{ color: "var(--accent)" }} // Fallback for gradient-unsupported browsers
+              aria-label={hero.tagline || "growing businesses"}
+            >
               {hero.tagline || "growing businesses"}
             </span>
           </motion.h1>
 
-          {/* Subheadline with improved spacing */}
+          {/* Subheadline with improved contrast (uses updated --muted-foreground AAA ratio) */}
           <motion.p
             variants={itemVariants}
             className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed text-pretty"

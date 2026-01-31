@@ -198,9 +198,9 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-   --animate-cell-ripple: cell-ripple var(--duration, 200ms) ease-out none 1
-  var(--delay, 0ms);
- 
+  --animate-cell-ripple: cell-ripple var(--duration, 200ms) ease-out none 1
+    var(--delay, 0ms);
+
   @keyframes cell-ripple {
     0% {
       opacity: 0.4;
@@ -514,4 +514,18 @@
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* Shimmer animation for background-boxes CSS grid */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 15s ease-in-out infinite;
 }

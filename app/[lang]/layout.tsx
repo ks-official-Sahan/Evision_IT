@@ -13,7 +13,6 @@ import {
 import {
   siteConfig,
   SUPPORTED_LOCALES,
-  DEFAULT_LOCALE,
   LOCALE_LABELS,
   type Locale,
 } from "@/lib/config";
@@ -174,7 +173,7 @@ export default async function LocaleLayout({
 
       <div dir={direction} className="relative flex min-h-screen flex-col">
         <SiteHeader locale={locale} />
-        <main id="main-content" className="flex-1">
+        <main id="main-content" className="flex-1 z-[2]">
           {children}
         </main>
         <SiteFooter locale={locale} />

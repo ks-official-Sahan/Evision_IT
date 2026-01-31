@@ -39,29 +39,34 @@ export default async function HomePage({ params }: PageProps) {
 
   return (
     <>
+      {/* Hero Section with Collision Beams */}
       <BackgroundBeamsWithCollision>
         <HeroSection dict={dict} locale={locale} />
-      <TrustBar dict={dict} locale={locale} />
+        <TrustBar dict={dict} locale={locale} />
       </BackgroundBeamsWithCollision>
-      <div className="relative antialiased">
-        <SolutionFinderQuiz dict={dict} locale={locale} />
-        <SolutionsOverview dict={dict} locale={locale} />
-        <BackgroundBeams />
-      </div>
-      {/* <div className="relative antialiased"> */}
+
+      {/* Solutions Section with Background Beams */}
+      <section className="relative overflow-hidden">
+        <BackgroundBeams className="opacity-40" />
+        <div className="relative z-10">
+          <SolutionFinderQuiz dict={dict} locale={locale} />
+          <SolutionsOverview dict={dict} locale={locale} />
+        </div>
+      </section>
+
+      {/* Metrics and Case Studies */}
       <OutcomesMetrics dict={dict} locale={locale} />
-      {/* <BackgroundBeams />
-      </div>
-      <div className="relative antialiased"> */}
       <CaseStudiesPreview dict={dict} locale={locale} />
       <ProcessSection dict={dict} locale={locale} />
-      {/* <BackgroundBeams />
-      </div> */}
-      <div className="relative antialiased">
-        <FAQSection dict={dict} locale={locale} />
-        <FinalCTASection dict={dict} locale={locale} />
-        <BackgroundBeams />
-      </div>
+
+      {/* FAQ and CTA Section with Background Beams */}
+      <section className="relative overflow-hidden">
+        <BackgroundBeams className="opacity-30" />
+        <div className="relative z-10">
+          <FAQSection dict={dict} locale={locale} />
+          <FinalCTASection dict={dict} locale={locale} />
+        </div>
+      </section>
     </>
   );
 }

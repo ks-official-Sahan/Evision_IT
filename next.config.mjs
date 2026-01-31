@@ -105,6 +105,7 @@ const nextConfig = {
       "motion",
       "@radix-ui/react-icons",
       "clsx",
+      "ogl",
       "gsap",
       "@tabler/icons-react",
       "tailwind-merge",

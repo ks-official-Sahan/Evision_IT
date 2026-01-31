@@ -9,7 +9,8 @@ export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground overflow-hidden relative">
       {/* Background Blobs */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full pointer-events-none motion-safe:animate-pulse" />
+      <div className="absolute top-20 right-20 w-[250px] h-[250px] bg-accent/10 blur-[80px] rounded-full pointer-events-none motion-safe:animate-[pulse_3s_ease-in-out_infinite]" />
 
       <div className="container relative z-10 flex max-w-[64rem] flex-col items-center gap-4 text-center p-4">
         <motion.div
@@ -48,7 +49,7 @@ export default function NotFound() {
           <Button
             asChild
             size="lg"
-            className="h-12 px-8 rounded-full shadow-lg hover:shadow-primary/25 transition-all duration-300"
+            className="h-12 px-8 rounded-full shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95 transition-all duration-300"
           >
             <Link href="/">
               <Home className="mr-2 h-4 w-4" />
@@ -59,7 +60,7 @@ export default function NotFound() {
             variant="outline"
             asChild
             size="lg"
-            className="h-12 px-8 rounded-full backdrop-blur-sm bg-background/50 hover:bg-muted/50 transition-all duration-300"
+            className="h-12 px-8 rounded-full backdrop-blur-sm bg-background/50 hover:bg-muted/50 hover:scale-105 active:scale-95 transition-all duration-300"
           >
             <Link href="/contact">Contact Support</Link>
           </Button>

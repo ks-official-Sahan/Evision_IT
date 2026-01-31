@@ -4,7 +4,6 @@ import type { ComponentType } from "react";
 
 export function ClientEffects() {
   const [mods, setMods] = useState<{
-    BackgroundRippleEffect?: ComponentType;
     CursorFollower?: ComponentType;
   }>({});
 
@@ -17,12 +16,10 @@ export function ClientEffects() {
     const coarse = matchMedia("(pointer: coarse)").matches;
 
     const load = async () => {
-      const [{ CursorFollower }, { BackgroundRippleEffect }] =
-        await Promise.all([
-          import("@/components/motion/cursor-follower"),
-          import("@/components/ui/background-ripple-effect"),
-        ]);
-      setMods({ BackgroundRippleEffect, CursorFollower });
+      const [{ CursorFollower }] = await Promise.all([
+        import("@/components/motion/cursor-follower"),
+      ]);
+      setMods({ CursorFollower });
     };
 
     // Idle or first interaction — whichever comes first
@@ -80,12 +77,11 @@ export function ClientEffects() {
     }
   }, []);
 
-  const { CursorFollower, BackgroundRippleEffect } = mods;
+  const { CursorFollower } = mods;
   return (
     <>
       {/* cursor follower only on non-coarse pointers – handled inside the component */}
       {CursorFollower ? <CursorFollower /> : null}
-      {BackgroundRippleEffect ? <BackgroundRippleEffect /> : null}
     </>
   );
 }

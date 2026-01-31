@@ -54,7 +54,7 @@ export const BackgroundBeamsWithCollision = ({
       className: "h-20",
     },
     {
-      initialX: 900,
+      initialX: 899,
       translateX: 700,
       duration: 5,
       repeatDelay: 5,
@@ -62,7 +62,7 @@ export const BackgroundBeamsWithCollision = ({
       className: "h-8",
     },
     {
-      initialX: 900,
+      initialX: 901,
       translateX: 1100,
       duration: 8,
       repeatDelay: 9,
@@ -92,7 +92,6 @@ export const BackgroundBeamsWithCollision = ({
       ref={parentRef}
       className={cn(
         "relative flex flex-col w-full justify-center overflow-hidden",
-        // h-screen if you want bigger
         className,
       )}
     >

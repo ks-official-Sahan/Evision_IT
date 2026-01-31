@@ -54,7 +54,7 @@ export function HeroSection({ dict, locale = "en" }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden pt-8 pb-16 lg:pt-16 lg:pb-24">
       {/* Subtle background gradient */}
-      <div className="absolute inset-0 min-w-dvw bg-gradient-to-b from-accent/5 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-[1] min-w-dvw bg-gradient-to-b from-accent/5 via-transparent to-transparent pointer-events-none" />
 
       <Container>
         <motion.div
@@ -70,11 +70,15 @@ export function HeroSection({ dict, locale = "en" }: HeroSectionProps) {
             </Badge>
           </motion.div>
 
-          {/* H1 */}
+          {/* H1 with sr-only SEO keywords for AEO/GEO optimization */}
           <motion.h1
             variants={itemVariants}
             className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance"
           >
+            <span className="sr-only">
+              Leading IT Services, Web Development and Software Solutions
+              Company in Sri Lanka - Evision IT
+            </span>
             {hero.headline || "Digital transformation for"}{" "}
             <span className="text-accent">
               {hero.tagline || "growing businesses"}

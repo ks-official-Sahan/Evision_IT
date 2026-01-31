@@ -19,14 +19,14 @@ export function TrustBar({ locale = "en", dict }: TrustBarProps) {
   const trustSignals = [
     {
       icon: CheckCircle2,
-      label: trust.projectsDelivered || "200+ Projects Delivered",
+      label: trust.projectsDelivered || "100+ Projects Delivered",
       description:
         trust.projectsDeliveredDesc ||
         "Proven track record of successful implementations",
     },
     {
       icon: Users,
-      label: trust.activeClients || "50+ Active Clients",
+      label: trust.activeClients || "30+ Active Clients",
       description:
         trust.activeClientsDesc || "Trusted by businesses across industries",
     },
@@ -45,7 +45,7 @@ export function TrustBar({ locale = "en", dict }: TrustBarProps) {
   ];
 
   return (
-    <Section>
+    <Section className="bg-transparent">
       <Container>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {trustSignals.map((signal, idx) => {
@@ -86,21 +86,6 @@ export function TrustBar({ locale = "en", dict }: TrustBarProps) {
             <div className="h-12 px-6 bg-muted/30 rounded-lg flex items-center">
               <span className="text-muted-foreground text-sm font-medium">
                 Client Logo 2
-              </span>
-            </div>
-            <div className="h-12 px-6 bg-muted/30 rounded-lg flex items-center">
-              <span className="text-muted-foreground text-sm font-medium">
-                Client Logo 3
-              </span>
-            </div>
-            <div className="h-12 px-6 bg-muted/30 rounded-lg flex items-center">
-              <span className="text-muted-foreground text-sm font-medium">
-                Client Logo 4
-              </span>
-            </div>
-            <div className="h-12 px-6 bg-muted/30 rounded-lg flex items-center">
-              <span className="text-muted-foreground text-sm font-medium">
-                Client Logo 5
               </span>
             </div>
           </div>

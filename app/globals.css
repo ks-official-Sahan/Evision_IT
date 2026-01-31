@@ -474,6 +474,60 @@
     @apply hover:shadow-[0_0_20px_rgba(37,187,232,0.5)] transition-shadow duration-200;
   }
 
+  /* Gradient Text */
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent via-primary to-accent bg-clip-text text-transparent;
+    background-size: 200% auto;
+    animation: gradient-flow 3s ease infinite;
+  }
+
+  .text-gradient-accent {
+    @apply bg-gradient-to-r from-[#25bbe8] to-[#005a5a] bg-clip-text text-transparent;
+  }
+
+  /* Section Gradients */
+  .section-gradient-1 {
+    @apply bg-gradient-to-b from-background via-muted/30 to-background;
+  }
+
+  .section-gradient-2 {
+    @apply bg-gradient-to-br from-background via-accent/5 to-background;
+  }
+
+  /* Glassmorphic Card Enhanced */
+  .glass-card {
+    @apply relative bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl shadow-lg;
+    @apply hover:bg-card/90 hover:shadow-xl hover:border-accent/30 transition-all duration-300;
+  }
+
+  .dark .glass-card {
+    @apply bg-card/60 border-white/10;
+    @apply hover:bg-card/70 hover:border-accent/40;
+  }
+
+  /* Glowing CTA Button */
+  .btn-glow {
+    @apply relative overflow-hidden;
+    box-shadow: 0 0 0 0 rgba(37, 187, 232, 0.5);
+    transition: all 0.3s ease;
+  }
+
+  .btn-glow:hover {
+    box-shadow: 0 0 20px 4px rgba(37, 187, 232, 0.4);
+    transform: translateY(-2px);
+  }
+
+  /* Accent border glow */
+  .border-glow {
+    @apply border border-accent/30;
+    box-shadow: 0 0 15px rgba(37, 187, 232, 0.15);
+  }
+
+  /* Pulse animation for CTAs */
+  .animate-pulse-subtle {
+    animation: pulse-subtle 2s infinite;
+  }
+
   /* Reduced Motion Support */
   @media (prefers-reduced-motion: reduce) {
     * {
@@ -528,4 +582,43 @@
 
 .animate-shimmer {
   animation: shimmer 15s ease-in-out infinite;
+}
+
+/* Gradient flow for text gradient */
+@keyframes gradient-flow {
+  0%,
+  100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+/* Subtle pulse for floating CTAs */
+@keyframes pulse-subtle {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(37, 187, 232, 0.4);
+  }
+  50% {
+    opacity: 0.95;
+    box-shadow: 0 0 20px 8px rgba(37, 187, 232, 0.2);
+  }
+}
+
+/* Float animation for FAB */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }

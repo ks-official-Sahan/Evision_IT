@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { FloatingCTA } from "@/components/layout/floating-cta";
 import { JsonLd } from "@/components/seo/json-ld";
 import {
   organizationSchema,
@@ -177,6 +178,9 @@ export default async function LocaleLayout({
           {children}
         </main>
         <SiteFooter locale={locale} />
+
+        {/* Floating CTA for quick contact */}
+        <FloatingCTA locale={locale} />
       </div>
     </ThemeProvider>
   );

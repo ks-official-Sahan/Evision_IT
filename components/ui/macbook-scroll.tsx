@@ -24,7 +24,6 @@ import { IconCommand } from "@tabler/icons-react";
 import { IconCaretLeftFilled } from "@tabler/icons-react";
 import { IconCaretDownFilled } from "@tabler/icons-react";
 
-
 export const MacbookScroll = ({
   src,
   showGradient,
@@ -165,11 +164,13 @@ export const Lid = ({
         className="absolute inset-0 h-96 w-[32rem] rounded-2xl bg-[#010101] p-2"
       >
         <div className="absolute inset-0 rounded-lg bg-[#272729]" />
-        <img
-          src={src as string}
-          alt="aceternity logo"
-          className="absolute inset-0 h-full w-full rounded-lg object-cover object-left-top"
-        />
+        {src && (
+          <img
+            src={src}
+            alt="MacBook screen content"
+            className="absolute inset-0 h-full w-full rounded-lg object-cover object-top-left"
+          />
+        )}{" "}
       </motion.div>
     </div>
   );
@@ -188,72 +189,72 @@ export const Trackpad = () => {
 
 export const Keypad = () => {
   return (
-    <div className="mx-1 h-full [transform:translateZ(0)] rounded-md bg-[#050505] p-1 [will-change:transform]">
+    <div className="mx-1 h-full transform-[translateZ(0)] rounded-md bg-[#050505] p-1 will-change:transform">
       {/* First Row */}
-      <div className="mb-[2px] flex w-full shrink-0 gap-[2px]">
+      <div className="mb-0.5 flex w-full shrink-0 gap-0.5">
         <KBtn
-          className="w-10 items-end justify-start pb-[2px] pl-[4px]"
+          className="w-10 items-end justify-start pb-0.5 pl-1"
           childrenClassName="items-start"
         >
           esc
         </KBtn>
         <KBtn>
-          <IconBrightnessDown className="h-[6px] w-[6px]" />
+          <IconBrightnessDown className="h-1.5 w-1.5" />
           <span className="mt-1 inline-block">F1</span>
         </KBtn>
         <KBtn>
-          <IconBrightnessUp className="h-[6px] w-[6px]" />
+          <IconBrightnessUp className="h-1.5 w-1.5" />
           <span className="mt-1 inline-block">F2</span>
         </KBtn>
         <KBtn>
-          <IconTable className="h-[6px] w-[6px]" />
+          <IconTable className="h-1.5 w-1.5" />
           <span className="mt-1 inline-block">F3</span>
         </KBtn>
         <KBtn>
-          <IconSearch className="h-[6px] w-[6px]" />
+          <IconSearch className="h-1.5 w-1.5" />
           <span className="mt-1 inline-block">F4</span>
         </KBtn>
         <KBtn>
-          <IconMicrophone className="h-[6px] w-[6px]" />
+          <IconMicrophone className="h-1.5 w-1.5" />
           <span className="mt-1 inline-block">F5</span>
         </KBtn>
         <KBtn>
-          <IconMoon className="h-[6px] w-[6px]" />
+          <IconMoon className="h-1.5 w-1.5" />
           <span className="mt-1 inline-block">F6</span>
         </KBtn>
         <KBtn>
-          <IconPlayerTrackPrev className="h-[6px] w-[6px]" />
+          <IconPlayerTrackPrev className="h-1.5 w-1.5" />
           <span className="mt-1 inline-block">F7</span>
         </KBtn>
         <KBtn>
-          <IconPlayerSkipForward className="h-[6px] w-[6px]" />
+          <IconPlayerSkipForward className="h-1.5 w-1.5" />
           <span className="mt-1 inline-block">F8</span>
         </KBtn>
         <KBtn>
-          <IconPlayerTrackNext className="h-[6px] w-[6px]" />
-          <span className="mt-1 inline-block">F8</span>
+          <IconPlayerTrackNext className="h-1.5 w-1.5" />
+          <span className="mt-1 inline-block">F9</span>
         </KBtn>
         <KBtn>
-          <IconVolume3 className="h-[6px] w-[6px]" />
+          <IconVolume3 className="h-1.5 w-1.5" />
           <span className="mt-1 inline-block">F10</span>
         </KBtn>
         <KBtn>
-          <IconVolume2 className="h-[6px] w-[6px]" />
+          <IconVolume2 className="h-1.5 w-1.5" />
           <span className="mt-1 inline-block">F11</span>
         </KBtn>
         <KBtn>
-          <IconVolume className="h-[6px] w-[6px]" />
+          <IconVolume className="h-1.5 w-1.5" />
           <span className="mt-1 inline-block">F12</span>
         </KBtn>
         <KBtn>
-          <div className="h-4 w-4 rounded-full bg-gradient-to-b from-neutral-900 from-20% via-black via-50% to-neutral-900 to-95% p-px">
+          <div className="h-4 w-4 rounded-full bg-linear-to-b from-neutral-900 from-20% via-black via-50% to-neutral-900 to-95% p-px">
             <div className="h-full w-full rounded-full bg-black" />
           </div>
         </KBtn>
       </div>
 
       {/* Second row */}
-      <div className="mb-[2px] flex w-full shrink-0 gap-[2px]">
+      <div className="mb-0.5 flex w-full shrink-0 gap-0.5">
         <KBtn>
           <span className="block">~</span>
           <span className="mt-1 block">`</span>
@@ -307,7 +308,7 @@ export const Keypad = () => {
           <span className="block"> = </span>
         </KBtn>
         <KBtn
-          className="w-10 items-end justify-end pr-[4px] pb-[2px]"
+          className="w-10 items-end justify-end pr-1 pb-0.5"   
           childrenClassName="items-end"
         >
           delete
@@ -315,9 +316,9 @@ export const Keypad = () => {
       </div>
 
       {/* Third row */}
-      <div className="mb-[2px] flex w-full shrink-0 gap-[2px]">
+      <div className="mb-0.5 flex w-full shrink-0 gap-0.5">
         <KBtn
-          className="w-10 items-end justify-start pb-[2px] pl-[4px]"
+          className="w-10 items-end justify-start pb-0.5 pl-1"
           childrenClassName="items-start"
         >
           tab
@@ -367,9 +368,9 @@ export const Keypad = () => {
       </div>
 
       {/* Fourth Row */}
-      <div className="mb-[2px] flex w-full shrink-0 gap-[2px]">
+      <div className="mb-0.5 flex w-full shrink-0 gap-0.5">
         <KBtn
-          className="w-[2.8rem] items-end justify-start pb-[2px] pl-[4px]"
+          className="w-[2.8rem] items-end justify-start pb-0.5 pl-1"
           childrenClassName="items-start"
         >
           caps lock
@@ -410,7 +411,7 @@ export const Keypad = () => {
           <span className="block">{`'`}</span>
         </KBtn>
         <KBtn
-          className="w-[2.85rem] items-end justify-end pr-[4px] pb-[2px]"
+          className="w-[2.85rem] items-end justify-end pr-1 pb-0.5"   
           childrenClassName="items-end"
         >
           return
@@ -418,9 +419,9 @@ export const Keypad = () => {
       </div>
 
       {/* Fifth Row */}
-      <div className="mb-[2px] flex w-full shrink-0 gap-[2px]">
+      <div className="mb-0.5 flex w-full shrink-0 gap-0.5">
         <KBtn
-          className="w-[3.65rem] items-end justify-start pb-[2px] pl-[4px]"
+          className="w-[3.65rem] items-end justify-start pb-0.5 pl-1"
           childrenClassName="items-start"
         >
           shift
@@ -459,7 +460,7 @@ export const Keypad = () => {
           <span className="block">{`/`}</span>
         </KBtn>
         <KBtn
-          className="w-[3.65rem] items-end justify-end pr-[4px] pb-[2px]"
+          className="w-[3.65rem] items-end justify-end pr-1 pb-0.5"   
           childrenClassName="items-end"
         >
           shift
@@ -467,18 +468,18 @@ export const Keypad = () => {
       </div>
 
       {/* sixth Row */}
-      <div className="mb-[2px] flex w-full shrink-0 gap-[2px]">
+      <div className="mb-0.5 flex w-full shrink-0 gap-0.5">
         <KBtn className="" childrenClassName="h-full justify-between py-[4px]">
           <div className="flex w-full justify-end pr-1">
             <span className="block">fn</span>
           </div>
           <div className="flex w-full justify-start pl-1">
-            <IconWorld className="h-[6px] w-[6px]" />
+            <IconWorld className="h-1.5 w-1.5" />
           </div>
         </KBtn>
         <KBtn className="" childrenClassName="h-full justify-between py-[4px]">
           <div className="flex w-full justify-end pr-1">
-            <IconChevronUp className="h-[6px] w-[6px]" />
+            <IconChevronUp className="h-1.5 w-1.5" />
           </div>
           <div className="flex w-full justify-start pl-1">
             <span className="block">control</span>
@@ -486,7 +487,7 @@ export const Keypad = () => {
         </KBtn>
         <KBtn className="" childrenClassName="h-full justify-between py-[4px]">
           <div className="flex w-full justify-end pr-1">
-            <OptionKey className="h-[6px] w-[6px]" />
+            <OptionKey className="h-1.5 w-1.5" />
           </div>
           <div className="flex w-full justify-start pl-1">
             <span className="block">option</span>
@@ -497,7 +498,7 @@ export const Keypad = () => {
           childrenClassName="h-full justify-between py-[4px]"
         >
           <div className="flex w-full justify-end pr-1">
-            <IconCommand className="h-[6px] w-[6px]" />
+            <IconCommand className="h-1.5 w-1.5" />
           </div>
           <div className="flex w-full justify-start pl-1">
             <span className="block">command</span>
@@ -509,7 +510,7 @@ export const Keypad = () => {
           childrenClassName="h-full justify-between py-[4px]"
         >
           <div className="flex w-full justify-start pl-1">
-            <IconCommand className="h-[6px] w-[6px]" />
+            <IconCommand className="h-1.5 w-1.5" />
           </div>
           <div className="flex w-full justify-start pl-1">
             <span className="block">command</span>
@@ -517,25 +518,25 @@ export const Keypad = () => {
         </KBtn>
         <KBtn className="" childrenClassName="h-full justify-between py-[4px]">
           <div className="flex w-full justify-start pl-1">
-            <OptionKey className="h-[6px] w-[6px]" />
+            <OptionKey className="h-1.5 w-1.5" />
           </div>
           <div className="flex w-full justify-start pl-1">
             <span className="block">option</span>
           </div>
         </KBtn>
-        <div className="mt-[2px] flex h-6 w-[4.9rem] flex-col items-center justify-end rounded-[4px] p-[0.5px]">
+        <div className="mt-0.5 flex h-6 w-[4.9rem] flex-col items-center justify-end rounded-lg p-[0.5px]">
           <KBtn className="h-3 w-6">
-            <IconCaretUpFilled className="h-[6px] w-[6px]" />
+            <IconCaretUpFilled className="h-1.5 w-1.5" />
           </KBtn>
           <div className="flex">
             <KBtn className="h-3 w-6">
-              <IconCaretLeftFilled className="h-[6px] w-[6px]" />
+              <IconCaretLeftFilled className="h-1.5 w-1.5" />
             </KBtn>
             <KBtn className="h-3 w-6">
-              <IconCaretDownFilled className="h-[6px] w-[6px]" />
+              <IconCaretDownFilled className="h-1.5 w-1.5" />
             </KBtn>
             <KBtn className="h-3 w-6">
-              <IconCaretRightFilled className="h-[6px] w-[6px]" />
+              <IconCaretRightFilled className="h-1.5 w-1.5" />
             </KBtn>
           </div>
         </div>
@@ -558,8 +559,8 @@ export const KBtn = ({
   return (
     <div
       className={cn(
-        "[transform:translateZ(0)] rounded-[4px] p-[0.5px] [will-change:transform]",
-        backlit && "bg-white/[0.2] shadow-xl shadow-white",
+        "transform-[translateZ(0)] rounded-lg p-[0.5px] will-change:transform",
+        backlit && "bg-white/20 shadow-xl shadow-white",
       )}
     >
       <div
@@ -589,7 +590,7 @@ export const KBtn = ({
 export const SpeakerGrid = () => {
   return (
     <div
-      className="mt-2 flex h-40 gap-[2px] px-[0.5px]"
+      className="mt-2 flex h-40 gap-0.5 px-[0.5px]"
       style={{
         backgroundImage:
           "radial-gradient(circle, #08080A 0.5px, transparent 0.5px)",

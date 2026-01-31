@@ -7,11 +7,34 @@ interface ThemeSwitcherProps {
   variant?: "outline" | "ghost";
 }
 
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { Sun, Moon } from "lucide-react";
+
+interface ThemeSwitcherProps {
+  className?: string;
+  variant?: "outline" | "ghost";
+}
+
 const ThemeSwitcher = ({
   variant = "outline",
   className,
 }: ThemeSwitcherProps) => {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <Button variant={variant} size="icon" className={className} disabled>
+        <span className="h-5 w-5" />
+      </Button>
+    );
+  }
 
   return (
     <Button
@@ -26,6 +49,8 @@ const ThemeSwitcher = ({
     </Button>
   );
 };
+
+export default ThemeSwitcher;};
 
 export default ThemeSwitcher;
 

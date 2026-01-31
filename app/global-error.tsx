@@ -24,9 +24,8 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
 
         <div className="text-center px-4 relative z-10 max-w-md w-full">
           <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-red-500/10 border border-red-500/20 backdrop-blur-sm shadow-2xl animate-in zoom-in duration-500">
-            <AlertTriangle className="h-12 w-12 text-red-500 animate-[bounce_1s_infinite]" />
+            <AlertTriangle className="h-12 w-12 text-red-500 motion-safe:animate-[bounce_1s_ease-in-out_infinite]" />
           </div>
-
           <h1 className="text-4xl font-bold mb-4 tracking-tight animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
             System Error
           </h1>

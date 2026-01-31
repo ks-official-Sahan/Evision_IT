@@ -225,7 +225,7 @@ export function CursorFollower() {
         <div
           key={index}
           ref={(el) => {
-            if (el) trailRefs.current[index] = el;
+            trailRefs.current[index] = el!;
           }}
           className="fixed top-0 left-0 rounded-full pointer-events-none z-[9997] mix-blend-difference hidden lg:block"
           style={{
@@ -239,7 +239,6 @@ export function CursorFollower() {
           }}
         />
       ))}
-
       {Array.from({ length: 8 }).map((_, index) => (
         <div
           key={`ribbon-${index}`}

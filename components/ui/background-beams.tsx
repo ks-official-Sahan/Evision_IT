@@ -5,6 +5,17 @@ import { cn } from "@/lib/utils";
 
 export const BackgroundBeams = React.memo(
   ({ className }: { className?: string }) => {
+    // Generate stable random values once per mount
+    const randomValues = React.useMemo(
+      () =>
+        paths.map((_, index) => ({
+          y2End: 93 + ((index * 7) % 8), // deterministic pseudo-random
+          duration: 10 + ((index * 3) % 10),
+          delay: (index * 2) % 10,
+        })),
+      [],
+    );
+
     const paths = [
       "M-380 -189C-380 -189 -312 216 152 343C616 470 684 875 684 875",
       "M-373 -197C-373 -197 -305 208 159 335C623 462 691 867 691 867",
@@ -104,13 +115,13 @@ export const BackgroundBeams = React.memo(
                   x1: ["0%", "100%"],
                   x2: ["0%", "95%"],
                   y1: ["0%", "100%"],
-                  y2: ["0%", `${93 + Math.random() * 8}%`],
+                  y2: ["0%", `${randomValues[index].y2End}%`],
                 }}
                 transition={{
-                  duration: Math.random() * 10 + 10,
+                  duration: randomValues[index].duration,
                   ease: "easeInOut",
                   repeat: Infinity,
-                  delay: Math.random() * 10,
+                  delay: randomValues[index].delay,
                 }}
               >
                 <stop stopColor="#18CCFC" stopOpacity="0"></stop>

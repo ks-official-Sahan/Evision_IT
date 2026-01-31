@@ -86,7 +86,7 @@ export const BackgroundBeamsWithCollision = ({
       className={cn(
         "min-h-screen relative flex flex-col w-full justify-center overflow-hidden",
         // h-screen if you want bigger
-        className
+        className,
       )}
     >
       {beams.map((beam) => (
@@ -98,7 +98,7 @@ export const BackgroundBeamsWithCollision = ({
         />
       ))}
 
-      {children? children : null}
+      {children ? children : null}
       <div
         ref={containerRef}
         className="absolute bottom-0 bg-neutral-100 w-full inset-x-0 pointer-events-none"
@@ -176,17 +176,15 @@ const CollisionMechanism = React.forwardRef<
 
   useEffect(() => {
     if (collision.detected && collision.coordinates) {
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         setCollision({ detected: false, coordinates: null });
         setCycleCollisionDetected(false);
-      }, 2000);
-
-      setTimeout(() => {
         setBeamKey((prevKey) => prevKey + 1);
       }, 2000);
+
+      return () => clearTimeout(timeoutId);
     }
   }, [collision]);
-
   return (
     <>
       <motion.div
@@ -215,7 +213,7 @@ const CollisionMechanism = React.forwardRef<
         }}
         className={cn(
           "absolute left-0 top-20 m-auto h-14 w-px rounded-full bg-gradient-to-t from-indigo-500 via-purple-500 to-transparent",
-          beamOptions.className
+          beamOptions.className,
         )}
       />
       <AnimatePresence>

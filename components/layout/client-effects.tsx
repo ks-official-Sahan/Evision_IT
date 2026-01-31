@@ -17,10 +17,11 @@ export function ClientEffects() {
     const coarse = matchMedia("(pointer: coarse)").matches;
 
     const load = async () => {
-      const [{ CursorFollower }, { BackgroundRippleEffect }] = await Promise.all([
-        import("@/components/motion/cursor-follower"),
-        import("@/components/ui/background-ripple-effect"),
-      ]);
+      const [{ CursorFollower }, { BackgroundRippleEffect }] =
+        await Promise.all([
+          import("@/components/motion/cursor-follower"),
+          import("@/components/ui/background-ripple-effect"),
+        ]);
       setMods({ BackgroundRippleEffect, CursorFollower });
     };
 
@@ -38,10 +39,33 @@ export function ClientEffects() {
     };
 
     if (!prefersReducedMotion) {
+      let loaded = false;
+      const useRequestIdleCallback =
+        typeof (window as any).requestIdleCallback === "function";
       const rIC =
         (window as any).requestIdleCallback ||
         ((cb: any) => setTimeout(cb, 300));
-      const id = rIC(load);
+      const cIC =
+        (window as any).cancelIdleCallback || ((id: any) => clearTimeout(id));
+
+      let scheduledCallbackId: number | undefined;
+
+      const wrappedLoad = () => {
+        if (loaded) return;
+        loaded = true;
+        load();
+      };
+
+      scheduledCallbackId = rIC(wrappedLoad);
+
+      const onFirstInteraction = () => {
+        removeListeners();
+        if (scheduledCallbackId !== undefined) {
+          cIC(scheduledCallbackId);
+        }
+        wrappedLoad();
+      };
+
       ["pointerdown", "wheel", "keydown", "touchstart"].forEach((t) =>
         window.addEventListener(t, onFirstInteraction, {
           passive: true,
@@ -49,7 +73,9 @@ export function ClientEffects() {
       );
       return () => {
         removeListeners();
-        (window as any).cancelIdleCallback?.(id);
+        if (scheduledCallbackId !== undefined) {
+          cIC(scheduledCallbackId);
+        }
       };
     }
   }, []);

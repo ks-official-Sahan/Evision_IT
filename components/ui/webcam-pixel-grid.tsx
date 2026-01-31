@@ -80,13 +80,18 @@ export const WebcamPixelGrid: React.FC<WebcamPixelGridProps> = ({
   // Parse monochrome color
   const monoRGB = React.useMemo(() => {
     const hex = monochromeColor.replace("#", "");
+    const match = /^([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})$/.exec(
+      hex,
+    );
+    if (!match) {
+      return { r: 0, g: 255, b: 136 }; // fallback to default
+    }
     return {
-      r: parseInt(hex.slice(0, 2), 16),
-      g: parseInt(hex.slice(2, 4), 16),
-      b: parseInt(hex.slice(4, 6), 16),
+      r: parseInt(match[1], 16),
+      g: parseInt(match[2], 16),
+      b: parseInt(match[3], 16),
     };
   }, [monochromeColor]);
-
   // Parse border color
   const borderRGB = React.useMemo(() => {
     const hex = borderColor.replace("#", "");
@@ -116,6 +121,10 @@ export const WebcamPixelGrid: React.FC<WebcamPixelGridProps> = ({
   // Request camera access
   const requestCameraAccess = useCallback(async () => {
     try {
+      // if (!navigator.mediaDevices?.getUserMedia) {
+      //   throw new Error("Camera API not available. Ensure you're using HTTPS.");
+      // }
+
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           width: { ideal: 640 },
@@ -433,6 +442,7 @@ export const WebcamPixelGrid: React.FC<WebcamPixelGridProps> = ({
             <button
               onClick={() => setShowErrorPopup(false)}
               className="absolute top-2 right-2 rounded-md p-1 text-white/40 transition-colors hover:bg-white/10 hover:text-white/70"
+              aria-label="Close"
             >
               <svg
                 className="h-4 w-4"
@@ -448,7 +458,6 @@ export const WebcamPixelGrid: React.FC<WebcamPixelGridProps> = ({
                 />
               </svg>
             </button>
-
             {/* Camera icon */}
             <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-white/10">
               <svg

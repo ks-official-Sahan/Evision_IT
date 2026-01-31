@@ -36,8 +36,7 @@ export default function NotFound() {
           transition={{ delay: 0.3 }}
           className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8"
         >
-          Something went wrong. The page you are looking for doesn't exist or
-          has been moved.
+          The page you are looking for doesn't exist or has been moved.{" "}
         </motion.p>
 
         <motion.div
@@ -55,16 +54,15 @@ export default function NotFound() {
               <Home className="mr-2 h-4 w-4" />
               Go Home
             </Link>
-          </Button>
-
+            <Link href="/contact">Contact Support</Link>
           <Button
             variant="outline"
             asChild
             size="lg"
             className="h-12 px-8 rounded-full backdrop-blur-sm bg-background/50 hover:bg-muted/50 transition-all duration-300"
           >
-            <Link href="/en/contact">Contact Support</Link>
-          </Button>
+            <Link href="/contact">Contact Support</Link>          
+            </Button>
         </motion.div>
       </div>
     </div>

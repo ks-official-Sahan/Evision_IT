@@ -102,6 +102,7 @@ const nextConfig = {
     optimizePackageImports: [
       "lucide-react",
       "framer-motion",
+      "motion",
       "@radix-ui/react-icons",
       "clsx",
       "gsap",

@@ -54,15 +54,15 @@ export default function NotFound() {
               <Home className="mr-2 h-4 w-4" />
               Go Home
             </Link>
-            <Link href="/contact">Contact Support</Link>
+          </Button>
           <Button
             variant="outline"
             asChild
             size="lg"
             className="h-12 px-8 rounded-full backdrop-blur-sm bg-background/50 hover:bg-muted/50 transition-all duration-300"
           >
-            <Link href="/contact">Contact Support</Link>          
-            </Button>
+            <Link href="/contact">Contact Support</Link>
+          </Button>
         </motion.div>
       </div>
     </div>

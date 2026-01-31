@@ -95,6 +95,33 @@
   ); /* Increased opacity for text readability */
   --glass-border: rgba(255, 255, 255, 0.25);
   --glass-text-overlay: rgba(255, 255, 255, 0.35); /* Text backing layer */
+
+  /* Enhanced UI/UX Tokens */
+  --card-hover-bg: rgba(
+    37,
+    187,
+    232,
+    0.06
+  ); /* Subtle accent overlay on hover */
+  --card-active-bg: rgba(37, 187, 232, 0.12); /* Active/selected state */
+  --glass-card-border-hover: rgba(
+    37,
+    187,
+    232,
+    0.35
+  ); /* Enhanced border on hover */
+
+  /* Animation Timing Tokens */
+  --animation-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animation-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --animation-duration-fast: 150ms;
+  --animation-duration-base: 300ms;
+  --animation-duration-slow: 500ms;
+
+  /* Spotlight Effect (for hover cards) */
+  --spotlight-size: 300px;
+  --spotlight-opacity: 0.15;
 }
 
 /* ============================================================================
@@ -173,6 +200,12 @@
   --glass-bg: rgba(26, 26, 26, 0.72); /* Increased for text contrast */
   --glass-border: rgba(255, 255, 255, 0.12);
   --glass-text-overlay: rgba(0, 0, 0, 0.45); /* Text backing layer */
+
+  /* Enhanced UI/UX Tokens - Dark Mode */
+  --card-hover-bg: rgba(37, 187, 232, 0.08);
+  --card-active-bg: rgba(37, 187, 232, 0.15);
+  --glass-card-border-hover: rgba(37, 187, 232, 0.45);
+  --spotlight-opacity: 0.12;
 }
 
 @theme inline {
@@ -533,6 +566,54 @@
     @apply hover:bg-card/70 hover:border-accent/40;
   }
 
+  /* Glass Card Enhanced - Premium variant with better hover states */
+  .glass-card-enhanced {
+    @apply relative bg-card/85 backdrop-blur-xl border border-border/60 rounded-2xl shadow-lg;
+    @apply transition-all duration-300 ease-[var(--animation-smooth)];
+  }
+
+  .glass-card-enhanced:hover {
+    @apply bg-card/95 shadow-xl;
+    border-color: var(--glass-card-border-hover);
+    transform: translateY(-2px);
+  }
+
+  .dark .glass-card-enhanced {
+    @apply bg-card/65 border-white/12;
+  }
+
+  .dark .glass-card-enhanced:hover {
+    @apply bg-card/75;
+  }
+
+  /* Spotlight Hover Effect (for premium cards) */
+  .spotlight-card {
+    @apply relative overflow-hidden;
+  }
+
+  .spotlight-card::before {
+    content: "";
+    position: absolute;
+    width: var(--spotlight-size);
+    height: var(--spotlight-size);
+    background: radial-gradient(
+      circle at center,
+      rgba(37, 187, 232, var(--spotlight-opacity)) 0%,
+      transparent 70%
+    );
+    transform: translate(
+      calc(var(--spotlight-x, 50%) - 50%),
+      calc(var(--spotlight-y, 50%) - 50%)
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .spotlight-card:hover::before {
+    opacity: 1;
+  }
+
   /* Glowing CTA Button */
   .btn-glow {
     @apply relative overflow-hidden;
@@ -649,4 +730,39 @@
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
+}
+
+/* Gradient flow animation for connection lines */
+@keyframes gradient-line-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-flow {
+  background-size: 200% 100%;
+  animation: gradient-line-flow 4s ease-in-out infinite;
+}
+
+/* Stagger animation delay utilities */
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+.stagger-4 {
+  animation-delay: 0.4s;
+}
+.stagger-5 {
+  animation-delay: 0.5s;
 }

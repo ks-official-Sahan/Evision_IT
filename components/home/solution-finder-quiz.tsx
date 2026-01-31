@@ -292,7 +292,7 @@ export function SolutionFinderQuiz({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
               <SectionHeader
                 badge={`${quiz.step || "Step"} ${currentStep} ${quiz.of || "of"} ${quizSteps.length}`}
@@ -307,8 +307,10 @@ export function SolutionFinderQuiz({
                     <div
                       key={step.id}
                       className={cn(
-                        "h-2 flex-1 rounded-full transition-colors",
-                        step.id <= currentStep ? "bg-accent" : "bg-muted",
+                        "h-2 flex-1 rounded-full transition-all duration-300",
+                        step.id <= currentStep
+                          ? "bg-accent shadow-sm shadow-accent/30"
+                          : "bg-muted",
                       )}
                     />
                   ))}
@@ -325,9 +327,9 @@ export function SolutionFinderQuiz({
                   >
                     <Card
                       className={cn(
-                        "group h-full cursor-pointer transition-all hover:shadow-md hover:border-accent",
+                        "group h-full cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-accent glass-card-enhanced",
                         answers[`step${currentStep}`] === option.id &&
-                          "border-accent border-2 bg-accent/5",
+                          "border-accent border-2 bg-accent/10 shadow-md",
                       )}
                     >
                       <CardContent className="pt-6">
@@ -382,7 +384,7 @@ export function SolutionFinderQuiz({
               key="recommendation"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
               <div className="text-center mb-8">
                 <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
@@ -394,7 +396,7 @@ export function SolutionFinderQuiz({
                 </p>
               </div>
 
-              <Card className="glass mb-8">
+              <Card className="glass-card-enhanced mb-8">
                 <CardContent className="pt-8">
                   <div className="flex gap-6 mb-6">
                     <div className="hidden sm:flex">{recommendation.icon}</div>

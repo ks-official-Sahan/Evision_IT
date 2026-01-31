@@ -44,7 +44,7 @@ export function FinalCTASection({ dict, locale = "en" }: FinalCTASectionProps) {
         initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
         whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
         className="mx-auto max-w-2xl relative z-10"
       >
         {/* Decorative element */}
@@ -55,7 +55,7 @@ export function FinalCTASection({ dict, locale = "en" }: FinalCTASectionProps) {
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
           className="flex justify-center mb-6"
         >
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm animate-pulse-subtle">
             <Sparkles className="h-7 w-7 text-accent" />
           </div>
         </motion.div>

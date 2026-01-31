@@ -70,7 +70,8 @@ export function FAQSection({ dict, locale = "en" }: FAQSectionProps) {
           initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
           whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass-card p-6 mb-10 border-accent/20"
+          transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+          className="glass-card-enhanced p-6 mb-10 border-accent/20"
         >
           <div className="flex items-center gap-2 mb-5">
             <HelpCircle className="h-5 w-5 text-accent" />
@@ -87,8 +88,8 @@ export function FAQSection({ dict, locale = "en" }: FAQSectionProps) {
                   initial={prefersReducedMotion ? {} : { opacity: 0, y: 10 }}
                   whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.1 + idx * 0.1 }}
-                  className="flex gap-3"
+                  transition={{ delay: 0.1 + idx * 0.08 }}
+                  className="flex gap-3 hover:bg-accent/5 p-2 rounded-lg transition-colors duration-200"
                 >
                   <div
                     className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${item.gradient} shadow-md`}
@@ -121,7 +122,7 @@ export function FAQSection({ dict, locale = "en" }: FAQSectionProps) {
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="glass-subtle px-5 border-none"
+                className="glass-card-enhanced px-5 border-none hover:bg-accent/5 transition-colors duration-200"
               >
                 <AccordionTrigger className="text-left text-foreground hover:text-accent py-4">
                   {faqItem.question}

@@ -44,7 +44,7 @@ export function CaseStudiesPreview({
       </div>
 
       <div className="mt-10 text-center">
-        <Button asChild variant="outline" size="lg">
+        <Button asChild variant="outline" size="lg" className="btn-glow">
           <Link href={`/${locale}/case-studies`}>
             {caseStudies.viewAllCaseStudies || "View All Case Studies"}
             <ArrowRight className="ml-2 h-4 w-4" />

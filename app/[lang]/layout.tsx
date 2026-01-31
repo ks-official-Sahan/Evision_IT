@@ -149,7 +149,7 @@ export default async function LocaleLayout({
       {/* Skip to content link for accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-accent focus:text-accent-foreground focus:rounded-md focus:outline-none"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-100 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-accent focus:text-accent-foreground focus:rounded-md focus:outline-none"
       >
         Skip to main content
       </a>
@@ -174,7 +174,7 @@ export default async function LocaleLayout({
 
       <div dir={direction} className="relative flex min-h-screen flex-col">
         <SiteHeader locale={locale} />
-        <main id="main-content" className="flex-1 z-[2]">
+        <main id="main-content" className="flex-1 z-2">
           {children}
         </main>
         <SiteFooter locale={locale} />

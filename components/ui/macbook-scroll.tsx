@@ -70,8 +70,7 @@ export const MacbookScroll = ({
       className="flex min-h-[200vh] shrink-0 scale-[0.35] transform flex-col items-center justify-start py-0 [perspective:800px] sm:scale-50 md:scale-100 md:py-80"
     >
       <motion.h2
-        style={{
-          translateY: textTransform,
+        className="mt-2 flex h-40 gap-[0.5px] px-[0.5px]"          translateY: textTransform,
           opacity: textOpacity,
         }}
         className="mb-20 text-center text-3xl font-bold text-neutral-800 dark:text-white"
@@ -170,8 +169,7 @@ export const Lid = ({
             alt="MacBook screen content"
             className="absolute inset-0 h-full w-full rounded-lg object-cover object-top-left"
           />
-        )}{" "}
-      </motion.div>
+        )}      </motion.div>
     </div>
   );
 };
@@ -189,7 +187,7 @@ export const Trackpad = () => {
 
 export const Keypad = () => {
   return (
-    <div className="mx-1 h-full transform-[translateZ(0)] rounded-md bg-[#050505] p-1 will-change:transform">
+    <div className="mx-1 h-full [transform:translateZ(0)] rounded-md bg-[#050505] p-1 will-change:transform">
       {/* First Row */}
       <div className="mb-0.5 flex w-full shrink-0 gap-0.5">
         <KBtn
@@ -559,7 +557,7 @@ export const KBtn = ({
   return (
     <div
       className={cn(
-        "transform-[translateZ(0)] rounded-lg p-[0.5px] will-change:transform",
+        "[transform:translateZ(0)] rounded-lg p-[0.5px] will-change:transform",
         backlit && "bg-white/20 shadow-xl shadow-white",
       )}
     >

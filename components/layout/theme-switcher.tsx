@@ -1,16 +1,7 @@
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon } from "lucide-react";
-
-interface ThemeSwitcherProps {
-  className?: string;
-  variant?: "outline" | "ghost";
-}
-
-import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
-import { Sun, Moon } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface ThemeSwitcherProps {
   className?: string;
@@ -50,10 +41,7 @@ const ThemeSwitcher = ({
   );
 };
 
-export default ThemeSwitcher;};
-
 export default ThemeSwitcher;
-
 {
   /* <Button
   variant="ghost"

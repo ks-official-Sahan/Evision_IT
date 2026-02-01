@@ -7,13 +7,15 @@ export function ClientEffects() {
     CursorFollower?: ComponentType;
   }>({});
 
+  let coarse: boolean = false;
+
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const prefersReducedMotion = matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    const coarse = matchMedia("(pointer: coarse)").matches;
+    coarse = matchMedia("(pointer: coarse)").matches;
 
     const load = async () => {
       const [{ CursorFollower }] = await Promise.all([
@@ -76,7 +78,7 @@ export function ClientEffects() {
   return (
     <>
       {/* cursor follower only on non-coarse pointers – handled inside the component */}
-      {CursorFollower ? <CursorFollower /> : null}
+      {CursorFollower && !coarse ? <CursorFollower /> : null}
     </>
   );
 }

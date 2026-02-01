@@ -70,7 +70,8 @@ export const MacbookScroll = ({
       className="flex min-h-[200vh] shrink-0 scale-[0.35] transform flex-col items-center justify-start py-0 [perspective:800px] sm:scale-50 md:scale-100 md:py-80"
     >
       <motion.h2
-        className="mt-2 flex h-40 gap-[0.5px] px-[0.5px]"          translateY: textTransform,
+        style={{
+          translateY: textTransform,
           opacity: textOpacity,
         }}
         className="mb-20 text-center text-3xl font-bold text-neutral-800 dark:text-white"
@@ -169,7 +170,8 @@ export const Lid = ({
             alt="MacBook screen content"
             className="absolute inset-0 h-full w-full rounded-lg object-cover object-top-left"
           />
-        )}      </motion.div>
+        )}{" "}
+      </motion.div>
     </div>
   );
 };
@@ -306,7 +308,7 @@ export const Keypad = () => {
           <span className="block"> = </span>
         </KBtn>
         <KBtn
-          className="w-10 items-end justify-end pr-1 pb-0.5"   
+          className="w-10 items-end justify-end pr-1 pb-0.5"
           childrenClassName="items-end"
         >
           delete
@@ -409,7 +411,7 @@ export const Keypad = () => {
           <span className="block">{`'`}</span>
         </KBtn>
         <KBtn
-          className="w-[2.85rem] items-end justify-end pr-1 pb-0.5"   
+          className="w-[2.85rem] items-end justify-end pr-1 pb-0.5"
           childrenClassName="items-end"
         >
           return
@@ -458,7 +460,7 @@ export const Keypad = () => {
           <span className="block">{`/`}</span>
         </KBtn>
         <KBtn
-          className="w-[3.65rem] items-end justify-end pr-1 pb-0.5"   
+          className="w-[3.65rem] items-end justify-end pr-1 pb-0.5"
           childrenClassName="items-end"
         >
           shift

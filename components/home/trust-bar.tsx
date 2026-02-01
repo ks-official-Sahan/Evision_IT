@@ -132,26 +132,6 @@ export function TrustBar({ locale = "en", dict }: TrustBarProps) {
           </div>
         </motion.div>
       </Container>
-
-      {/* Marquee Animation - Added inline for simplicity */}
-      <style jsx global>{`
-        @keyframes marquee {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        .animate-marquee {
-          animation: marquee 25s linear infinite;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .animate-marquee {
-            animation: none;
-          }
-        }
-      `}</style>
     </Section>
   );
 }

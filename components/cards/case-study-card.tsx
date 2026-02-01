@@ -2,78 +2,103 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import type { CaseStudy } from "@/lib/data";
 
 interface CaseStudyCardProps {
   caseStudy: CaseStudy;
   variant?: "default" | "featured";
   className?: string;
+  index?: number;
 }
 
 export function CaseStudyCard({
   caseStudy,
   variant = "default",
   className,
+  index = 0,
 }: CaseStudyCardProps) {
+  const isFeatured = variant === "featured";
+
   return (
-    <Link href={`/case-studies/${caseStudy.slug}`}>
-      <Card
-        className={cn(
-          "group h-full overflow-hidden transition-all hover:shadow-lg hover:border-accent",
-          className
-        )}
-      >
-        <div className="relative aspect-video overflow-hidden bg-muted">
-          <Image
-            src={caseStudy.image || "/placeholder.svg"}
-            alt={caseStudy.title}
-            fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-          <div className="absolute bottom-4 left-4 right-4">
-            <Badge variant="secondary" className="bg-background/90">
-              {caseStudy.category}
-            </Badge>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ delay: index * 0.1, duration: 0.4 }}
+      className={cn(
+        isFeatured && index === 0 && "case-study-featured",
+        className,
+      )}
+    >
+      <Link href={`/case-studies/${caseStudy.slug}`} className="block h-full">
+        <div className="case-study-card group h-full">
+          {/* Image Container */}
+          <div className="relative aspect-[16/10] overflow-hidden">
+            <Image
+              src={caseStudy.image || "/placeholder.svg"}
+              alt={caseStudy.title}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+            {/* Gradient Overlay */}
+            <div className="case-study-image-overlay" />
+            {/* Glass Overlay on Hover */}
+            <div className="case-study-glass-overlay" />
+
+            {/* Category Badge */}
+            <div className="absolute bottom-4 left-4 z-10">
+              <span className="case-study-badge">{caseStudy.category}</span>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="case-study-content">
+            {/* Client Name */}
+            <p className="text-xs font-semibold text-accent uppercase tracking-wider mb-2">
+              {caseStudy.client}
+            </p>
+
+            {/* Title */}
+            <h3 className="font-bold text-lg text-foreground line-clamp-2 mb-2 transition-colors group-hover:text-accent">
+              {caseStudy.title}
+            </h3>
+
+            {/* Excerpt */}
+            <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+              {caseStudy.excerpt}
+            </p>
+
+            {/* Results Metrics */}
+            {isFeatured &&
+              caseStudy.results &&
+              caseStudy.results.length > 0 && (
+                <div className="case-study-results">
+                  {caseStudy.results.slice(0, 3).map((result, idx) => (
+                    <div key={result.metric} className="case-study-metric">
+                      <div className="case-study-metric-value">
+                        {result.value}
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-0.5">
+                        {result.metric}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+            {/* View Link */}
+            <div className="case-study-link mt-4">
+              <span>View case study</span>
+              <ArrowRight className="h-4 w-4 case-study-link-arrow" />
+            </div>
           </div>
         </div>
-        <CardContent className="p-5">
-          <p className="text-xs font-medium text-accent uppercase tracking-wide">
-            {caseStudy.client}
-          </p>
-          <h3 className="mt-2 font-semibold text-foreground line-clamp-2 group-hover:text-accent transition-colors">
-            {caseStudy.title}
-          </h3>
-          <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
-            {caseStudy.excerpt}
-          </p>
-
-          {variant === "featured" && caseStudy.results.length > 0 && (
-            <div className="mt-4 grid grid-cols-3 gap-2 border-t border-border pt-4">
-              {caseStudy.results.slice(0, 3).map((result) => (
-                <div key={result.metric} className="text-center">
-                  <div className="text-lg font-semibold text-foreground">
-                    {result.value}
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    {result.metric}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div className="mt-4 flex items-center text-sm font-medium text-accent">
-            View case study
-            <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </div>
-        </CardContent>
-      </Card>
-    </Link>
+      </Link>
+    </motion.div>
   );
 }

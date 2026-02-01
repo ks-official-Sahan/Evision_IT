@@ -689,10 +689,6 @@
   }
 }
 
-.animate-shimmer {
-  animation: shimmer 15s ease-in-out infinite;
-}
-
 /* Gradient flow for text gradient */
 @keyframes gradient-flow {
   0%,
@@ -728,10 +724,6 @@
   }
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
 /* Gradient flow animation for connection lines */
 @keyframes gradient-line-flow {
   0% {
@@ -745,24 +737,287 @@
   }
 }
 
-.animate-gradient-flow {
-  background-size: 200% 100%;
-  animation: gradient-line-flow 4s ease-in-out infinite;
+@layer utilities {
+  .animate-shimmer {
+    animation: shimmer 15s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-gradient-flow {
+    background-size: 200% 100%;
+    animation: gradient-line-flow 4s ease-in-out infinite;
+  }
+
+  /* Stagger animation delay utilities */
+  .stagger-1 {
+    animation-delay: 0.1s;
+  }
+  .stagger-2 {
+    animation-delay: 0.2s;
+  }
+  .stagger-3 {
+    animation-delay: 0.3s;
+  }
+  .stagger-4 {
+    animation-delay: 0.4s;
+  }
+  .stagger-5 {
+    animation-delay: 0.5s;
+  }
+
+  /* ============================================================================
+     SOLUTION FINDER QUIZ STYLES
+     ============================================================================ */
+
+  /* Quiz Stepper - Numbered Circles */
+  .quiz-stepper {
+    @apply flex items-center justify-center gap-0;
+  }
+
+  .quiz-step-circle {
+    @apply relative z-10 flex h-10 w-10 items-center justify-center rounded-full
+         font-semibold text-sm transition-all duration-300;
+  }
+
+  .quiz-step-circle--inactive {
+    @apply bg-muted text-muted-foreground border-2 border-border;
+  }
+
+  .quiz-step-circle--active {
+    @apply bg-accent text-accent-foreground border-2 border-accent
+         shadow-lg shadow-accent/30;
+  }
+
+  .quiz-step-circle--complete {
+    @apply bg-accent/20 text-accent border-2 border-accent;
+  }
+
+  .quiz-step-connector {
+    @apply h-1 w-12 sm:w-16 lg:w-20 rounded-full transition-all duration-500;
+  }
+
+  .quiz-step-connector--inactive {
+    @apply bg-border;
+  }
+
+  .quiz-step-connector--active {
+    @apply bg-gradient-to-r from-accent to-accent/50;
+  }
+
+  /* Quiz Option Cards */
+  .quiz-option-card {
+    @apply relative overflow-hidden rounded-xl border-2 border-transparent
+         bg-card p-6 cursor-pointer transition-all duration-300;
+    background:
+      linear-gradient(var(--card), var(--card)) padding-box,
+      linear-gradient(135deg, transparent 0%, var(--border) 100%) border-box;
+  }
+
+  .quiz-option-card:hover {
+    @apply shadow-lg;
+    background:
+      linear-gradient(var(--card), var(--card)) padding-box,
+      linear-gradient(135deg, var(--accent) 0%, var(--brand-secondary) 100%)
+        border-box;
+    transform: translateY(-2px);
+  }
+
+  .quiz-option-card--selected {
+    @apply border-accent shadow-xl;
+    background:
+      linear-gradient(
+          color-mix(in srgb, var(--accent) 8%, var(--card)),
+          color-mix(in srgb, var(--accent) 8%, var(--card))
+        )
+        padding-box,
+      linear-gradient(135deg, var(--accent) 0%, var(--brand-secondary) 100%)
+        border-box;
+  }
+
+  .quiz-option-icon {
+    @apply flex h-14 w-14 items-center justify-center rounded-xl
+         transition-all duration-300;
+  }
+
+  .quiz-option-icon--default {
+    @apply bg-muted text-foreground;
+  }
+
+  .quiz-option-icon--selected {
+    @apply bg-accent text-accent-foreground shadow-md;
+  }
+} /* End @layer utilities for quiz step animations */
+
+/* Quiz Selection Pulse Animation */
+@keyframes selection-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 187, 232, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(37, 187, 232, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 187, 232, 0);
+  }
 }
 
-/* Stagger animation delay utilities */
-.stagger-1 {
-  animation-delay: 0.1s;
+@layer utilities {
+  .animate-selection-pulse {
+    animation: selection-pulse 0.6s ease-out;
+  }
+
+  /* Quiz Recommendation Card */
+  .quiz-recommendation-card {
+    @apply relative overflow-hidden rounded-2xl border border-accent/30
+         bg-card p-8;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent) 5%, var(--card)),
+      var(--card)
+    );
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(37, 187, 232, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .dark .quiz-recommendation-card {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent) 10%, var(--card)),
+      var(--card)
+    );
+  }
+
+  /* ============================================================================
+   CASE STUDY CARD STYLES
+   ============================================================================ */
+
+  /* Featured Case Study Card */
+  .case-study-featured {
+    @apply col-span-1 md:col-span-2 lg:col-span-2;
+  }
+
+  /* NOTE: Add 'group' class directly in component for group-hover variants to work */
+  .case-study-card {
+    @apply relative overflow-hidden rounded-xl border border-border
+         bg-card transition-all duration-300;
+  }
+
+  .case-study-card:hover {
+    @apply shadow-xl border-accent/50;
+    transform: translateY(-4px);
+  }
+
+  /* Image Overlay on Hover */
+  .case-study-image-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent
+         opacity-60 transition-opacity duration-300;
+  }
+
+  .case-study-card:hover .case-study-image-overlay {
+    @apply opacity-80;
+  }
+
+  /* Glassmorphism overlay on hover */
+  .case-study-glass-overlay {
+    @apply absolute inset-0 opacity-0 transition-all duration-300;
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--background) 90%, transparent),
+      color-mix(in srgb, var(--background) 40%, transparent) 50%,
+      transparent
+    );
+    backdrop-filter: blur(2px);
+  }
+
+  .case-study-card:hover .case-study-glass-overlay {
+    @apply opacity-100;
+  }
+
+  /* Content Slide-Up Reveal */
+  .case-study-content {
+    @apply relative z-10 p-5 transition-transform duration-300;
+  }
+
+  .case-study-card:hover .case-study-content {
+    transform: translateY(-8px);
+  }
+
+  /* Results Metrics Animation */
+  .case-study-results {
+    @apply grid grid-cols-3 gap-3 border-t border-border/50 pt-4 mt-4;
+  }
+
+  .case-study-metric {
+    @apply text-center transition-all duration-300;
+  }
+
+  .case-study-metric-value {
+    @apply text-xl font-bold text-foreground transition-colors duration-300;
+  }
+
+  .case-study-card:hover .case-study-metric-value {
+    @apply text-accent;
+  }
+
+  /* Badge Gradient */
+  .case-study-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium
+         transition-all duration-300;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent) 15%, var(--background)),
+      color-mix(in srgb, var(--accent) 5%, var(--background))
+    );
+    color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+
+  .case-study-card:hover .case-study-badge {
+    background: linear-gradient(135deg, var(--accent), var(--brand-secondary));
+    color: var(--accent-foreground);
+    border-color: transparent;
+  }
+
+  /* View Link Animation */
+  .case-study-link {
+    @apply inline-flex items-center gap-1 text-sm font-medium text-accent
+         transition-all duration-300;
+  }
+
+  .case-study-link-arrow {
+    @apply transition-transform duration-300;
+  }
+
+  .case-study-card:hover .case-study-link-arrow {
+    transform: translateX(4px);
+  }
+
+  /* ============================================================================
+     MARQUEE ANIMATION (Trust Bar)
+     ============================================================================ */
+
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
+} /* End @layer utilities */
+
+/* Marquee keyframes for TrustBar client logos */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
-.stagger-2 {
-  animation-delay: 0.2s;
-}
-.stagger-3 {
-  animation-delay: 0.3s;
-}
-.stagger-4 {
-  animation-delay: 0.4s;
-}
-.stagger-5 {
-  animation-delay: 0.5s;
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
 }

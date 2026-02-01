@@ -47,12 +47,12 @@ export default async function HomePage({ params }: PageProps) {
 
       {/* Solutions Section with Background Beams */}
       <section className="relative overflow-hidden">
-        <BackgroundBeams className="opacity-40" />
-        <div className="relative z-10">
+        {/* <BackgroundBeams className="opacity-40" /> */}
+        {/* <div className="relative z-10"> */}
           <SolutionFinderQuiz dict={dict} locale={locale} />
-          <SolutionsOverview dict={dict} locale={locale} />
-        </div>
+        {/* </div> */}
       </section>
+      <SolutionsOverview dict={dict} locale={locale} />
 
       {/* Metrics and Case Studies */}
       <OutcomesMetrics dict={dict} locale={locale} />

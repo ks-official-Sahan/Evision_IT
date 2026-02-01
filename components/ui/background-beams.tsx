@@ -90,7 +90,7 @@ export const BackgroundBeams = React.memo(
             stroke="url(#paint0_radial_242_278)"
             strokeOpacity="0.05"
             strokeWidth="0.5"
-            className="opacity-20"
+            className="opacity-40"
           ></path>
 
           {paths.map((path, index) => (

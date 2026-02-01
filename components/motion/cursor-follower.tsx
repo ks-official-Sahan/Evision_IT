@@ -31,8 +31,9 @@ export function CursorFollower() {
     const trails = trailRefs.current;
     const ribbons = ribbonRefs.current;
 
-    if (!cursor || !follower) return;
-
+    if (!cursor || !follower) {
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
     const onMouseMove = (e: MouseEvent) => {
       gsap.to(cursor, {
         x: e.clientX,
@@ -223,10 +224,9 @@ export function CursorFollower() {
       {/* Trail dots */}
       {Array.from({ length: 5 }).map((_, index) => (
         <div
-          key={index}
           ref={(el) => {
-            trailRefs.current[index] = el!;
-          }}
+            if (el) trailRefs.current[index] = el;
+          }}          
           className="fixed top-0 left-0 rounded-full pointer-events-none z-[9997] mix-blend-difference hidden lg:block"
           style={{
             width: `${8 - index}px`,

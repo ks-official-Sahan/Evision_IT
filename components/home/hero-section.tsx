@@ -54,8 +54,8 @@ export function HeroSection({ dict, locale = "en" }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden pt-8 pb-16 lg:pt-16 lg:pb-24">
       {/* Gradient background overlay */}
-      <div className="absolute inset-0 z-1 bg-linear-to-b from-accent/8 via-transparent to-transparent pointer-events-none" />
-      <div className="absolute inset-0 z-1 bg-linear-to-r from-transparent via-accent/3 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-linear-to-b from-accent/8 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-linear-to-r from-transparent via-accent/3 to-transparent pointer-events-none" />
 
       <Container>
         <motion.div
@@ -92,7 +92,6 @@ export function HeroSection({ dict, locale = "en" }: HeroSectionProps) {
             <span
               className="text-gradient-accent inline-block"
               style={{ color: "var(--accent)" }} // Fallback for gradient-unsupported browsers
-              aria-label={hero.tagline || "growing businesses"}
             >
               {hero.tagline || "growing businesses"}
             </span>

@@ -55,8 +55,8 @@ export function FinalCTASection({ dict, locale = "en" }: FinalCTASectionProps) {
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
           className="flex justify-center mb-6"
         >
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm animate-pulse-subtle">
-            <Sparkles className="h-7 w-7 text-accent" />
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm animate-pulse-subtle motion-reduce:animate-none">
+            <Sparkles className="h-7 w-7 text-accent" aria-hidden="true" />
           </div>
         </motion.div>
 

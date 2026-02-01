@@ -22,23 +22,8 @@ export function ClientEffects() {
       setMods({ CursorFollower });
     };
 
-    // Idle or first interaction — whichever comes first
-    const onFirstInteraction = () => {
-      removeListeners();
-      load();
-    };
-    const removeListeners = () => {
-      ["pointerdown", "wheel", "keydown", "touchstart"].forEach((t) =>
-        window.removeEventListener(t, onFirstInteraction, {
-          passive: true,
-        } as any),
-      );
-    };
-
     if (!prefersReducedMotion) {
       let loaded = false;
-      const useRequestIdleCallback =
-        typeof (window as any).requestIdleCallback === "function";
       const rIC =
         (window as any).requestIdleCallback ||
         ((cb: any) => setTimeout(cb, 300));
@@ -54,6 +39,16 @@ export function ClientEffects() {
       };
 
       scheduledCallbackId = rIC(wrappedLoad);
+
+      const events = ["pointerdown", "wheel", "keydown", "touchstart"] as const;
+
+      const removeListeners = () => {
+        events.forEach((t) =>
+          window.removeEventListener(t, onFirstInteraction, {
+            passive: true,
+          } as EventListenerOptions),
+        );
+      };
 
       const onFirstInteraction = () => {
         removeListeners();

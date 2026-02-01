@@ -168,14 +168,26 @@ export function OutcomesMetrics({ dict, locale = "en" }: OutcomesMetricsProps) {
                     <div className="h-1.5 bg-muted rounded-full overflow-hidden">
                       <motion.div
                         className={`h-full ${metric.progressColor} rounded-full`}
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${metric.progressPercent}%` }}
+                        initial={
+                          prefersReducedMotion
+                            ? { width: `${metric.progressPercent}%` }
+                            : { width: 0 }
+                        }
+                        whileInView={
+                          prefersReducedMotion
+                            ? {}
+                            : { width: `${metric.progressPercent}%` }
+                        }
                         viewport={{ once: true }}
-                        transition={{
-                          delay: 0.5 + idx * 0.1,
-                          duration: 0.8,
-                          ease: "easeOut",
-                        }}
+                        transition={
+                          prefersReducedMotion
+                            ? {}
+                            : {
+                                delay: 0.5 + idx * 0.1,
+                                duration: 0.8,
+                                ease: "easeOut",
+                              }
+                        }
                       />
                     </div>
                   </div>

@@ -159,6 +159,16 @@ interface Recommendation {
 const getRecommendation = (answers: QuizAnswers): Recommendation => {
   const buildType = answers.step1;
 
+  if (!buildType) {
+    // Return a sensible default or throw
+    return {
+      title: "Custom Solution",
+      description: "Complete the quiz to get a personalized recommendation.",
+      services: [],
+      icon: <Globe className="h-10 w-10 text-accent" />,
+    };
+  }
+
   if (buildType === "web") {
     return {
       title: "Custom Web Application Development",

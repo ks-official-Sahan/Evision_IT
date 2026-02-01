@@ -11,6 +11,7 @@ import {
   MessageSquare,
   Calendar,
 } from "lucide-react";
+import { siteConfig } from "@/lib/config";
 
 interface FloatingCTAProps {
   locale?: string;
@@ -31,7 +32,7 @@ export function FloatingCTA({ locale = "en", className }: FloatingCTAProps) {
   const prefersReducedMotion = useReducedMotion();
 
   // WhatsApp link with pre-filled message
-  const whatsappNumber = "+94702420004";
+  const whatsappNumber = siteConfig.contact.phone;
   const whatsappMessage = encodeURIComponent(
     "Hi! I'm interested in learning more about Evision IT services.",
   );

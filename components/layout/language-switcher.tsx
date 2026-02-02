@@ -16,11 +16,13 @@ import { cn } from "@/lib/utils";
 interface LanguageSwitcherProps {
   currentLocale: Locale;
   className?: string;
+  variant?: "outline" | "ghost";
 }
 
 export function LanguageSwitcher({
   currentLocale,
   className,
+  variant = "outline",
 }: LanguageSwitcherProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -50,14 +52,14 @@ export function LanguageSwitcher({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="ghost"
+          variant={variant}
           size="sm"
-          className={cn("gap-2", className)}
+          className={cn("gap-2 h-9", className)}
           aria-label="Select language"
         >
-          <Globe className="h-4 w-4" />
-          <span className="hidden sm:inline">{currentLabel.name}</span>
-          <span className="sm:hidden">{currentLocale.toUpperCase()}</span>
+          <Globe className="h-5 w-5" />
+          {/* <span className="hidden sm:inline">{currentLabel.name}</span> */}
+          <span className="text-sm">{currentLocale.toUpperCase()}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">

@@ -7,7 +7,7 @@ import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ServiceCard } from "@/components/cards/service-card";
-import { getAllServices, getServicesPageData } from "@/lib/cached-data";
+import { getAllServices } from "@/lib/cached-data";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface PageProps {

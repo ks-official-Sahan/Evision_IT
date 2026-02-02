@@ -1,12 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Palette, Cloud, Shield, Settings } from "lucide-react";
+import {
+  ArrowRight,
+  Palette,
+  Cloud,
+  Shield,
+  Settings,
+  Sparkles,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { type Locale } from "@/lib/config";
 import { type Dictionary } from "@/lib/i18n/get-dict";
@@ -20,8 +27,8 @@ export function SolutionsOverview({
   dict,
   locale = "en",
 }: SolutionsOverviewProps) {
+  const prefersReducedMotion = useReducedMotion();
   const solutions = dict?.solutions || {};
-  const cta = dict?.cta || {};
 
   const solutionItems = [
     {
@@ -39,6 +46,7 @@ export function SolutionsOverview({
       ],
       href: `/${locale}/solutions#digital`,
       featured: true,
+      gradient: "from-accent via-accent/80 to-cyan-400",
     },
     {
       id: "infrastructure",
@@ -54,6 +62,7 @@ export function SolutionsOverview({
         "Monitoring",
       ],
       href: `/${locale}/solutions#infrastructure`,
+      gradient: "from-blue-400 to-indigo-500",
     },
     {
       id: "security",
@@ -69,6 +78,7 @@ export function SolutionsOverview({
         "Training",
       ],
       href: `/${locale}/solutions#security`,
+      gradient: "from-rose-400 to-red-500",
     },
     {
       id: "managed",
@@ -84,11 +94,12 @@ export function SolutionsOverview({
         "Strategic Consulting",
       ],
       href: `/${locale}/solutions#managed`,
+      gradient: "from-purple-400 to-violet-500",
     },
   ];
 
   return (
-    <Section>
+    <Section className="section-gradient-2">
       <SectionHeader
         badge={solutions.badge || "Solutions"}
         title={
@@ -101,71 +112,97 @@ export function SolutionsOverview({
       />
 
       <div className="grid gap-6 md:grid-cols-2">
-        {solutionItems.map((solution) => (
-          <Link key={solution.id} href={solution.href}>
-            <Card
-              className={cn(
-                "group h-full transition-all hover:shadow-lg hover:border-accent",
-                solution.featured &&
-                  "md:row-span-1 border-accent/50 bg-accent/5",
-              )}
+        {solutionItems.map((solution, idx) => {
+          const Icon = solution.icon;
+          return (
+            <motion.div
+              key={solution.id}
+              initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+              whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: idx * 0.1, duration: 0.4 }}
             >
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div
-                    className={cn(
-                      "flex h-12 w-12 items-center justify-center rounded-lg transition-colors",
-                      solution.featured
-                        ? "bg-accent text-accent-foreground"
-                        : "bg-muted text-foreground group-hover:bg-accent group-hover:text-accent-foreground",
-                    )}
-                  >
-                    <solution.icon className="h-6 w-6" />
-                  </div>
-                  {solution.featured && (
-                    <Badge>
-                      {(solutions.primaryFocus as string) || "Primary Focus"}
-                    </Badge>
+              <Link href={solution.href} className="block h-full">
+                <div
+                  className={cn(
+                    "glass-card h-full p-6 group relative overflow-hidden",
+                    solution.featured && "border-accent/40",
                   )}
-                </div>
-                <CardTitle className="mt-4 text-xl group-hover:text-accent transition-colors">
-                  {solution.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed">
-                  {solution.description}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {solution.services.map((service: string) => (
-                    <Badge
-                      key={service}
-                      variant="secondary"
-                      className="font-normal"
+                >
+                  {/* Featured glow effect */}
+                  {solution.featured && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-transparent pointer-events-none" />
+                  )}
+
+                  {/* Header */}
+                  <div className="flex items-start justify-between relative z-10">
+                    <div
+                      className={cn(
+                        "flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg transition-all duration-300",
+                        solution.gradient,
+                        "group-hover:scale-110 group-hover:shadow-xl",
+                      )}
                     >
-                      {service}
-                    </Badge>
-                  ))}
+                      <Icon className="h-7 w-7 text-white" />
+                    </div>
+                    {solution.featured && (
+                      <Badge className="flex items-center gap-1 bg-accent/10 text-accent border-accent/30">
+                        <Sparkles className="h-3 w-3" />
+                        {(solutions.primaryFocus as string) || "Primary Focus"}
+                      </Badge>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="mt-5 relative z-10">
+                    <h3 className="text-xl font-semibold text-foreground group-hover:text-accent transition-colors">
+                      {solution.title}
+                    </h3>
+                    <p className="mt-2 text-muted-foreground leading-relaxed text-sm sm:text-base">
+                      {solution.description}
+                    </p>
+
+                    {/* Service Tags */}
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {solution.services.map((service: string) => (
+                        <span
+                          key={service}
+                          className="px-3 py-1 text-xs rounded-full bg-muted text-muted-foreground"
+                        >
+                          {service}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Arrow Link */}
+                    <div className="mt-5 flex items-center text-sm font-medium text-accent">
+                      {(solutions.exploreSolutions as string) ||
+                        "Explore solutions"}
+                      <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-2" />
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-4 flex items-center text-sm font-medium text-accent">
-                  {(solutions.exploreSolutions as string) ||
-                    "Explore solutions"}
-                  <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
+              </Link>
+            </motion.div>
+          );
+        })}
       </div>
 
-      <div className="mt-10 text-center">
-        <Button asChild variant="outline" size="lg">
+      {/* View All CTA */}
+      <motion.div
+        initial={prefersReducedMotion ? {} : { opacity: 0 }}
+        whileInView={prefersReducedMotion ? {} : { opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.5 }}
+        className="mt-12 text-center"
+      >
+        <Button asChild variant="outline" size="lg" className="btn-glow">
           <Link href={`/${locale}/solutions`}>
             {(solutions.viewAllSolutions as string) || "View All Solutions"}
             <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
-      </div>
+      </motion.div>
     </Section>
   );
 }

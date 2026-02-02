@@ -23,7 +23,7 @@ export const siteConfig = {
   legalName: "Evision IT (PVT) Ltd.",
   tagline: "Crafting Digital Excellence",
   description:
-    "High-performance websites, apps, e-commerce and digital marketing—backed by enterprise-grade infrastructure and security expertise.",
+    "Sri Lanka's leading IT company delivering high-performance websites, mobile apps, e-commerce solutions, and digital marketing with enterprise-grade security.",
 
   /* Domain & URLs */
   url: "https://evision-it.com",

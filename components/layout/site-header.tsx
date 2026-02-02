@@ -4,8 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, Sun, Moon } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import {
@@ -15,9 +14,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { siteConfig, navLinks, type Locale } from "@/lib/config";
 import { cn } from "@/lib/utils";
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import ThemeSwitcher from "@/components/layout/theme-switcher";
+import { useTheme } from "next-themes";
 
 interface SiteHeaderProps {
   locale?: Locale;
@@ -25,10 +26,10 @@ interface SiteHeaderProps {
 
 export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
   const pathname = usePathname();
-  const { theme, setTheme, resolvedTheme } = useTheme();
   const [isOpen, setIsOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
+  const { resolvedTheme } = useTheme();
 
   React.useEffect(() => {
     setMounted(true);
@@ -45,7 +46,7 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
   // Use dark logo for light theme, light logo for dark theme
   const logoSrc =
     mounted && resolvedTheme === "dark"
-      ? "/logo/logo_light.png"
+      ? "/logo/logo_white.png"
       : "/logo/logo_dark.png";
 
   return (
@@ -106,15 +107,7 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-2">
             <LanguageSwitcher currentLocale={locale} />
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              aria-label="Toggle theme"
-            >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            </Button>
+            <ThemeSwitcher />
             <Button asChild>
               <Link href={`/${locale}/contact`}>Get Started</Link>
             </Button>
@@ -123,15 +116,7 @@ export function SiteHeader({ locale = "en" }: SiteHeaderProps) {
           {/* Mobile Actions */}
           <div className="flex lg:hidden items-center gap-2">
             <LanguageSwitcher currentLocale={locale} />
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              aria-label="Toggle theme"
-            >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            </Button>
+            <ThemeSwitcher />
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" aria-label="Open menu">

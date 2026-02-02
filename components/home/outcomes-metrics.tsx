@@ -1,13 +1,17 @@
 "use client";
 
 import React, { useEffect } from "react";
-
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Container } from "@/components/ui/container";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, Zap, BarChart3, Clock } from "lucide-react";
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { TrendingUp, Zap, BarChart3, Clock, ArrowRight } from "lucide-react";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  animate,
+  useReducedMotion,
+} from "framer-motion";
 import { type Locale } from "@/lib/config";
 
 interface CounterProps {
@@ -16,6 +20,7 @@ interface CounterProps {
 }
 
 function AnimatedCounter({ value, duration = 2 }: CounterProps) {
+  const prefersReducedMotion = useReducedMotion();
   const numericValue = parseInt(value.replace(/[^0-9]/g, ""));
   const count = useMotionValue(0);
   const displayValue = useTransform(count, (latest) => {
@@ -24,11 +29,16 @@ function AnimatedCounter({ value, duration = 2 }: CounterProps) {
   });
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      count.set(numericValue);
+      return;
+    }
     const controls = animate(count, numericValue, {
       duration,
+      ease: "easeOut",
     });
     return controls.stop;
-  }, [count, numericValue, duration]);
+  }, [count, numericValue, duration, prefersReducedMotion]);
 
   return <motion.span>{displayValue}</motion.span>;
 }
@@ -39,49 +49,79 @@ interface OutcomesMetricsProps {
 }
 
 export function OutcomesMetrics({ dict, locale = "en" }: OutcomesMetricsProps) {
+  const prefersReducedMotion = useReducedMotion();
   const outcomes = dict?.outcomes || {};
 
   const outcomeMetrics = [
     {
-      icon: <TrendingUp className="h-6 w-6" />,
+      icon: TrendingUp,
       value: "204%",
       label: outcomes.trafficGrowth || "Average Traffic Growth",
       description:
         outcomes.trafficGrowthDesc ||
         "Client websites see significant organic traffic increases within 6 months",
-      color: "accent" as const,
+      gradient: "from-emerald-400 to-teal-500",
+      progressColor: "bg-emerald-500",
+      progressPercent: 90,
     },
     {
-      icon: <Zap className="h-6 w-6" />,
+      icon: Zap,
       value: "80%",
       label: outcomes.performanceImprovement || "Performance Improvement",
       description:
         outcomes.performanceDesc ||
         "Pages load 80% faster with our optimization techniques",
-      color: "secondary" as const,
+      gradient: "from-amber-400 to-orange-500",
+      progressColor: "bg-amber-500",
+      progressPercent: 80,
     },
     {
-      icon: <BarChart3 className="h-6 w-6" />,
+      icon: BarChart3,
       value: "3.5x",
       label: outcomes.conversionIncrease || "Conversion Rate Increase",
       description:
         outcomes.conversionDesc ||
         "Better UX and design lead to higher conversion rates",
-      color: "primary" as const,
+      gradient: "from-blue-400 to-indigo-500",
+      progressColor: "bg-blue-500",
+      progressPercent: 75,
     },
     {
-      icon: <Clock className="h-6 w-6" />,
+      icon: Clock,
       value: "50%",
       label: outcomes.fasterTimeToMarket || "Faster Time-to-Market",
       description:
         outcomes.fasterTimeDesc ||
         "Agile development methodology accelerates product launches",
-      color: "accent" as const,
+      gradient: "from-purple-400 to-violet-500",
+      progressColor: "bg-purple-500",
+      progressPercent: 50,
+    },
+  ];
+
+  const deliveryPoints = [
+    {
+      title: outcomes.technicalExcellence || "Technical Excellence",
+      desc:
+        outcomes.technicalExcellenceDesc ||
+        "Modern tech stacks, best practices, and continuous optimization",
+    },
+    {
+      title: outcomes.dataDrivenStrategy || "Data-Driven Strategy",
+      desc:
+        outcomes.dataDrivenStrategyDesc ||
+        "Every decision backed by analytics and user research",
+    },
+    {
+      title: outcomes.ongoingOptimization || "Ongoing Optimization",
+      desc:
+        outcomes.ongoingOptimizationDesc ||
+        "Continuous monitoring, testing, and improvements post-launch",
     },
   ];
 
   return (
-    <Section background="muted">
+    <Section background="muted" className="section-gradient-1">
       <SectionHeader
         badge={outcomes.badge || "Results & Impact"}
         title={outcomes.title || "Real outcomes from real projects"}
@@ -92,93 +132,106 @@ export function OutcomesMetrics({ dict, locale = "en" }: OutcomesMetricsProps) {
       />
 
       <div className="grid gap-6 md:grid-cols-2">
-        {outcomeMetrics.map((metric, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: idx * 0.1 }}
-          >
-            <Card className="h-full glass hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="flex items-start justify-between gap-4">
-                  <div
-                    className={`flex h-12 w-12 items-center justify-center rounded-lg flex-shrink-0 ${
-                      metric.color === "accent"
-                        ? "bg-accent/10 text-accent"
-                        : metric.color === "secondary"
-                          ? "bg-secondary/10 text-secondary"
-                          : "bg-primary/10 text-primary"
-                    }`}
-                  >
-                    {metric.icon}
-                  </div>
+        {outcomeMetrics.map((metric, idx) => {
+          const Icon = metric.icon;
+          return (
+            <motion.div
+              key={idx}
+              initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+              whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: idx * 0.1, duration: 0.4 }}
+              className="glass-card p-6 sm:p-8 group"
+            >
+              <div className="flex items-start gap-5">
+                {/* Icon with gradient */}
+                <div
+                  className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${metric.gradient} flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                >
+                  <Icon className="h-7 w-7 text-white" />
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="mb-4">
-                  <div className="text-4xl sm:text-5xl font-bold text-foreground mb-2">
+
+                <div className="flex-1">
+                  {/* Large Value */}
+                  <div className="text-4xl sm:text-5xl font-bold text-gradient-accent mb-1">
                     <AnimatedCounter value={metric.value} />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
                     {metric.label}
                   </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {metric.description}
+                  </p>
+
+                  {/* Progress Bar Visualization */}
+                  <div className="mt-4">
+                    <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                      <motion.div
+                        className={`h-full ${metric.progressColor} rounded-full`}
+                        initial={
+                          prefersReducedMotion
+                            ? { width: `${metric.progressPercent}%` }
+                            : { width: 0 }
+                        }
+                        whileInView={
+                          prefersReducedMotion
+                            ? {}
+                            : { width: `${metric.progressPercent}%` }
+                        }
+                        viewport={{ once: true }}
+                        transition={
+                          prefersReducedMotion
+                            ? {}
+                            : {
+                                delay: 0.5 + idx * 0.1,
+                                duration: 0.8,
+                                ease: "easeOut",
+                              }
+                        }
+                      />
+                    </div>
+                  </div>
                 </div>
-                <p className="text-sm sm:text-base text-muted-foreground">
-                  {metric.description}
-                </p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
 
-      {/* Additional Context Section */}
+      {/* How We Deliver Section */}
       <motion.div
-        className="mt-12 pt-12 border-t border-border"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        className="mt-16 pt-12 border-t border-border/50"
+        initial={prefersReducedMotion ? {} : { opacity: 0 }}
+        whileInView={prefersReducedMotion ? {} : { opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 0.4 }}
       >
-        <Container>
-          <div className="max-w-3xl mx-auto">
-            <h3 className="text-2xl font-bold text-foreground mb-4">
+        <Container size="sm">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-foreground">
               {outcomes.howWeDeliver || "How we deliver these results"}
             </h3>
-            <ul className="space-y-3 text-muted-foreground">
-              <li className="flex items-start gap-3">
-                <span className="text-accent font-bold mt-1">→</span>
-                <span>
-                  <strong className="text-foreground">
-                    {outcomes.technicalExcellence || "Technical Excellence:"}
-                  </strong>{" "}
-                  {outcomes.technicalExcellenceDesc ||
-                    "Modern tech stacks, best practices, and continuous optimization"}
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-accent font-bold mt-1">→</span>
-                <span>
-                  <strong className="text-foreground">
-                    {outcomes.dataDrivenStrategy || "Data-Driven Strategy:"}
-                  </strong>{" "}
-                  {outcomes.dataDrivenStrategyDesc ||
-                    "Every decision backed by analytics and user research"}
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-accent font-bold mt-1">→</span>
-                <span>
-                  <strong className="text-foreground">
-                    {outcomes.ongoingOptimization || "Ongoing Optimization:"}
-                  </strong>{" "}
-                  {outcomes.ongoingOptimizationDesc ||
-                    "Continuous monitoring, testing, and improvements post-launch"}
-                </span>
-              </li>
-            </ul>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            {deliveryPoints.map((point, idx) => (
+              <motion.div
+                key={idx}
+                initial={prefersReducedMotion ? {} : { opacity: 0, y: 10 }}
+                whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 + idx * 0.1 }}
+                className="glass-subtle p-5 text-center"
+              >
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <ArrowRight className="h-4 w-4 text-accent" />
+                  <strong className="text-foreground font-semibold">
+                    {point.title}
+                  </strong>
+                </div>
+                <p className="text-sm text-muted-foreground">{point.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </Container>
       </motion.div>

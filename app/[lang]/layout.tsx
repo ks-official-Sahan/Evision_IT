@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { FloatingCTA } from "@/components/layout/floating-cta";
 import { JsonLd } from "@/components/seo/json-ld";
 import {
   organizationSchema,
@@ -13,7 +14,6 @@ import {
 import {
   siteConfig,
   SUPPORTED_LOCALES,
-  DEFAULT_LOCALE,
   LOCALE_LABELS,
   type Locale,
 } from "@/lib/config";
@@ -141,15 +141,15 @@ export default async function LocaleLayout({
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="system"
-      enableSystem
+      defaultTheme="dark"
+      // enableSystem
       storageKey="evision-theme"
       disableTransitionOnChange={false}
     >
       {/* Skip to content link for accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-accent focus:text-accent-foreground focus:rounded-md focus:outline-none"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-100 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-accent focus:text-accent-foreground focus:rounded-md focus:outline-none"
       >
         Skip to main content
       </a>
@@ -174,10 +174,13 @@ export default async function LocaleLayout({
 
       <div dir={direction} className="relative flex min-h-screen flex-col">
         <SiteHeader locale={locale} />
-        <main id="main-content" className="flex-1">
+        <main id="main-content" className="flex-1 z-2">
           {children}
         </main>
         <SiteFooter locale={locale} />
+
+        {/* Floating CTA for quick contact */}
+        <FloatingCTA locale={locale} />
       </div>
     </ThemeProvider>
   );

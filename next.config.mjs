@@ -102,8 +102,12 @@ const nextConfig = {
     optimizePackageImports: [
       "lucide-react",
       "framer-motion",
+      "motion",
       "@radix-ui/react-icons",
       "clsx",
+      "ogl",
+      "gsap",
+      "@tabler/icons-react",
       "tailwind-merge",
       "@radix-ui/react-slot",
       "@radix-ui/react-accordion",

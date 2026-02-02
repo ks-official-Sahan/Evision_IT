@@ -5,9 +5,9 @@ import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Button } from "@/components/ui/button";
 import { CaseStudyCard } from "@/components/cards/case-study-card";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Briefcase } from "lucide-react";
 import { getFeaturedCaseStudies } from "@/lib/data";
-import { type Dictionary } from "@/lib/i18n/get-dict";
+import { motion } from "framer-motion";
 import { type Locale } from "@/lib/config";
 
 interface CaseStudiesPreviewProps {
@@ -23,7 +23,7 @@ export function CaseStudiesPreview({
   const caseStudies = dict?.caseStudies || {};
 
   return (
-    <Section background="muted">
+    <Section background="muted" className="overflow-hidden">
       <SectionHeader
         badge={caseStudies.badge || "Case Studies"}
         title={caseStudies.sectionTitle || "Results that speak for themselves"}
@@ -33,24 +33,34 @@ export function CaseStudiesPreview({
         }
       />
 
+      {/* Featured Layout: First card spans 2 columns on lg */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {featuredCaseStudies.map((caseStudy) => (
+        {featuredCaseStudies.map((caseStudy, index) => (
           <CaseStudyCard
             key={caseStudy.slug}
             caseStudy={caseStudy}
             variant="featured"
+            index={index}
           />
         ))}
       </div>
 
-      <div className="mt-10 text-center">
-        <Button asChild variant="outline" size="lg">
+      {/* View All CTA */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.4 }}
+        className="mt-12 text-center"
+      >
+        <Button asChild variant="outline" size="lg" className="group">
           <Link href={`/${locale}/case-studies`}>
+            <Briefcase className="mr-2 h-4 w-4" />
             {caseStudies.viewAllCaseStudies || "View All Case Studies"}
-            <ArrowRight className="ml-2 h-4 w-4" />
+            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </Button>
-      </div>
+      </motion.div>
     </Section>
   );
 }

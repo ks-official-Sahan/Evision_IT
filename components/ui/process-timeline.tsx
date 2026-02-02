@@ -27,17 +27,17 @@ export function ProcessTimeline({ steps, className }: ProcessTimelineProps) {
                 <div className="relative flex items-center justify-center mb-6">
                   {/* Connector line (before) */}
                   {index > 0 && (
-                    <div className="absolute right-1/2 top-1/2 h-0.5 w-full -translate-y-1/2 bg-gradient-to-r from-accent/50 to-accent animate-gradient-flow" />
+                    <div className="absolute right-1/2 top-1/2 h-0.5 w-full -translate-y-1/2 bg-linear-to-r from-accent/50 to-accent animate-gradient-flow" />
                   )}
 
                   {/* Step circle */}
-                  <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-accent to-accent/70 text-accent-foreground font-bold text-lg shadow-lg shadow-accent/30">
+                  <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-accent to-accent/70 text-accent-foreground font-bold text-lg shadow-lg shadow-accent/30">
                     {index + 1}
                   </div>
 
                   {/* Connector line (after) */}
                   {index < steps.length - 1 && (
-                    <div className="absolute left-1/2 top-1/2 h-0.5 w-full -translate-y-1/2 bg-gradient-to-r from-accent to-accent/50 animate-gradient-flow" />
+                    <div className="absolute left-1/2 top-1/2 h-0.5 w-full -translate-y-1/2 bg-linear-to-r from-accent to-accent/50 animate-gradient-flow" />
                   )}
                 </div>
 
@@ -63,13 +63,13 @@ export function ProcessTimeline({ steps, className }: ProcessTimelineProps) {
             {/* Left side: Step number and connector */}
             <div className="flex flex-col items-center">
               {/* Step circle */}
-              <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-accent to-accent/70 text-accent-foreground font-bold shadow-lg shadow-accent/30">
+              <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-accent to-accent/70 text-accent-foreground font-bold shadow-lg shadow-accent/30">
                 {index + 1}
               </div>
 
               {/* Vertical connector line */}
               {index < steps.length - 1 && (
-                <div className="w-0.5 h-full min-h-[60px] bg-gradient-to-b from-accent to-accent/30" />
+                <div className="w-0.5 h-full min-h-[60px] bg-linear-to-b from-accent to-accent/30" />
               )}
             </div>
 

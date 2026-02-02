@@ -5,6 +5,7 @@ import { ChevronRight, Home } from "lucide-react";
 import { siteConfig } from "@/lib/config";
 import { breadcrumbSchema } from "@/lib/json-ld";
 import { JsonLd } from "./json-ld";
+import { cn } from "@/lib/utils";
 
 export interface BreadcrumbItem {
   label: string;
@@ -14,9 +15,14 @@ export interface BreadcrumbItem {
 interface BreadcrumbsProps {
   items: BreadcrumbItem[];
   locale?: string;
+  className?: string; // Added className prop
 }
 
-export function Breadcrumbs({ items, locale = "en" }: BreadcrumbsProps) {
+export function Breadcrumbs({
+  items,
+  locale = "en",
+  className,
+}: BreadcrumbsProps) {
   const homeHref = `/${locale}`;
   const allItems = [{ label: "Home", href: homeHref }, ...items];
 
@@ -28,7 +34,7 @@ export function Breadcrumbs({ items, locale = "en" }: BreadcrumbsProps) {
   return (
     <>
       <JsonLd data={breadcrumbSchema(schemaItems)} />
-      <nav aria-label="Breadcrumb" className="mb-6">
+      <nav aria-label="Breadcrumb" className={cn("mb-6", className)}>
         <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground">
           {allItems.map((item, index) => {
             const isLast = index === allItems.length - 1;

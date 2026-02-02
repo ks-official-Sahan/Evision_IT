@@ -49,9 +49,9 @@ export async function generateMetadata({
   const locale = getValidLocale(lang);
   const dict = await getDictionary(locale);
 
-  const title = dict.solutions?.title || "Business Solutions";
+  const title = (dict.solutions as any)?.title || "Business Solutions";
   const description =
-    dict.solutions?.description ||
+    (dict.solutions as any)?.description ||
     "Comprehensive digital solutions tailored to your business needs. From custom software to IT infrastructure.";
 
   return {
@@ -235,13 +235,14 @@ export default async function SolutionsPage({ params }: PageProps) {
 
       {/* Screen reader optimized heading */}
       <h1 className="sr-only">
-        {dict.solutions?.title || "Business Solutions"} - {siteConfig.name}
+        {(dict.solutions as any)?.title || "Business Solutions"} -{" "}
+        {siteConfig.name}
       </h1>
 
       {/* Hero Section */}
       <Section className="relative overflow-hidden pt-20 pb-16 md:pt-28 md:pb-24">
         {/* Background gradient */}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-accent/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 -z-10 bg-linear-to-b from-accent/5 via-transparent to-transparent" />
 
         <Container className="relative z-10">
           <Breadcrumbs items={breadcrumbItems} className="mb-8" />
@@ -264,7 +265,7 @@ export default async function SolutionsPage({ params }: PageProps) {
 
             {/* Hero description */}
             <p className="text-lg md:text-xl text-muted-foreground text-pretty max-w-2xl mb-8">
-              {dict.solutions?.description ||
+              {(dict.solutions as any)?.description ||
                 "From digital product development to managed IT support, we deliver comprehensive solutions that transform your business and accelerate success."}
             </p>
 
@@ -358,7 +359,7 @@ export default async function SolutionsPage({ params }: PageProps) {
                   "Flexible engagement models to suit your needs",
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-accent mt-0.5 shrink-0" />
                     <span className="text-foreground">{item}</span>
                   </li>
                 ))}
@@ -419,7 +420,7 @@ export default async function SolutionsPage({ params }: PageProps) {
       {/* CTA Section */}
       <Section className="py-20 md:py-28 relative overflow-hidden">
         {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-accent/5 -z-10" />
+        <div className="absolute inset-0 bg-linear-to-br from-accent/10 via-transparent to-accent/5 -z-10" />
 
         <Container className="text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-balance">

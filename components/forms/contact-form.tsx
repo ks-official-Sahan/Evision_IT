@@ -3,11 +3,18 @@
 import * as React from "react";
 import { type Locale } from "@/lib/config";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { Loader2, CheckCircle2, Send, Sparkles } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ContactFormProps {
   locale: Locale;
@@ -71,67 +78,83 @@ export function ContactForm({ locale }: ContactFormProps) {
 
   if (isSuccess) {
     return (
-      <Card className="glass border-accent/50 bg-accent/5">
-        <CardContent className="pt-6">
-          <div className="flex flex-col items-center justify-center py-8 text-center">
-            <CheckCircle2 className="h-12 w-12 text-accent mb-4" />
-            <h3 className="text-lg font-semibold text-foreground mb-2">
-              Thank you for your message!
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              We've received your inquiry and will get back to you as soon as possible.
-            </p>
-            <Button
-              variant="outline"
-              onClick={() => setIsSuccess(false)}
-              className="text-sm"
-            >
-              Send Another Message
-            </Button>
+      <Card className="glass border-accent/20 bg-accent/5 shadow-2xl relative overflow-hidden">
+        <div className="absolute inset-0 bg-linear-to-tr from-accent/10 via-transparent to-transparent pointer-events-none" />
+        <CardContent className="pt-6 h-full flex flex-col items-center justify-center min-h-[500px] text-center p-8 relative z-10">
+          <div className="h-20 w-20 bg-accent/10 rounded-full flex items-center justify-center mb-6 animate-in zoom-in duration-500">
+            <CheckCircle2 className="h-10 w-10 text-accent" />
           </div>
+          <h3 className="text-2xl font-bold text-foreground mb-3">
+            Message Sent!
+          </h3>
+          <p className="text-muted-foreground mb-8 max-w-xs text-balance">
+            Thanks for starting the conversation. Our team is reviewing your
+            details and will get back to you within 24 hours.
+          </p>
+          <Button
+            variant="outline"
+            onClick={() => setIsSuccess(false)}
+            className="group"
+          >
+            Send Another Message
+          </Button>
         </CardContent>
       </Card>
     );
   }
 
   return (
-    <Card className="glass">
-      <CardContent className="pt-6">
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <Card className="glass border-white/10 dark:border-white/5 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+      {/* Subtle top sheen */}
+      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/20 to-transparent" />
+
+      <CardHeader className="space-y-1 pb-6">
+        <CardTitle className="text-2xl font-semibold flex items-center gap-2">
+          Send us a message
+        </CardTitle>
+        <CardDescription className="text-base">
+          Fill out the form below and we'll help you build something amazing.
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-5">
           {/* Honeypot field - hidden from users */}
           <input type="hidden" name="website" />
 
           {/* Name Fields */}
           <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">
-                First Name *
+            <div className="space-y-2">
+              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                First Name <span className="text-accent">*</span>
               </label>
               <Input
                 name="firstName"
                 placeholder="John"
                 required
                 disabled={isSubmitting}
+                className="bg-background/50 border-input/50 focus:border-accent/50 focus:bg-background/80 transition-all"
               />
             </div>
-            <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">
-                Last Name *
+            <div className="space-y-2">
+              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Last Name <span className="text-accent">*</span>
               </label>
               <Input
                 name="lastName"
                 placeholder="Doe"
                 required
                 disabled={isSubmitting}
+                className="bg-background/50 border-input/50 focus:border-accent/50 focus:bg-background/80 transition-all"
               />
             </div>
           </div>
 
           {/* Email & Phone */}
           <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">
-                Email *
+            <div className="space-y-2">
+              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Email <span className="text-accent">*</span>
               </label>
               <Input
                 name="email"
@@ -139,110 +162,95 @@ export function ContactForm({ locale }: ContactFormProps) {
                 placeholder="john@example.com"
                 required
                 disabled={isSubmitting}
+                className="bg-background/50 border-input/50 focus:border-accent/50 focus:bg-background/80 transition-all"
               />
             </div>
-            <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">
+            <div className="space-y-2">
+              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 Phone
               </label>
               <Input
                 name="phone"
                 type="tel"
-                placeholder="+1 (555) 123-4567"
+                placeholder="+1 (555) 000-0000"
                 disabled={isSubmitting}
+                className="bg-background/50 border-input/50 focus:border-accent/50 focus:bg-background/80 transition-all"
               />
             </div>
           </div>
 
           {/* Company & Project Type */}
           <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">
+            <div className="space-y-2">
+              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 Company
               </label>
               <Input
                 name="company"
                 placeholder="Your Company"
                 disabled={isSubmitting}
+                className="bg-background/50 border-input/50 focus:border-accent/50 focus:bg-background/80 transition-all"
               />
             </div>
-            <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">
+            <div className="space-y-2">
+              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 Project Type
               </label>
-              <select
-                name="projectType"
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground disabled:opacity-50"
-                disabled={isSubmitting}
-              >
-                <option value="">Select project type...</option>
-                <option value="web-development">Web Development</option>
-                <option value="mobile-apps">Mobile Apps</option>
-                <option value="ecommerce">E-commerce</option>
-                <option value="digital-marketing">Digital Marketing</option>
-                <option value="cloud-solutions">Cloud Solutions</option>
-                <option value="cybersecurity">Cybersecurity</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Budget & Timeline */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">
-                Budget Range
-              </label>
-              <select
-                name="budget"
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground disabled:opacity-50"
-                disabled={isSubmitting}
-              >
-                <option value="">Select budget range...</option>
-                <option value="under-10k">Under $10,000</option>
-                <option value="10k-25k">$10,000 - $25,000</option>
-                <option value="25k-50k">$25,000 - $50,000</option>
-                <option value="50k-100k">$50,000 - $100,000</option>
-                <option value="over-100k">Over $100,000</option>
-              </select>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">
-                Timeline
-              </label>
-              <select
-                name="timeline"
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground disabled:opacity-50"
-                disabled={isSubmitting}
-              >
-                <option value="">Select timeline...</option>
-                <option value="asap">ASAP (1-2 months)</option>
-                <option value="soon">Soon (2-6 months)</option>
-                <option value="planned">Planned (6-12 months)</option>
-                <option value="flexible">Flexible</option>
-              </select>
+              <div className="relative">
+                <select
+                  name="projectType"
+                  className="flex h-10 w-full rounded-md border border-input/50 bg-background/50 px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 focus:border-accent/50 focus:bg-background/80 transition-all appearance-none"
+                  disabled={isSubmitting}
+                >
+                  <option value="">Select project type...</option>
+                  <option value="web-development">Web Development</option>
+                  <option value="mobile-apps">Mobile Apps</option>
+                  <option value="ecommerce">E-commerce</option>
+                  <option value="digital-marketing">Digital Marketing</option>
+                  <option value="cloud-solutions">Cloud Solutions</option>
+                  <option value="cybersecurity">Cybersecurity</option>
+                  <option value="other">Other</option>
+                </select>
+                <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-muted-foreground">
+                  <svg
+                    width="10"
+                    height="6"
+                    viewBox="0 0 10 6"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1 1L5 5L9 1"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Message */}
-          <div>
-            <label className="text-sm font-medium text-foreground mb-2 block">
-              Message *
+          <div className="space-y-2">
+            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Message <span className="text-accent">*</span>
             </label>
             <Textarea
               name="message"
               placeholder="Tell us about your project..."
-              rows={5}
+              rows={4}
               required
               disabled={isSubmitting}
-              className="resize-none"
+              className="resize-none bg-background/50 border-input/50 focus:border-accent/50 focus:bg-background/80 transition-all"
             />
           </div>
 
           {/* Submit Button */}
           <Button
             type="submit"
-            className="w-full btn-cta"
+            className="w-full btn-cta bg-accent hover:bg-accent/90 text-white font-semibold h-11"
             disabled={isSubmitting}
           >
             {isSubmitting ? (
@@ -251,12 +259,23 @@ export function ContactForm({ locale }: ContactFormProps) {
                 Sending...
               </>
             ) : (
-              "Send Message"
+              <>
+                Send Message
+                <Send className="w-4 h-4 ml-2" />
+              </>
             )}
           </Button>
 
-          <p className="text-xs text-muted-foreground text-center">
-            We'll get back to you within 24 hours.
+          <p className="text-xs text-muted-foreground text-center pt-2">
+            Protected by reCAPTCHA and the Google{" "}
+            <a href="#" className="underline hover:text-foreground">
+              Privacy Policy
+            </a>{" "}
+            and{" "}
+            <a href="#" className="underline hover:text-foreground">
+              Terms of Service
+            </a>{" "}
+            apply.
           </p>
         </form>
       </CardContent>

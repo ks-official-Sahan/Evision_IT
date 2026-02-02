@@ -90,7 +90,7 @@ export function SolutionCardEnhanced({
         <div
           className={cn(
             "flex h-14 w-14 items-center justify-center rounded-xl mb-4",
-            "bg-gradient-to-br from-accent/20 to-accent/5",
+            "bg-linear-to-br from-accent/20 to-accent/5",
             "border border-accent/20",
             "group-hover:from-accent/30 group-hover:to-accent/10",
             "group-hover:border-accent/40 group-hover:shadow-lg group-hover:shadow-accent/20",
@@ -117,7 +117,7 @@ export function SolutionCardEnhanced({
               className="flex items-center gap-3 text-sm text-muted-foreground group-hover:text-foreground/80 transition-colors"
               style={{ transitionDelay: `${index * 50}ms` }}
             >
-              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent/70 group-hover:bg-accent transition-colors" />
+              <span className="shrink-0 w-1.5 h-1.5 rounded-full bg-accent/70 group-hover:bg-accent transition-colors" />
               <span>{feature}</span>
             </div>
           ))}

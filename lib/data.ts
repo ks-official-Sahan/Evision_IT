@@ -65,6 +65,46 @@ export const services: Service[] = [
       },
     ],
     relatedServices: ["mobile-apps", "e-commerce", "ui-ux-design"],
+    problems: [
+      "Slow loading times affecting conversion rates",
+      "Poor mobile responsiveness losing users",
+      "Low search engine visibility",
+      "Complex content management",
+      "Security vulnerabilities",
+    ],
+    process: [
+      {
+        title: "Discovery",
+        description:
+          "We analyze your requirements, target audience, and competitors.",
+      },
+      {
+        title: "Design",
+        description:
+          "Creating wireframes and high-fidelity mockups for your approval.",
+      },
+      {
+        title: "Development",
+        description:
+          "Building your solution using modern, scalable technologies.",
+      },
+      {
+        title: "Testing",
+        description:
+          "Rigorous testing for performance, security, and compatibility.",
+      },
+      {
+        title: "Launch",
+        description: "Smooth deployment and post-launch verification.",
+      },
+    ],
+    deliverables: [
+      "Custom responsive website",
+      "CMS integration (Sanity/Strapi)",
+      "SEO setup & optimization",
+      "Analytics dashboard",
+      "30 days post-launch support",
+    ],
   },
   {
     slug: "mobile-apps",

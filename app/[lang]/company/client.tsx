@@ -51,7 +51,7 @@ export default function CompanyClient({ locale, dict }: CompanyClientProps) {
   const stats = [
     { value: "100+", label: "Projects Delivered", icon: CheckCircle2 },
     { value: "30+", label: "Active Clients", icon: Users },
-    { value: "5+", label: "Years Experience", icon: Clock },
+    { value: "2+", label: "Years Experience", icon: Clock },
     { value: "99.9%", label: "Uptime SLA", icon: Zap },
   ];
 

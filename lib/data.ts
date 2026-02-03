@@ -558,6 +558,22 @@ export function getRelatedBlogPosts(
   return getRelatedPosts(currentSlug, limit);
 }
 
+// Get featured blog posts, or latest if not enough featured
+export function getFeaturedBlogPosts(limit = 3): BlogPost[] {
+  const featured = blogPosts.filter((post) => post.featured);
+  if (featured.length >= limit) {
+    return featured.slice(0, limit);
+  }
+  // Fill with latest posts if not enough featured
+  const latestPosts = blogPosts
+    .filter((post) => !post.featured)
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+    );
+  return [...featured, ...latestPosts].slice(0, limit);
+}
+
 // ============================================
 // CASE STUDIES DATA
 // ============================================
@@ -686,6 +702,33 @@ export function getFeaturedCaseStudies(): CaseStudy[] {
 
 export function getCaseStudiesByCategory(category: string): CaseStudy[] {
   return caseStudies.filter((c) => c.category === category);
+}
+
+export function getRelatedCaseStudies(
+  currentSlug: string,
+  limit = 3,
+): CaseStudy[] {
+  const current = getCaseStudyBySlug(currentSlug);
+  if (!current) return [];
+
+  // First, try to find case studies in the same category
+  const sameCategoryStudies = caseStudies.filter(
+    (c) => c.slug !== currentSlug && c.category === current.category,
+  );
+
+  // If not enough, add studies with overlapping services
+  if (sameCategoryStudies.length >= limit) {
+    return sameCategoryStudies.slice(0, limit);
+  }
+
+  const overlappingServices = caseStudies.filter(
+    (c) =>
+      c.slug !== currentSlug &&
+      c.category !== current.category &&
+      c.services.some((s) => current.services.includes(s)),
+  );
+
+  return [...sameCategoryStudies, ...overlappingServices].slice(0, limit);
 }
 
 // ============================================

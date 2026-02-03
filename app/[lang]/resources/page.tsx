@@ -1,18 +1,6 @@
-import { Suspense } from "react";
 import { type Locale } from "@/lib/config";
 import { getDictionary, getValidLocale } from "@/lib/i18n/get-dict";
-import { Section } from "@/components/ui/section";
-import { Container } from "@/components/ui/container";
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import ResourcesClient from "./client";
 
 interface PageProps {
   params: Promise<{ lang: string }>;
@@ -24,14 +12,73 @@ export async function generateMetadata({ params }: PageProps) {
   const dict = await getDictionary(locale);
 
   return {
-    title: `Resources | Evision IT`,
-    description: "Educational resources and guides for digital transformation",
+    title: `Resources & Learning Center | Evision IT`,
+    description:
+      "Access free educational resources including implementation guides, case studies, webinars, technical documentation, whitepapers, and templates for digital transformation.",
+    keywords: [
+      "IT resources",
+      "digital transformation guides",
+      "web development tutorials",
+      "case studies Sri Lanka",
+      "technical documentation",
+      "IT whitepapers",
+      "development templates",
+    ],
     openGraph: {
-      title: "Resources",
+      title: "Resources & Learning Center | Evision IT",
       description:
-        "Educational resources and guides for digital transformation",
+        "Free educational resources and guides for digital transformation success.",
       type: "website",
     },
+  };
+}
+
+// ItemList Schema for SEO
+function getItemListSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Evision IT Resources",
+    description:
+      "Educational resources for digital transformation and IT solutions",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Implementation Guides",
+        description: "Step-by-step guides for implementing digital solutions",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Case Studies",
+        description: "Real-world project examples and success stories",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: "Webinars & Workshops",
+        description: "Live training sessions and recorded workshops",
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        name: "Technical Documentation",
+        description: "Comprehensive API and integration documentation",
+      },
+      {
+        "@type": "ListItem",
+        position: 5,
+        name: "Whitepapers",
+        description: "In-depth research and industry insights",
+      },
+      {
+        "@type": "ListItem",
+        position: 6,
+        name: "Templates & Checklists",
+        description: "Ready-to-use templates for planning and execution",
+      },
+    ],
   };
 }
 
@@ -40,98 +87,16 @@ export default async function ResourcesPage({ params }: PageProps) {
   const locale = getValidLocale(lang) as Locale;
   const dict = await getDictionary(locale);
 
-  const resources = [
-    {
-      id: "guides",
-      title: "Implementation Guides",
-      description: "Step-by-step guides for implementing digital solutions",
-      count: 12,
-    },
-    {
-      id: "case-studies",
-      title: dict.caseStudies.title,
-      description: "Learn from real-world project examples",
-      count: 15,
-    },
-    {
-      id: "webinars",
-      title: "Webinars & Workshops",
-      description: "Live training sessions and recorded workshops",
-      count: 8,
-    },
-    {
-      id: "documentation",
-      title: "Technical Documentation",
-      description: "Comprehensive API and integration documentation",
-      count: 25,
-    },
-    {
-      id: "whitepapers",
-      title: "Whitepapers",
-      description: "In-depth research and industry insights",
-      count: 6,
-    },
-    {
-      id: "templates",
-      title: "Templates & Checklists",
-      description: "Ready-to-use templates for planning and execution",
-      count: 20,
-    },
-  ];
-
   return (
     <>
-      <Section
-        padding="lg"
-        className="bg-gradient-to-b from-muted/50 to-background"
-      >
-        <Container size="sm">
-          <Breadcrumbs
-            items={[{ label: "Resources", href: `/${locale}/resources` }]}
-            locale={locale}
-          />
-
-          <div className="mt-8 text-center">
-            <Badge variant="secondary" className="mb-6">
-              Resources
-            </Badge>
-            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl text-balance mb-4">
-              Learning Resources
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              Guides, documentation, and tools to help you succeed
-            </p>
-          </div>
-        </Container>
-      </Section>
-
-      <Section>
-        <Container>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {resources.map((resource) => (
-              <Card
-                key={resource.id}
-                className="glass hover:shadow-lg transition-all"
-              >
-                <CardHeader>
-                  <CardTitle>{resource.title}</CardTitle>
-                  <CardDescription>{resource.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">
-                      {resource.count} {resource.count === 1 ? "item" : "items"}
-                    </span>
-                    <Button variant="outline" size="sm">
-                      {dict.cta.secondary}
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </Section>
+      {/* ItemList Schema for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getItemListSchema()),
+        }}
+      />
+      <ResourcesClient locale={locale} dict={dict} />
     </>
   );
 }

@@ -31,8 +31,8 @@ export default function NotFound() {
                   Page Not Found
                 </div>
                 <p className="text-muted-foreground text-lg max-w-md mx-auto">
-                  We checked everywhere, but we couldn't find the page you were
-                  looking for.
+                  We checked everywhere, but we couldn&apos;t find the page you
+                  were looking for.
                 </p>
               </div>
             </div>
@@ -52,7 +52,7 @@ export default function NotFound() {
           <div className="order-1 lg:order-2 space-y-8">
             <div className="space-y-2">
               <h1 className="text-2xl font-bold tracking-tight text-foreground">
-                Let's get you back on track
+                Let&apos;s get you back on track
               </h1>
               <p className="text-muted-foreground">
                 Here are some helpful links to guide you back to safety.

@@ -45,6 +45,35 @@ function AnimatedCounter({
   const hasAnimated = useRef(false);
 
   useEffect(() => {
+    const animateValue = () => {
+      const { number, suffix, prefix } = parseValue(value);
+      const startTime = Date.now();
+      const isDecimal = value.includes(".");
+
+      const animate = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Easing function for smooth deceleration
+        const eased = 1 - Math.pow(1 - progress, 3);
+
+        const current = number * eased;
+        const formatted = isDecimal
+          ? current.toFixed(1)
+          : Math.round(current).toString();
+
+        setDisplayValue(`${prefix}${formatted}${suffix}`);
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          setDisplayValue(value);
+        }
+      };
+
+      requestAnimationFrame(animate);
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !hasAnimated.current) {
@@ -60,36 +89,7 @@ function AnimatedCounter({
     }
 
     return () => observer.disconnect();
-  }, [value]);
-
-  const animateValue = () => {
-    const { number, suffix, prefix } = parseValue(value);
-    const startTime = Date.now();
-    const isDecimal = value.includes(".");
-
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      // Easing function for smooth deceleration
-      const eased = 1 - Math.pow(1 - progress, 3);
-
-      const current = number * eased;
-      const formatted = isDecimal
-        ? current.toFixed(1)
-        : Math.round(current).toString();
-
-      setDisplayValue(`${prefix}${formatted}${suffix}`);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        setDisplayValue(value);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  };
+  }, [value, duration]);
 
   return <span ref={ref}>{displayValue}</span>;
 }

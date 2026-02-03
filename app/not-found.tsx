@@ -12,7 +12,7 @@ export default function NotFound() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full pointer-events-none motion-safe:animate-pulse" />
       <div className="absolute top-20 right-20 w-[250px] h-[250px] bg-accent/10 blur-[80px] rounded-full pointer-events-none motion-safe:animate-[pulse_3s_ease-in-out_infinite]" />
 
-      <div className="container relative z-10 flex max-w-[64rem] flex-col items-center gap-4 text-center p-4">
+      <div className="container relative z-10 flex max-w-5xl flex-col items-center gap-4 text-center p-4">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -26,7 +26,7 @@ export default function NotFound() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-4xl font-bold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60"
+          className="text-4xl font-bold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-linear-to-r from-primary to-primary/60"
         >
           404 - Page Not Found
         </motion.h1>
@@ -35,9 +35,10 @@ export default function NotFound() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8"
+          className="max-w-2xl leading-normal text-muted-foreground sm:text-xl sm:leading-8"
         >
-          The page you are looking for doesn't exist or has been moved.{" "}
+          The page you are looking for doesn&apos;t exist or has been
+          moved.{" "}
         </motion.p>
 
         <motion.div

@@ -113,7 +113,8 @@ export function ContactForm({ locale }: ContactFormProps) {
           Send us a message
         </CardTitle>
         <CardDescription className="text-base">
-          Fill out the form below and we'll help you build something amazing.
+          Fill out the form below and we&apos;ll help you build something
+          amazing.
         </CardDescription>
       </CardHeader>
 

@@ -409,7 +409,7 @@ export default async function ServicePage({ params }: PageProps) {
             Ready to get started?
           </h2>
           <p className="text-lg text-muted-foreground mb-8 text-pretty">
-            Let's discuss how we can help you achieve your business goals.
+            Let&apos;s discuss how we can help you achieve your business goals.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild className="btn-cta">

@@ -246,7 +246,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   aria-hidden="true"
                 />
                 <blockquote className="text-2xl md:text-3xl font-medium text-foreground italic mb-6 text-balance">
-                  "{caseStudy.testimonial.quote}"
+                  &quot;{caseStudy.testimonial.quote}&quot;
                 </blockquote>
                 <div className="flex items-center justify-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold">

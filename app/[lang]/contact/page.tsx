@@ -108,10 +108,10 @@ export default async function ContactPage({ params }: PageProps) {
       <div className="sr-only">
         <h1>Contact Evision IT - IT Services Company in Sri Lanka</h1>
         <p>
-          Get in touch with Evision IT, Sri Lanka's leading IT services company
-          based in Nugegoda. We offer web development, mobile app development,
-          e-commerce solutions, digital marketing, cloud services, and
-          cybersecurity. Email: {siteConfig.contact.email}. Phone:{" "}
+          Get in touch with Evision IT, Sri Lanka&apos;s leading IT services
+          company based in Nugegoda. We offer web development, mobile app
+          development, e-commerce solutions, digital marketing, cloud services,
+          and cybersecurity. Email: {siteConfig.contact.email}. Phone:{" "}
           {siteConfig.contact.phone}. Address: {siteConfig.contact.address}.
           Request a free consultation for your next project.
         </p>
@@ -137,7 +137,7 @@ export default async function ContactPage({ params }: PageProps) {
                 className="w-fit mb-6 px-4 py-2 border-accent/30 bg-accent/5 text-accent animate-fade-in"
               >
                 <MessageSquare className="w-4 h-4 mr-2" />
-                Let's Talk
+                Let&apos;s Talk
               </Badge>
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-balance">

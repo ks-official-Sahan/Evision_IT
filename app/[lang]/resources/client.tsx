@@ -122,7 +122,7 @@ export default function ResourcesClient({
       <div className="sr-only">
         <h1>Resources - Evision IT Learning Center Sri Lanka</h1>
         <p>
-          Access Evision IT's comprehensive learning resources including
+          Access Evision IT&apos;s comprehensive learning resources including
           implementation guides, case studies, webinars, technical
           documentation, whitepapers, and templates. Free educational content
           for digital transformation, web development, mobile app development,

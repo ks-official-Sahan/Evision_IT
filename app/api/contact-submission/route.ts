@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { connectToDatabase } from "@/lib/db/mongodb";
+import { sendEmail, sendAdminNotification } from "@/lib/email";
 
 // Validation schema
 const ContactFormPayload = z.object({
@@ -55,10 +56,22 @@ export async function POST(req: NextRequest) {
     // Insert into database
     const result = await collection.insertOne(submission);
 
-    // TODO: Send confirmation email to user
-    // TODO: Send notification email to sales team
-    // await sendConfirmationEmail(validatedData.email, validatedData.firstName);
-    // await notifySalesTeam(submission);
+    // Send confirmation email to user
+    await sendEmail({
+      to: validatedData.email,
+      subject: `Received: ${validatedData.projectType || "Inquiry"} - Evision IT`,
+      text: `Hi ${validatedData.firstName},\n\nThank you for reaching out to Evision IT. We have received your message regarding "${validatedData.projectType || "your project"}" and will get back to you shortly.\n\nBest regards,\nThe Evision IT Team`,
+    });
+
+    // Send notification email to admin
+    await sendAdminNotification("New Contact Form Submission", {
+      Name: `${validatedData.firstName} ${validatedData.lastName}`,
+      Email: validatedData.email,
+      Company: validatedData.company || "N/A",
+      Project: validatedData.projectType || "General",
+      Budget: validatedData.budget || "N/A",
+      Message: validatedData.message,
+    });
 
     console.log("[v0] Contact submission created:", result.insertedId);
 

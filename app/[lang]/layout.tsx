@@ -145,17 +145,7 @@ export default async function LocaleLayout({
       <JsonLd data={localBusinessSchema()} />
       <JsonLd data={entityAuthoritySchema()} />
 
-      {/* Alternate language links for SEO - kept here as they depend on config */}
-      {SUPPORTED_LOCALES.map((altLocale) => (
-        <React.Fragment key={altLocale}>
-          {/* Link tags inside body/div are not ideal but Next.js deduplicates head tags if Metadata API used. 
-               However, manual <link> in body is ignored for head purposes.
-               We should rely on generateMetadata for these. 
-               The generateMetadata function ALREADY handles alternates.
-               So we can remove these manual link tags as they are redundant and misplaced in a child layout.
-           */}
-        </React.Fragment>
-      ))}
+      {/* Alternate language links are handled by generateMetadata in layout head */}
 
       <div dir={direction} className="relative flex min-h-screen flex-col">
         <SiteHeader locale={locale} />

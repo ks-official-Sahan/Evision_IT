@@ -189,7 +189,6 @@ export default async function SolutionsPage({ params }: PageProps) {
 
   // Breadcrumb items
   const breadcrumbItems = [
-    { label: dict.nav?.home || "Home", href: `/${locale}` },
     { label: dict.nav?.solutions || "Solutions", href: `/${locale}/solutions` },
   ];
 

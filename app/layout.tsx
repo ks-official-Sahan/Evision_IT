@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import {
   GoogleTagManager,
   GoogleTagManagerNoScript,
@@ -41,37 +42,52 @@ export default function RootLayout({
       <body
         className={`${geist.variable} ${geistMono.variable} font-sans antialiased relative`}
       >
-        <GoogleTagManagerNoScript />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          storageKey="evision-theme"
+          disableTransitionOnChange={false}
+        >
+          <GoogleTagManagerNoScript />
 
-        {/* Global background effect - fixed to viewport, behind all content */}
-        <Suspense fallback={null}>
-          <div
-            className="fixed inset-0 pointer-events-none overflow-hidden"
-            style={{ zIndex: -10 }}
-            aria-hidden="true"
+          {/* Skip to content link for accessibility */}
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:z-100 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-accent focus:text-accent-foreground focus:rounded-md focus:outline-none"
           >
-            <LightRays
-              raysOrigin="top-center"
-              raysColor="#5dfeca"
-              raysSpeed={0.5}
-              lightSpread={0.9}
-              rayLength={1.4}
-              followMouse={true}
-              mouseInfluence={0.02}
-              noiseAmount={0}
-              distortion={0.01}
-            />
-          </div>
-        </Suspense>
+            Skip to main content
+          </a>
 
-        {/* Main content wrapper */}
-        <div className="relative z-0">{children}</div>
+          {/* Global background effect - fixed to viewport, behind all content */}
+          <Suspense fallback={null}>
+            <div
+              className="fixed inset-0 pointer-events-none overflow-hidden"
+              style={{ zIndex: -10 }}
+              aria-hidden="true"
+            >
+              <LightRays
+                raysOrigin="top-center"
+                raysColor="#5dfeca"
+                raysSpeed={0.5}
+                lightSpread={0.9}
+                rayLength={1.4}
+                followMouse={true}
+                mouseInfluence={0.02}
+                noiseAmount={0}
+                distortion={0.01}
+              />
+            </div>
+          </Suspense>
 
-        <Analytics />
-        <GoogleTagManager />
-        <Suspense fallback={null}>
-          <ClientEffects />
-        </Suspense>
+          {/* Main content wrapper */}
+          <div className="relative z-0">{children}</div>
+
+          <Analytics />
+          <GoogleTagManager />
+          <Suspense fallback={null}>
+            <ClientEffects />
+          </Suspense>
+        </ThemeProvider>
       </body>
     </html>
   );

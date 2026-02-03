@@ -54,7 +54,7 @@ export function SolutionCardEnhanced({
   className,
   variant = "default",
 }: SolutionCardEnhancedProps) {
-  const IconComponent = iconMap[solution.id] || iconMap["default"];
+  const IconComponent = (iconMap[solution.id] || iconMap["default"]) as any;
   const href = solution.href || `/${locale}/solutions#${solution.id}`;
 
   return (

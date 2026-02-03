@@ -10,14 +10,14 @@ import { SUPPORTED_LOCALES, type Locale } from "@/lib/config";
    ============================================================================ */
 
 export const TranslationSchema = z.record(
-  z.enum(SUPPORTED_LOCALES as [Locale, ...Locale[]]),
+  z.enum(SUPPORTED_LOCALES as unknown as [string, ...string[]]),
   z.object({
     title: z.string().optional(),
     description: z.string().optional(),
     content: z.string().optional(),
     body: z.string().optional(),
     excerpt: z.string().optional(),
-  })
+  }),
 );
 
 export type Translation = z.infer<typeof TranslationSchema>;
@@ -28,9 +28,19 @@ export type Translation = z.infer<typeof TranslationSchema>;
 
 export const QuizSubmissionSchema = z.object({
   _id: z.any().optional(), // MongoDB ObjectId
-  step1: z.enum(["web-application", "mobile-application", "marketing-platform", "it-infrastructure"]),
+  step1: z.enum([
+    "web-application",
+    "mobile-application",
+    "marketing-platform",
+    "it-infrastructure",
+  ]),
   step2: z.enum(["urgent", "soon", "planned", "flexible"]),
-  step3: z.enum(["revenue-growth", "security-compliance", "efficiency", "speed"]),
+  step3: z.enum([
+    "revenue-growth",
+    "security-compliance",
+    "efficiency",
+    "speed",
+  ]),
   email: z.string().email().optional(),
   phone: z.string().optional(),
   submittedAt: z.date().default(() => new Date()),
@@ -48,8 +58,14 @@ export const PageSchema = z.object({
   _id: z.string().optional(),
   slug: z.string(),
   translations: TranslationSchema,
-  createdAt: z.date().optional().default(() => new Date()),
-  updatedAt: z.date().optional().default(() => new Date()),
+  createdAt: z
+    .date()
+    .optional()
+    .default(() => new Date()),
+  updatedAt: z
+    .date()
+    .optional()
+    .default(() => new Date()),
 });
 
 export type Page = z.infer<typeof PageSchema>;
@@ -64,20 +80,28 @@ export const ServiceSchema = z.object({
   icon: z.string().optional(),
   image: z.string().optional(),
   translations: z.record(
-    z.enum(SUPPORTED_LOCALES as [Locale, ...Locale[]]),
+    z.enum(SUPPORTED_LOCALES as unknown as [string, ...string[]]),
     z.object({
       name: z.string(),
       description: z.string(),
       shortDescription: z.string().optional(),
       benefits: z.array(z.string()).optional(),
       features: z.array(z.string()).optional(),
-    })
+    }),
   ),
-  category: z.enum(["digital-products", "infrastructure", "managed-support"]).optional(),
+  category: z
+    .enum(["digital-products", "infrastructure", "managed-support"])
+    .optional(),
   price: z.number().optional(),
   areaServed: z.array(z.string()).optional(),
-  createdAt: z.date().optional().default(() => new Date()),
-  updatedAt: z.date().optional().default(() => new Date()),
+  createdAt: z
+    .date()
+    .optional()
+    .default(() => new Date()),
+  updatedAt: z
+    .date()
+    .optional()
+    .default(() => new Date()),
 });
 
 export type Service = z.infer<typeof ServiceSchema>;
@@ -93,7 +117,7 @@ export const CaseStudySchema = z.object({
   company: z.string(),
   logo: z.string().optional(),
   translations: z.record(
-    z.enum(SUPPORTED_LOCALES as [Locale, ...Locale[]]),
+    z.enum(SUPPORTED_LOCALES as unknown as [string, ...string[]]),
     z.object({
       title: z.string(),
       description: z.string(),
@@ -101,7 +125,7 @@ export const CaseStudySchema = z.object({
       solution: z.string(),
       results: z.string(),
       testimonial: z.string().optional(),
-    })
+    }),
   ),
   metrics: z
     .object({
@@ -111,15 +135,23 @@ export const CaseStudySchema = z.object({
     })
     .array()
     .optional(),
-  author: z.object({
-    name: z.string(),
-    role: z.string(),
-    image: z.string().optional(),
-  }).optional(),
+  author: z
+    .object({
+      name: z.string(),
+      role: z.string(),
+      image: z.string().optional(),
+    })
+    .optional(),
   image: z.string().optional(),
   services: z.array(z.string()).optional(),
-  createdAt: z.date().optional().default(() => new Date()),
-  updatedAt: z.date().optional().default(() => new Date()),
+  createdAt: z
+    .date()
+    .optional()
+    .default(() => new Date()),
+  updatedAt: z
+    .date()
+    .optional()
+    .default(() => new Date()),
 });
 
 export type CaseStudy = z.infer<typeof CaseStudySchema>;
@@ -134,14 +166,14 @@ export const BlogPostSchema = z.object({
   category: z.string(),
   date: z.date(),
   translations: z.record(
-    z.enum(SUPPORTED_LOCALES as [Locale, ...Locale[]]),
+    z.enum(SUPPORTED_LOCALES as unknown as [string, ...string[]]),
     z.object({
       title: z.string(),
       description: z.string(),
       excerpt: z.string(),
       body: z.string(),
       seoKeyword: z.string().optional(),
-    })
+    }),
   ),
   author: z.object({
     name: z.string(),
@@ -153,8 +185,14 @@ export const BlogPostSchema = z.object({
   tags: z.array(z.string()).optional(),
   image: z.string().optional(),
   readTime: z.number().optional(),
-  createdAt: z.date().optional().default(() => new Date()),
-  updatedAt: z.date().optional().default(() => new Date()),
+  createdAt: z
+    .date()
+    .optional()
+    .default(() => new Date()),
+  updatedAt: z
+    .date()
+    .optional()
+    .default(() => new Date()),
 });
 
 export type BlogPost = z.infer<typeof BlogPostSchema>;
@@ -170,16 +208,22 @@ export const TestimonialSchema = z.object({
   role: z.string().optional(),
   image: z.string().optional(),
   translations: z.record(
-    z.enum(SUPPORTED_LOCALES as [Locale, ...Locale[]]),
+    z.enum(SUPPORTED_LOCALES as unknown as [string, ...string[]]),
     z.object({
       quote: z.string(),
-    })
+    }),
   ),
   rating: z.number().min(1).max(5).optional(),
   featured: z.boolean().default(false),
   authorCountry: z.string().optional(),
-  createdAt: z.date().optional().default(() => new Date()),
-  updatedAt: z.date().optional().default(() => new Date()),
+  createdAt: z
+    .date()
+    .optional()
+    .default(() => new Date()),
+  updatedAt: z
+    .date()
+    .optional()
+    .default(() => new Date()),
 });
 
 export type Testimonial = z.infer<typeof TestimonialSchema>;
@@ -196,9 +240,12 @@ export const ContactSubmissionSchema = z.object({
   phone: z.string().optional(),
   service: z.string().optional(),
   message: z.string(),
-  locale: z.enum(SUPPORTED_LOCALES as [Locale, ...Locale[]]),
+  locale: z.enum(SUPPORTED_LOCALES as unknown as [string, ...string[]]),
   status: z.enum(["new", "contacted", "converted", "spam"]).default("new"),
-  createdAt: z.date().optional().default(() => new Date()),
+  createdAt: z
+    .date()
+    .optional()
+    .default(() => new Date()),
 });
 
 export type ContactSubmission = z.infer<typeof ContactSubmissionSchema>;

@@ -1,7 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+  Variants,
+} from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
   MessageCircle,
@@ -76,7 +81,7 @@ export function FloatingCTA({ locale = "en", className }: FloatingCTAProps) {
   const toggleOpen = () => setIsOpen(!isOpen);
 
   // Animation variants
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -87,7 +92,7 @@ export function FloatingCTA({ locale = "en", className }: FloatingCTAProps) {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20, scale: 0.8 },
     visible: {
       opacity: 1,
@@ -107,7 +112,7 @@ export function FloatingCTA({ locale = "en", className }: FloatingCTAProps) {
     },
   };
 
-  const fabVariants = {
+  const fabVariants: Variants = {
     closed: { rotate: 0 },
     open: { rotate: 45 },
   };

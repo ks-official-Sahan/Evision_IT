@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ResourceCard, ResourceGrid } from "@/components/cards/resource-card";
 import type { Locale } from "@/lib/config";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import {
   BookOpen,
   FileText,
@@ -28,7 +28,7 @@ interface ResourcesClientProps {
   dict: any;
 }
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -38,7 +38,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -189,7 +189,7 @@ export default function ResourcesClient({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-accent/20 via-accent/10 to-primary/20 border border-accent/30 p-6 md:p-8"
+            className="relative overflow-hidden rounded-2xl bg-linear-to-r from-accent/20 via-accent/10 to-primary/20 border border-accent/30 p-6 md:p-8"
           >
             {/* Decorative */}
             <div className="absolute right-0 top-0 -mr-20 -mt-20 w-64 h-64 bg-accent/30 rounded-full blur-3xl opacity-50" />
@@ -277,7 +277,7 @@ export default function ResourcesClient({
 
       {/* CTA Section */}
       <Section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-muted/30 via-muted/50 to-background" />
+        <div className="absolute inset-0 -z-10 bg-linear-to-b from-muted/30 via-muted/50 to-background" />
 
         <Container size="sm">
           <motion.div

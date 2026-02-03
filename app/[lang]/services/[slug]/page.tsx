@@ -132,9 +132,7 @@ export default async function ServicePage({ params }: PageProps) {
       description: step.description,
     })) || [];
 
-  const IconComponent = Icons[
-    service.icon as keyof typeof Icons
-  ] as React.ElementType;
+  const IconComponent = Icons[service.icon as keyof typeof Icons] as any;
 
   return (
     <>

@@ -77,7 +77,7 @@ export function LanguageSwitcher({
               )}
             >
               <div className="flex flex-col">
-                <span className="font-medium">{label.name}</span>
+                <span className="font-medium">{label.label}</span>
                 <span className="text-xs text-muted-foreground">
                   {label.nativeName}
                 </span>

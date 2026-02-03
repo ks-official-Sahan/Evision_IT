@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
           success: true,
           message: "Contact submission received",
         },
-        { status: 200 }
+        { status: 200 },
       );
     }
 
@@ -60,10 +60,7 @@ export async function POST(req: NextRequest) {
     // await sendConfirmationEmail(validatedData.email, validatedData.firstName);
     // await notifySalesTeam(submission);
 
-    console.log(
-      "[v0] Contact submission created:",
-      result.insertedId
-    );
+    console.log("[v0] Contact submission created:", result.insertedId);
 
     return NextResponse.json(
       {
@@ -71,7 +68,7 @@ export async function POST(req: NextRequest) {
         message: "Thank you for reaching out! We'll be in touch shortly.",
         submissionId: result.insertedId,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("[v0] Contact submission error:", error);
@@ -81,12 +78,12 @@ export async function POST(req: NextRequest) {
         {
           success: false,
           error: "Validation failed",
-          details: error.errors.map((e) => ({
+          details: (error as any).errors.map((e: any) => ({
             field: e.path.join("."),
             message: e.message,
           })),
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -95,7 +92,7 @@ export async function POST(req: NextRequest) {
         success: false,
         error: "Failed to submit contact form",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -24,9 +24,7 @@ export function ServiceCard({
   className,
   locale = "en",
 }: ServiceCardProps) {
-  const IconComponent = Icons[
-    service.icon as keyof typeof Icons
-  ] as React.ElementType;
+  const IconComponent = Icons[service.icon as keyof typeof Icons] as any;
   const href = `/${locale}/services/${service.slug}`;
 
   // Compact variant (e.g. for sidebar or lists)

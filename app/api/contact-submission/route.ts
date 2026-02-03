@@ -56,28 +56,41 @@ export async function POST(req: NextRequest) {
     // Insert into database
     const result = await collection.insertOne(submission);
 
-    // Send emails (best-effort)
-    try {
-      // Send confirmation email to user
-      await sendEmail({
+    // Send emails (best-effort, independent)
+    const emailPromises = [];
+
+    // 1. User confirmation email
+    emailPromises.push(
+      sendEmail({
         to: validatedData.email,
         subject: `Received: ${validatedData.projectType || "Inquiry"} - Evision IT`,
         text: `Hi ${validatedData.firstName},\n\nThank you for reaching out to Evision IT. We have received your message regarding "${validatedData.projectType || "your project"}" and will get back to you shortly.\n\nBest regards,\nThe Evision IT Team`,
-      });
+      }),
+    );
 
-      // Send notification email to admin
-      await sendAdminNotification("New Contact Form Submission", {
+    // 2. Admin notification
+    emailPromises.push(
+      sendAdminNotification("New Contact Form Submission", {
         Name: `${validatedData.firstName} ${validatedData.lastName}`,
         Email: validatedData.email,
         Company: validatedData.company || "N/A",
         Project: validatedData.projectType || "General",
         Budget: validatedData.budget || "N/A",
         Message: validatedData.message,
+      }),
+    );
+
+    // Execute both independently
+    Promise.allSettled(emailPromises).then((results) => {
+      results.forEach((result, index) => {
+        if (result.status === "rejected") {
+          console.error(
+            `[v0] Failed to send ${index === 0 ? "user" : "admin"} email:`,
+            result.reason,
+          );
+        }
       });
-    } catch (emailError) {
-      console.error("[v0] Failed to send emails:", emailError);
-      // Continue execution - don't fail the submission
-    }
+    });
 
     console.log("[v0] Contact submission created:", result.insertedId);
 

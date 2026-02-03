@@ -40,7 +40,7 @@ export function ReadingProgress() {
       aria-label="Reading progress"
     >
       <div
-        className="h-full bg-gradient-to-r from-accent via-accent to-accent/80 transition-[width] duration-150 ease-out"
+        className="h-full bg-linear-to-r from-accent via-accent to-accent/80 transition-[width] duration-150 ease-out"
         style={{ width: `${progress}%` }}
       />
     </div>

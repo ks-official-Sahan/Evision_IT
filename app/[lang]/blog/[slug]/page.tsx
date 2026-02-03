@@ -52,9 +52,10 @@ export async function generateMetadata({
   }
 
   const url = `${siteConfig.url}/${locale}/blog/${post.slug}`;
-  const imageUrl = post.image.startsWith("http")
-    ? post.image
-    : `${siteConfig.url}${post.image.startsWith("/") ? "" : "/"}${post.image}`;
+  const imageUrl =
+    post.image.startsWith("http") || post.image.startsWith("//")
+      ? post.image
+      : `${siteConfig.url}${post.image.startsWith("/") ? "" : "/"}${post.image}`;
 
   return {
     title: post.title,
@@ -212,7 +213,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
                       About the Author
                     </h3>
                     <div className="flex items-start gap-4 p-6 rounded-xl bg-card/80 backdrop-blur-sm border border-border/50">
-                      <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-accent/30 ring-offset-2 ring-offset-background">
+                      <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0 ring-2 ring-accent/30 ring-offset-2 ring-offset-background">
                         {post.author.avatar ? (
                           <Image
                             src={post.author.avatar}

@@ -5,10 +5,12 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Search, Home, FileQuestion, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SUPPORTED_LOCALES } from "@/lib/config";
 
 export default function NotFound() {
   const pathname = usePathname();
-  const locale = pathname.split("/")[1] || "en";
+  const segment = pathname.split("/")[1];
+  const locale = SUPPORTED_LOCALES.includes(segment as any) ? segment : "en";
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground overflow-hidden relative">

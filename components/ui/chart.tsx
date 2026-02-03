@@ -228,7 +228,10 @@ function ChartTooltipContent({
                       nestLabel ? "items-end" : "items-center",
                     )}
                   >
-                    <div className="grid gap-1.5">
+                    <div
+                      key={item.name}
+                      className="flex flex-col gap-1 min-w-32"
+                    >
                       {nestLabel ? tooltipLabel : null}
                       <span className="text-muted-foreground">
                         {itemConfig?.label || item.name}

@@ -28,6 +28,33 @@ import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import dynamicIconImports from "lucide-react/dynamicIconImports";
 
+// Icon cache to prevent re-creation of components heavily
+const iconCache = new Map<string, React.ComponentType<any>>();
+
+const getIcon = (name: string) => {
+  // Normalize PascalCase to kebab-case if needed
+  const normalizedName = name
+    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+    .toLowerCase()
+    .trim();
+
+  if (!iconCache.has(normalizedName)) {
+    const importFn =
+      dynamicIconImports[normalizedName as keyof typeof dynamicIconImports];
+    if (importFn) {
+      iconCache.set(normalizedName, dynamic(importFn));
+    } else {
+      // Try as-is just in case
+      const rawImport =
+        dynamicIconImports[name as keyof typeof dynamicIconImports];
+      if (rawImport) {
+        iconCache.set(normalizedName, dynamic(rawImport));
+      }
+    }
+  }
+  return iconCache.get(normalizedName);
+};
+
 const DynamicIcon = ({
   name,
   ...props
@@ -36,9 +63,13 @@ const DynamicIcon = ({
   className?: string;
   strokeWidth?: number;
 }) => {
-  const LucideIcon = dynamic(
-    dynamicIconImports[name as keyof typeof dynamicIconImports],
-  );
+  const LucideIcon = getIcon(name);
+
+  if (!LucideIcon) {
+    console.warn(`Icon "${name}" not found`);
+    return null;
+  }
+
   return <LucideIcon {...props} />;
 };
 

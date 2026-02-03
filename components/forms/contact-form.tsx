@@ -24,6 +24,7 @@ export function ContactForm({ locale }: ContactFormProps) {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
   const { toast } = useToast();
+  const id = React.useId();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -127,13 +128,13 @@ export function ContactForm({ locale }: ContactFormProps) {
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <label
-                htmlFor="firstName"
+                htmlFor={`${id}-firstName`}
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 First Name <span className="text-accent">*</span>
               </label>
               <Input
-                id="firstName"
+                id={`${id}-firstName`}
                 name="firstName"
                 placeholder="John"
                 required
@@ -143,13 +144,13 @@ export function ContactForm({ locale }: ContactFormProps) {
             </div>
             <div className="space-y-2">
               <label
-                htmlFor="lastName"
+                htmlFor={`${id}-lastName`}
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 Last Name <span className="text-accent">*</span>
               </label>
               <Input
-                id="lastName"
+                id={`${id}-lastName`}
                 name="lastName"
                 placeholder="Doe"
                 required
@@ -163,13 +164,13 @@ export function ContactForm({ locale }: ContactFormProps) {
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <label
-                htmlFor="email"
+                htmlFor={`${id}-email`}
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 Email <span className="text-accent">*</span>
               </label>
               <Input
-                id="email"
+                id={`${id}-email`}
                 name="email"
                 type="email"
                 placeholder="john@example.com"
@@ -180,13 +181,13 @@ export function ContactForm({ locale }: ContactFormProps) {
             </div>
             <div className="space-y-2">
               <label
-                htmlFor="phone"
+                htmlFor={`${id}-phone`}
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 Phone
               </label>
               <Input
-                id="phone"
+                id={`${id}-phone`}
                 name="phone"
                 type="tel"
                 placeholder="+1 (555) 000-0000"
@@ -200,13 +201,13 @@ export function ContactForm({ locale }: ContactFormProps) {
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <label
-                htmlFor="company"
+                htmlFor={`${id}-company`}
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 Company
               </label>
               <Input
-                id="company"
+                id={`${id}-company`}
                 name="company"
                 placeholder="Your Company"
                 disabled={isSubmitting}
@@ -215,14 +216,14 @@ export function ContactForm({ locale }: ContactFormProps) {
             </div>
             <div className="space-y-2">
               <label
-                htmlFor="projectType"
+                htmlFor={`${id}-projectType`}
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 Project Type
               </label>
               <div className="relative">
                 <select
-                  id="projectType"
+                  id={`${id}-projectType`}
                   name="projectType"
                   className="flex h-10 w-full rounded-md border border-input/50 bg-background/50 px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 focus:border-accent/50 focus:bg-background/80 transition-all appearance-none"
                   disabled={isSubmitting}
@@ -260,13 +261,13 @@ export function ContactForm({ locale }: ContactFormProps) {
           {/* Message */}
           <div className="space-y-2">
             <label
-              htmlFor="message"
+              htmlFor={`${id}-message`}
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Message <span className="text-accent">*</span>
             </label>
             <Textarea
-              id="message"
+              id={`${id}-message`}
               name="message"
               placeholder="Tell us about your project..."
               rows={4}

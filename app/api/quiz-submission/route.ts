@@ -41,26 +41,36 @@ export async function POST(req: NextRequest) {
     // Insert into database
     const result = await collection.insertOne(submission);
 
-    // Send emails (best-effort)
-    try {
-      if (validatedData.email) {
-        await sendEmail({
+    // Send emails (best-effort, independent)
+    const emailPromises = [];
+
+    if (validatedData.email) {
+      emailPromises.push(
+        sendEmail({
           to: validatedData.email,
           subject: "Your Project Estimate - Evision IT",
           text: `Based on your selections (Build: ${validatedData.step1}, Timeline: ${validatedData.step2}), we have received your inquiry. We will analyze your requirements and contact you with a detailed estimate.`,
-        });
-      }
+        }),
+      );
+    }
 
-      await sendAdminNotification("New Quiz/Estimate Request", {
+    emailPromises.push(
+      sendAdminNotification("New Quiz/Estimate Request", {
         Build: validatedData.step1,
         Timeline: validatedData.step2,
         Outcome: validatedData.step3,
         Email: validatedData.email || "Not provided",
         Phone: validatedData.phone || "Not provided",
+      }),
+    );
+
+    Promise.allSettled(emailPromises).then((results) => {
+      results.forEach((result) => {
+        if (result.status === "rejected") {
+          console.error("[v0] Failed to send an email:", result.reason);
+        }
       });
-    } catch (emailError) {
-      console.error("[v0] Failed to send emails:", emailError);
-    }
+    });
 
     return NextResponse.json(
       {
@@ -78,8 +88,7 @@ export async function POST(req: NextRequest) {
         {
           success: false,
           error: "Validation failed",
-          // @ts-ignore
-          details: error.errors,
+          details: (error as any).errors,
         },
         { status: 400 },
       );

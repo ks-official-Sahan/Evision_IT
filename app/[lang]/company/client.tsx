@@ -186,7 +186,7 @@ export default function CompanyClient({ locale, dict }: CompanyClientProps) {
             {/* Mission Card */}
             <motion.div variants={itemVariants}>
               <Card className="h-full bg-card/50 backdrop-blur-sm border-border/50 hover:border-accent/40 transition-all duration-300 group overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-linear-to-br from-accent/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <CardHeader className="pb-4">
                   <div className="flex items-center gap-4">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent group-hover:bg-accent group-hover:text-accent-foreground transition-colors">
@@ -208,7 +208,7 @@ export default function CompanyClient({ locale, dict }: CompanyClientProps) {
             {/* Vision Card */}
             <motion.div variants={itemVariants}>
               <Card className="h-full bg-card/50 backdrop-blur-sm border-border/50 hover:border-accent/40 transition-all duration-300 group overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <CardHeader className="pb-4">
                   <div className="flex items-center gap-4">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
@@ -233,7 +233,7 @@ export default function CompanyClient({ locale, dict }: CompanyClientProps) {
       {/* Core Values Section */}
       <Section className="relative overflow-hidden">
         {/* Background gradient */}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-muted/30 via-muted/50 to-muted/30" />
+        <div className="absolute inset-0 -z-10 bg-linear-to-b from-muted/30 via-muted/50 to-muted/30" />
 
         <Container>
           <motion.div

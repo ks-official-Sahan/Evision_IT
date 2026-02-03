@@ -40,15 +40,10 @@ export function NewsletterForm() {
       setEmail("");
       toast.success("Thanks for subscribing!");
     } catch (error) {
-      console.error(error);
-      // Fallback to success for demo if API doesn't exist yet, or strict error if preferred.
-      // User said "shows validation/error success UI".
-      // I'll show error if it fails.
       setStatus("error");
       toast.error("Something went wrong. Please try again.");
-    } finally {
-      setStatus("idle");
     }
+    // No finally block to keep success/error state visible
   };
 
   return (

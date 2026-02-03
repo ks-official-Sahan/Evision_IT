@@ -70,7 +70,7 @@ export async function generateMetadata({
 }
 
 // Solutions data with enhanced fields
-const getSolutions = (locale: string) => [
+const getSolutions = (locale: Locale) => [
   {
     id: "digital-products",
     title: "Digital Product Development",

@@ -21,12 +21,21 @@ export async function sendEmail(
 
   const emailId = `mock_${Date.now()}_${Math.random().toString(36).substring(7)}`;
 
-  console.log("---------------------------------------------------");
-  console.log(`[Mock Email Service] ID: ${emailId}`);
-  console.log(`To: ${payload.to}`);
-  console.log(`Subject: ${payload.subject}`);
-  console.log(`Body (preview): ${payload.text.substring(0, 100)}...`);
-  console.log("---------------------------------------------------");
+  if (process.env.NODE_ENV === "production") {
+    console.log("---------------------------------------------------");
+    console.log(`[Mock Email Service] ID: ${emailId}`);
+    console.log(`To: ${payload.to.replace(/(?<=.{3}).(?=.*@)/g, "*")}`); // Simple redaction
+    console.log(`Subject: ${payload.subject}`);
+    console.log("Body: [REDACTED IN PRODUCTION]");
+    console.log("---------------------------------------------------");
+  } else {
+    console.log("---------------------------------------------------");
+    console.log(`[Mock Email Service] ID: ${emailId}`);
+    console.log(`To: ${payload.to}`);
+    console.log(`Subject: ${payload.subject}`);
+    console.log(`Body (preview): ${payload.text.substring(0, 100)}...`);
+    console.log("---------------------------------------------------");
+  }
 
   return {
     success: true,

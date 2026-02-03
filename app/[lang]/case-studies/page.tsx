@@ -50,7 +50,7 @@ export async function generateMetadata({
       siteName: siteConfig.name,
       images: [
         {
-          url: `${siteConfig.url}/images/og/case-studies.jpg`,
+          url: `${siteConfig.url}/og-image.png`,
           width: 1200,
           height: 630,
           alt: `${siteConfig.name} Case Studies & Success Stories`,

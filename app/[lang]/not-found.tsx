@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Home,
   ArrowLeft,
@@ -12,6 +15,9 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 
 export default function NotFound() {
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "en";
+
   return (
     <div className="min-h-[85vh] flex items-center justify-center py-20 relative overflow-hidden">
       {/* Background Ambience */}
@@ -62,7 +68,7 @@ export default function NotFound() {
             {/* Bento Grid Quick Links */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Home Card */}
-              <Link href="/" className="group block">
+              <Link href={`/${locale}`} className="group block">
                 <div className="h-full p-6 rounded-2xl border border-border bg-card/50 hover:bg-card/80 hover:border-accent/30 hover:shadow-lg transition-all duration-300 relative overflow-hidden">
                   <div className="absolute inset-0 bg-linear-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="relative z-10 flex flex-col h-full">
@@ -80,7 +86,7 @@ export default function NotFound() {
               </Link>
 
               {/* Services Card */}
-              <Link href="/services" className="group block">
+              <Link href={`/${locale}/services`} className="group block">
                 <div className="h-full p-6 rounded-2xl border border-border bg-card/50 hover:bg-card/80 hover:border-accent/30 hover:shadow-lg transition-all duration-300 relative overflow-hidden">
                   <div className="absolute inset-0 bg-linear-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="relative z-10 flex flex-col h-full">
@@ -98,7 +104,10 @@ export default function NotFound() {
               </Link>
 
               {/* Contact Card */}
-              <Link href="/contact" className="group block sm:col-span-2">
+              <Link
+                href={`/${locale}/contact`}
+                className="group block sm:col-span-2"
+              >
                 <div className="h-full p-6 rounded-2xl border border-border bg-card/50 hover:bg-card/80 hover:border-accent/30 hover:shadow-lg transition-all duration-300 relative overflow-hidden flex items-center gap-6">
                   <div className="absolute inset-0 bg-linear-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="h-12 w-12 shrink-0 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 text-foreground">

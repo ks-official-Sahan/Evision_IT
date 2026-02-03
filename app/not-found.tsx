@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Search, Home, FileQuestion, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "en";
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground overflow-hidden relative">
       {/* Background Blobs */}
@@ -52,7 +56,7 @@ export default function NotFound() {
             size="lg"
             className="h-12 px-8 rounded-full shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95 transition-all duration-300"
           >
-            <Link href="/">
+            <Link href={`/${locale}`}>
               <Home className="mr-2 h-4 w-4" />
               Go Home
             </Link>
@@ -63,7 +67,7 @@ export default function NotFound() {
             size="lg"
             className="h-12 px-8 rounded-full backdrop-blur-sm bg-background/50 hover:bg-muted/50 hover:scale-105 active:scale-95 transition-all duration-300"
           >
-            <Link href="/contact">Contact Support</Link>
+            <Link href={`/${locale}/contact`}>Contact Support</Link>
           </Button>
         </motion.div>
       </div>

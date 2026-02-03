@@ -2,13 +2,13 @@
 
 import * as React from "react";
 import { GripVerticalIcon } from "lucide-react";
-import * as ResizablePrimitive from "react-resizable-panels";
+import {
+  Panel,
+  Group as PanelGroup,
+  Separator as PanelResizeHandle,
+} from "react-resizable-panels";
 
 import { cn } from "@/lib/utils";
-
-const PanelGroup = (ResizablePrimitive as any).PanelGroup;
-const Panel = (ResizablePrimitive as any).Panel;
-const PanelResizeHandle = (ResizablePrimitive as any).PanelResizeHandle;
 
 function ResizablePanelGroup({
   className,

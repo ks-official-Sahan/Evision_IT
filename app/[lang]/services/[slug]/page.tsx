@@ -25,7 +25,22 @@ import {
 } from "@/lib/cached-data";
 import { ArrowRight, CheckCircle2, Sparkles, Zap, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Icon as Icons } from "lucide-react";
+import dynamic from "next/dynamic";
+import dynamicIconImports from "lucide-react/dynamicIconImports";
+
+const DynamicIcon = ({
+  name,
+  ...props
+}: {
+  name: string;
+  className?: string;
+  strokeWidth?: number;
+}) => {
+  const LucideIcon = dynamic(
+    dynamicIconImports[name as keyof typeof dynamicIconImports],
+  );
+  return <LucideIcon {...props} />;
+};
 
 interface PageProps {
   params: Promise<{
@@ -132,8 +147,6 @@ export default async function ServicePage({ params }: PageProps) {
       description: step.description,
     })) || [];
 
-  const IconComponent = Icons[service.icon as keyof typeof Icons] as any;
-
   return (
     <>
       <JsonLd data={serviceSchema} />
@@ -205,14 +218,13 @@ export default async function ServicePage({ params }: PageProps) {
             <div className="hidden lg:flex justify-center">
               <div className="relative">
                 <div className="absolute inset-0 bg-accent/20 blur-[100px] rounded-full scale-150" />
-                {IconComponent && (
-                  <div className="relative z-10 p-12 rounded-3xl bg-linear-to-br from-background/80 to-background/40 border border-white/10 backdrop-blur-xl shadow-2xl animate-float">
-                    <IconComponent
-                      className="h-32 w-32 text-accent"
-                      strokeWidth={1}
-                    />
-                  </div>
-                )}
+                <div className="relative z-10 p-12 rounded-3xl bg-linear-to-br from-background/80 to-background/40 border border-white/10 backdrop-blur-xl shadow-2xl animate-float">
+                  <DynamicIcon
+                    name={service.icon as any}
+                    className="h-32 w-32 text-accent"
+                    strokeWidth={1}
+                  />
+                </div>
               </div>
             </div>
           </div>

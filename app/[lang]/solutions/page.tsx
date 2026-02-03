@@ -70,7 +70,7 @@ export async function generateMetadata({
 }
 
 // Solutions data with enhanced fields
-const solutions = [
+const getSolutions = (locale: string) => [
   {
     id: "digital-products",
     title: "Digital Product Development",
@@ -84,7 +84,7 @@ const solutions = [
       "E-Commerce Solutions",
       "SaaS Product Development",
     ],
-    href: "/en/services?category=development",
+    href: `/${locale}/services?category=development`,
   },
   {
     id: "it-infrastructure",
@@ -98,7 +98,7 @@ const solutions = [
       "Security Implementation",
       "Disaster Recovery Planning",
     ],
-    href: "/en/services?category=infrastructure",
+    href: `/${locale}/services?category=infrastructure`,
   },
   {
     id: "managed-support",
@@ -112,7 +112,7 @@ const solutions = [
       "Help Desk Support",
       "Performance Optimization",
     ],
-    href: "/en/services?category=support",
+    href: `/${locale}/services?category=support`,
   },
 ];
 
@@ -191,6 +191,8 @@ export default async function SolutionsPage({ params }: PageProps) {
   const breadcrumbItems = [
     { label: dict.nav?.solutions || "Solutions", href: `/${locale}/solutions` },
   ];
+
+  const solutions = getSolutions(locale);
 
   // JSON-LD structured data for SEO
   const solutionsSchema = {

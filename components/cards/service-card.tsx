@@ -24,76 +24,90 @@ export function ServiceCard({
   className,
   locale = "en",
 }: ServiceCardProps) {
-  const IconComponent = Icons[
-    service.icon as keyof typeof Icons
-  ] as React.ElementType;
+  const IconComponent = Icons[service.icon as keyof typeof Icons] as any;
   const href = `/${locale}/services/${service.slug}`;
 
+  // Compact variant (e.g. for sidebar or lists)
   if (variant === "compact") {
     return (
       <Link href={href as Route}>
         <Card
           className={cn(
-            "group h-full transition-colors hover:border-accent",
+            "group h-full transition-all duration-300 hover:border-accent/40 bg-card/50 hover:bg-card/80",
             className,
           )}
         >
           <CardContent className="flex items-center gap-4 p-4">
             {IconComponent && (
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground group-hover:bg-accent group-hover:text-accent-foreground transition-colors">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent group-hover:bg-accent group-hover:text-accent-foreground transition-colors duration-300">
                 <IconComponent className="h-5 w-5" />
               </div>
             )}
             <div className="min-w-0 flex-1">
-              <h3 className="font-medium text-foreground truncate">
+              <h3 className="font-medium text-foreground truncate group-hover:text-accent transition-colors">
                 {service.shortTitle}
               </h3>
               <p className="text-sm text-muted-foreground truncate">
                 {service.excerpt}
               </p>
             </div>
-            <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-accent transition-colors shrink-0" />
+            <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-accent transition-colors shrink-0 group-hover:translate-x-1" />
           </CardContent>
         </Card>
       </Link>
     );
   }
 
+  // Default / Featured variant with Spotlight and Glassmorphism
   return (
     <Link href={href as Route}>
       <Card
         className={cn(
-          "group h-full transition-all hover:shadow-lg hover:border-accent",
+          "group relative h-full overflow-hidden transition-all duration-300",
+          "glass-card-enhanced",
+          "hover:-translate-y-1 hover:shadow-xl",
           {
-            "border-accent bg-accent/5": variant === "featured",
+            "border-accent/40 bg-accent/5": variant === "featured",
           },
           className,
         )}
       >
+        {/* Spotlight Effect Overlay */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(37, 187, 232, 0.06), transparent 40%)",
+          }}
+        />
+
         <CardHeader>
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex items-start justify-between gap-4 relative z-10">
             {IconComponent && (
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-muted text-foreground group-hover:bg-accent group-hover:text-accent-foreground transition-colors">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-accent/10 to-accent/5 border border-accent/10 text-accent group-hover:from-accent/20 group-hover:to-accent/10 group-hover:border-accent/30 group-hover:shadow-lg group-hover:shadow-accent/10 transition-all duration-300">
                 <IconComponent className="h-6 w-6" />
               </div>
             )}
             {service.isFeatured && (
-              <Badge variant="secondary" className="shrink-0">
+              <Badge
+                variant="default"
+                className="shrink-0 bg-accent text-accent-foreground shadow-sm"
+              >
                 Popular
               </Badge>
             )}
           </div>
-          <CardTitle className="mt-4 text-lg group-hover:text-accent transition-colors">
+          <CardTitle className="mt-4 text-xl group-hover:text-accent transition-colors relative z-10">
             {service.title}
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground text-sm leading-relaxed">
+        <CardContent className="relative z-10">
+          <p className="text-muted-foreground text-sm leading-relaxed mb-6 text-pretty">
             {service.excerpt}
           </p>
-          <div className="mt-4 flex items-center text-sm font-medium text-accent">
+          <div className="flex items-center text-sm font-semibold text-accent/90 group-hover:text-accent">
             Learn more
-            <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </div>
         </CardContent>
       </Card>

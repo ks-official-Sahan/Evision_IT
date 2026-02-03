@@ -1,26 +1,21 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import Link from "next/link";
+import { useState, useMemo, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { type Locale } from "@/lib/config";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { GlassCardArticle } from "@/components/ui/glass-card-article";
+import { EmptyState } from "@/components/ui/empty-state";
 import { caseStudies } from "@/lib/data";
-import { ArrowRight, Filter } from "lucide-react";
+import { Filter, X, Briefcase, Layers } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface CaseStudiesClientContentProps {
   locale: Locale;
-  dict?: any;
+  dict?: Record<string, unknown>;
 }
 
 export function CaseStudiesClientContent({
@@ -38,7 +33,7 @@ export function CaseStudiesClientContent({
     selectedService,
   );
 
-  const caseStudiesDict = dict?.caseStudies || {};
+  const caseStudiesDict = (dict?.caseStudies || {}) as Record<string, string>;
 
   // Get unique categories and services for filters
   const categories = useMemo(() => {
@@ -46,7 +41,8 @@ export function CaseStudiesClientContent({
   }, []);
 
   const availableServices = useMemo(() => {
-    return Array.from(new Set(caseStudies.flatMap((cs) => cs.services)));
+    const serviceSet = new Set(caseStudies.flatMap((cs) => cs.services));
+    return Array.from(serviceSet);
   }, []);
 
   // Filter case studies
@@ -58,22 +54,58 @@ export function CaseStudiesClientContent({
     });
   }, [activeCategory, activeService]);
 
+  const clearFilters = useCallback(() => {
+    setActiveCategory(null);
+    setActiveService(null);
+  }, []);
+
+  const hasActiveFilters = activeCategory !== null || activeService !== null;
+
+  // Format service name for display
+  const formatServiceName = (service: string) => {
+    return service
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   return (
     <>
       {/* Filters Section */}
-      <Section background="muted">
+      <Section
+        className="py-8 md:py-12 bg-muted/30 border-y border-border/30"
+        aria-labelledby="case-studies-filters-heading"
+      >
         <Container>
-          <div className="flex flex-col gap-6">
+          {/* Screen reader heading */}
+          <h2 id="case-studies-filters-heading" className="sr-only">
+            Filter case studies by category or service type
+          </h2>
+
+          <div className="flex flex-col gap-6 md:gap-8">
+            {/* Category filters */}
             <div>
-              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
-                <Filter className="h-4 w-4" />
+              <h3
+                id="category-filter-heading"
+                className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2"
+              >
+                <Layers className="h-4 w-4 text-accent" aria-hidden="true" />
                 {caseStudiesDict.filterByCategory || "Filter by Category"}
               </h3>
-              <div className="flex flex-wrap gap-2">
+              <div
+                className="flex flex-wrap gap-2"
+                role="group"
+                aria-labelledby="category-filter-heading"
+              >
                 <Button
                   variant={activeCategory === null ? "default" : "outline"}
                   onClick={() => setActiveCategory(null)}
-                  className="text-sm"
+                  size="sm"
+                  aria-pressed={activeCategory === null}
+                  className={cn(
+                    "transition-all",
+                    activeCategory === null && "shadow-md",
+                  )}
                 >
                   {caseStudiesDict.allCategories || "All Categories"}
                 </Button>
@@ -84,7 +116,12 @@ export function CaseStudiesClientContent({
                       activeCategory === category ? "default" : "outline"
                     }
                     onClick={() => setActiveCategory(category)}
-                    className="text-sm"
+                    size="sm"
+                    aria-pressed={activeCategory === category}
+                    className={cn(
+                      "transition-all",
+                      activeCategory === category && "shadow-md",
+                    )}
                   >
                     {category}
                   </Button>
@@ -92,16 +129,29 @@ export function CaseStudiesClientContent({
               </div>
             </div>
 
+            {/* Service filters */}
             <div>
-              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
-                <Filter className="h-4 w-4" />
+              <h3
+                id="service-filter-heading"
+                className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2"
+              >
+                <Briefcase className="h-4 w-4 text-accent" aria-hidden="true" />
                 {caseStudiesDict.filterByService || "Filter by Service"}
               </h3>
-              <div className="flex flex-wrap gap-2">
+              <div
+                className="flex flex-wrap gap-2"
+                role="group"
+                aria-labelledby="service-filter-heading"
+              >
                 <Button
                   variant={activeService === null ? "default" : "outline"}
                   onClick={() => setActiveService(null)}
-                  className="text-sm"
+                  size="sm"
+                  aria-pressed={activeService === null}
+                  className={cn(
+                    "transition-all",
+                    activeService === null && "shadow-md",
+                  )}
                 >
                   {caseStudiesDict.allServices || "All Services"}
                 </Button>
@@ -110,91 +160,133 @@ export function CaseStudiesClientContent({
                     key={service}
                     variant={activeService === service ? "default" : "outline"}
                     onClick={() => setActiveService(service)}
-                    className="text-sm"
+                    size="sm"
+                    aria-pressed={activeService === service}
+                    className={cn(
+                      "transition-all",
+                      activeService === service && "shadow-md",
+                    )}
                   >
-                    {service}
+                    {formatServiceName(service)}
                   </Button>
                 ))}
               </div>
             </div>
+
+            {/* Active filters summary */}
+            {hasActiveFilters && (
+              <div
+                className="flex items-center gap-3 pt-2 border-t border-border/30"
+                role="status"
+                aria-live="polite"
+              >
+                <span className="text-sm text-muted-foreground">
+                  Active filters:
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {activeCategory && (
+                    <Badge
+                      variant="secondary"
+                      className="gap-1 pr-1 bg-accent/20 text-accent"
+                    >
+                      {activeCategory}
+                      <button
+                        onClick={() => setActiveCategory(null)}
+                        className="ml-1 p-0.5 rounded-full hover:bg-accent/30 transition-colors"
+                        aria-label={`Remove ${activeCategory} category filter`}
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  )}
+                  {activeService && (
+                    <Badge
+                      variant="secondary"
+                      className="gap-1 pr-1 bg-accent/20 text-accent"
+                    >
+                      {formatServiceName(activeService)}
+                      <button
+                        onClick={() => setActiveService(null)}
+                        className="ml-1 p-0.5 rounded-full hover:bg-accent/30 transition-colors"
+                        aria-label={`Remove ${formatServiceName(activeService)} service filter`}
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  )}
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearFilters}
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  Clear all
+                </Button>
+              </div>
+            )}
           </div>
         </Container>
       </Section>
 
       {/* Case Studies Grid */}
-      <Section>
+      <Section
+        className="py-12 md:py-16"
+        aria-labelledby="case-studies-grid-heading"
+      >
         <Container>
+          {/* Screen reader heading */}
+          <h2 id="case-studies-grid-heading" className="sr-only">
+            Case studies and success stories
+          </h2>
+
           {filteredCaseStudies.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {filteredCaseStudies.map((caseStudy) => (
-                <Link
-                  key={caseStudy.slug}
-                  href={`/${locale}/case-studies/${caseStudy.slug}`}
-                >
-                  <Card className="h-full glass hover:shadow-lg transition-shadow cursor-pointer">
-                    {/* Image Placeholder */}
-                    <div className="h-48 bg-gradient-to-br from-accent/20 to-secondary/20 flex items-center justify-center">
-                      <span className="text-muted-foreground text-sm">
-                        {caseStudiesDict.projectImage || "Project Image"}
-                      </span>
-                    </div>
-
-                    <CardHeader>
-                      <div className="flex flex-wrap gap-2 mb-2">
-                        <Badge variant="secondary" className="text-xs">
-                          {caseStudy.category}
-                        </Badge>
-                        {caseStudy.services[0] && (
-                          <Badge variant="outline" className="text-xs">
-                            {caseStudy.services[0]}
-                          </Badge>
-                        )}
-                      </div>
-                      <CardTitle className="text-lg">
-                        {caseStudy.title}
-                      </CardTitle>
-                      <CardDescription className="line-clamp-2">
-                        {caseStudy.excerpt}
-                      </CardDescription>
-                    </CardHeader>
-
-                    <CardContent>
-                      <div className="space-y-3">
-                        {caseStudy.results[0] && (
-                          <div>
-                            <p className="text-xs font-semibold text-muted-foreground uppercase">
-                              {caseStudy.results[0].metric}
-                            </p>
-                            <p className="text-sm font-bold text-accent">
-                              {caseStudy.results[0].value}
-                            </p>
-                          </div>
-                        )}
-                        <div className="flex items-center gap-2 text-accent text-sm font-medium">
-                          {caseStudiesDict.readCaseStudy || "Read Case Study"}
-                          <ArrowRight className="h-4 w-4" />
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-lg text-muted-foreground mb-4">
-                {caseStudiesDict.noResults || "No case studies found."}
-              </p>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setActiveCategory(null);
-                  setActiveService(null);
-                }}
+            <>
+              {/* Results count */}
+              <p
+                className="text-sm text-muted-foreground mb-6"
+                role="status"
+                aria-live="polite"
               >
-                {caseStudiesDict.clearFilters || "Clear Filters"}
-              </Button>
-            </div>
+                Showing {filteredCaseStudies.length} of {caseStudies.length}{" "}
+                case studies
+              </p>
+
+              {/* Grid - uniform height cards */}
+              <div
+                className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                role="list"
+              >
+                {filteredCaseStudies.map((caseStudy, index) => (
+                  <div key={caseStudy.slug} role="listitem">
+                    <GlassCardArticle
+                      href={`/${locale}/case-studies/${caseStudy.slug}`}
+                      image={caseStudy.image}
+                      imageAlt={`${caseStudy.client} - ${caseStudy.title}`}
+                      category={caseStudy.category}
+                      title={caseStudy.title}
+                      excerpt={caseStudy.excerpt}
+                      metadata={{ date: caseStudy.publishedAt }}
+                      className={cn(
+                        "h-full animate-fade-in",
+                        `stagger-${Math.min(index + 1, 5)}`,
+                      )}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <EmptyState
+              icon={<Filter className="h-12 w-12" />}
+              title={caseStudiesDict.noResults || "No case studies found"}
+              description="Try adjusting your filters to see more results."
+              action={
+                <Button variant="outline" onClick={clearFilters}>
+                  {caseStudiesDict.clearFilters || "Clear Filters"}
+                </Button>
+              }
+            />
           )}
         </Container>
       </Section>

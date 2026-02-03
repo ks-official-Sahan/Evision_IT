@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { connectToDatabase } from "@/lib/db/mongodb";
+import { sendEmail, sendAdminNotification } from "@/lib/email";
 
 // Validation schema
 const ContactFormPayload = z.object({
@@ -35,7 +36,7 @@ export async function POST(req: NextRequest) {
           success: true,
           message: "Contact submission received",
         },
-        { status: 200 }
+        { status: 200 },
       );
     }
 
@@ -55,15 +56,24 @@ export async function POST(req: NextRequest) {
     // Insert into database
     const result = await collection.insertOne(submission);
 
-    // TODO: Send confirmation email to user
-    // TODO: Send notification email to sales team
-    // await sendConfirmationEmail(validatedData.email, validatedData.firstName);
-    // await notifySalesTeam(submission);
+    // Send confirmation email to user
+    await sendEmail({
+      to: validatedData.email,
+      subject: `Received: ${validatedData.projectType || "Inquiry"} - Evision IT`,
+      text: `Hi ${validatedData.firstName},\n\nThank you for reaching out to Evision IT. We have received your message regarding "${validatedData.projectType || "your project"}" and will get back to you shortly.\n\nBest regards,\nThe Evision IT Team`,
+    });
 
-    console.log(
-      "[v0] Contact submission created:",
-      result.insertedId
-    );
+    // Send notification email to admin
+    await sendAdminNotification("New Contact Form Submission", {
+      Name: `${validatedData.firstName} ${validatedData.lastName}`,
+      Email: validatedData.email,
+      Company: validatedData.company || "N/A",
+      Project: validatedData.projectType || "General",
+      Budget: validatedData.budget || "N/A",
+      Message: validatedData.message,
+    });
+
+    console.log("[v0] Contact submission created:", result.insertedId);
 
     return NextResponse.json(
       {
@@ -71,7 +81,7 @@ export async function POST(req: NextRequest) {
         message: "Thank you for reaching out! We'll be in touch shortly.",
         submissionId: result.insertedId,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("[v0] Contact submission error:", error);
@@ -81,12 +91,12 @@ export async function POST(req: NextRequest) {
         {
           success: false,
           error: "Validation failed",
-          details: error.errors.map((e) => ({
+          details: (error as any).errors.map((e: any) => ({
             field: e.path.join("."),
             message: e.message,
           })),
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -95,7 +105,7 @@ export async function POST(req: NextRequest) {
         success: false,
         error: "Failed to submit contact form",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

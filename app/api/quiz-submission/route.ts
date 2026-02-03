@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { connectToDatabase } from "@/lib/db/mongodb";
+import { sendEmail, sendAdminNotification } from "@/lib/email";
 import { type QuizSubmission } from "@/lib/db/schemas";
 
 // Validation schema
@@ -40,8 +41,22 @@ export async function POST(req: NextRequest) {
     // Insert into database
     const result = await collection.insertOne(submission);
 
-    // TODO: Send confirmation email
-    // TODO: Send notification email to admin
+    // Send emails
+    if (validatedData.email) {
+      await sendEmail({
+        to: validatedData.email,
+        subject: "Your Project Estimate - Evision IT",
+        text: `Based on your selections (Build: ${validatedData.step1}, Timeline: ${validatedData.step2}), we have received your inquiry. We will analyze your requirements and contact you with a detailed estimate.`,
+      });
+    }
+
+    await sendAdminNotification("New Quiz/Estimate Request", {
+      Build: validatedData.step1,
+      Timeline: validatedData.step2,
+      Outcome: validatedData.step3,
+      Email: validatedData.email || "Not provided",
+      Phone: validatedData.phone || "Not provided",
+    });
 
     return NextResponse.json(
       {

@@ -26,7 +26,11 @@ export function trackEvent(eventName: GA4Event, params?: EventParams) {
 
 // Google Ads conversion tracking
 export function trackConversion(conversionLabel: string, value?: number) {
-  if (typeof window !== "undefined" && window.gtag && siteConfig.analytics.ga4Id) {
+  if (
+    typeof window !== "undefined" &&
+    window.gtag &&
+    siteConfig.analytics.ga4Id
+  ) {
     window.gtag("event", "conversion", {
       send_to: `${siteConfig.analytics.ga4Id}/${conversionLabel}`,
       value: value,
@@ -95,5 +99,18 @@ declare global {
     uetq?: {
       push: (...args: unknown[]) => void;
     };
+  }
+}
+
+// Helper for pageview tracking
+export function pageview(url: string) {
+  if (
+    typeof window !== "undefined" &&
+    window.gtag &&
+    siteConfig.analytics.ga4Id
+  ) {
+    window.gtag("config", siteConfig.analytics.ga4Id, {
+      page_path: url,
+    });
   }
 }

@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/providers/theme-provider";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { FloatingCTA } from "@/components/layout/floating-cta";
@@ -139,38 +138,14 @@ export default async function LocaleLayout({
   const direction = localeLabel.dir;
 
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="dark"
-      // enableSystem
-      storageKey="evision-theme"
-      disableTransitionOnChange={false}
-    >
-      {/* Skip to content link for accessibility */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:z-100 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-accent focus:text-accent-foreground focus:rounded-md focus:outline-none"
-      >
-        Skip to main content
-      </a>
-
+    <>
       {/* Structured Data */}
       <JsonLd data={organizationSchema(locale)} />
       <JsonLd data={websiteSchema()} />
       <JsonLd data={localBusinessSchema()} />
       <JsonLd data={entityAuthoritySchema()} />
 
-      {/* Alternate language links for SEO - kept here as they depend on config */}
-      {SUPPORTED_LOCALES.map((altLocale) => (
-        <React.Fragment key={altLocale}>
-          {/* Link tags inside body/div are not ideal but Next.js deduplicates head tags if Metadata API used. 
-               However, manual <link> in body is ignored for head purposes.
-               We should rely on generateMetadata for these. 
-               The generateMetadata function ALREADY handles alternates.
-               So we can remove these manual link tags as they are redundant and misplaced in a child layout.
-           */}
-        </React.Fragment>
-      ))}
+      {/* Alternate language links are handled by generateMetadata in layout head */}
 
       <div dir={direction} className="relative flex min-h-screen flex-col">
         <SiteHeader locale={locale} />
@@ -182,6 +157,6 @@ export default async function LocaleLayout({
         {/* Floating CTA for quick contact */}
         <FloatingCTA locale={locale} />
       </div>
-    </ThemeProvider>
+    </>
   );
 }

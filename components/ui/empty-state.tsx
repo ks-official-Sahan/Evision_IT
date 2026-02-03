@@ -1,28 +1,31 @@
-'use client';
+"use client";
 
-import React from "react"
+import React from "react";
 
 import { cn } from "@/lib/utils";
 import { FileQuestion, Search, FolderOpen, AlertCircle } from "lucide-react";
 import { Button } from "./button";
 import Link from "next/link";
 
-type EmptyStateVariant = "no-results" | "no-data" | "error" | "coming-soon";
+export type EmptyStateVariant =
+  | "no-results"
+  | "no-data"
+  | "error"
+  | "coming-soon";
 
 interface EmptyStateProps {
   variant?: EmptyStateVariant;
   title?: string;
   description?: string;
+  icon?: React.ReactNode;
+  action?: React.ReactNode;
   actionLabel?: string;
   actionHref?: string;
   onAction?: () => void;
   className?: string;
 }
 
-const defaultContent: Record<
-  EmptyStateVariant,
-  { icon: React.ElementType; title: string; description: string }
-> = {
+const defaultContent: Record<string, any> = {
   "no-results": {
     icon: Search,
     title: "No results found",
@@ -52,23 +55,29 @@ export function EmptyState({
   variant = "no-data",
   title,
   description,
+  icon,
+  action,
   actionLabel,
   actionHref,
   onAction,
   className,
 }: EmptyStateProps) {
-  const content = defaultContent[variant];
-  const Icon = content.icon;
+  const content = defaultContent[variant as EmptyStateVariant];
+  const DefaultIcon = content.icon;
 
   return (
     <div
       className={cn(
         "flex flex-col items-center justify-center py-16 px-4 text-center",
-        className
+        className,
       )}
     >
       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-muted">
-        <Icon className="h-8 w-8 text-muted-foreground" />
+        {icon ? (
+          icon
+        ) : (
+          <DefaultIcon className="h-8 w-8 text-muted-foreground" />
+        )}
       </div>
       <h3 className="mt-4 text-lg font-semibold text-foreground">
         {title || content.title}
@@ -76,7 +85,9 @@ export function EmptyState({
       <p className="mt-2 max-w-sm text-sm text-muted-foreground">
         {description || content.description}
       </p>
-      {(actionLabel && actionHref) || onAction ? (
+      {action ? (
+        <div className="mt-6">{action}</div>
+      ) : (actionLabel && actionHref) || onAction ? (
         <div className="mt-6">
           {actionHref ? (
             <Button asChild>

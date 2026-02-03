@@ -65,6 +65,46 @@ export const services: Service[] = [
       },
     ],
     relatedServices: ["mobile-apps", "e-commerce", "ui-ux-design"],
+    problems: [
+      "Slow loading times affecting conversion rates",
+      "Poor mobile responsiveness losing users",
+      "Low search engine visibility",
+      "Complex content management",
+      "Security vulnerabilities",
+    ],
+    process: [
+      {
+        title: "Discovery",
+        description:
+          "We analyze your requirements, target audience, and competitors.",
+      },
+      {
+        title: "Design",
+        description:
+          "Creating wireframes and high-fidelity mockups for your approval.",
+      },
+      {
+        title: "Development",
+        description:
+          "Building your solution using modern, scalable technologies.",
+      },
+      {
+        title: "Testing",
+        description:
+          "Rigorous testing for performance, security, and compatibility.",
+      },
+      {
+        title: "Launch",
+        description: "Smooth deployment and post-launch verification.",
+      },
+    ],
+    deliverables: [
+      "Custom responsive website",
+      "CMS integration (Sanity/Strapi)",
+      "SEO setup & optimization",
+      "Analytics dashboard",
+      "30 days post-launch support",
+    ],
   },
   {
     slug: "mobile-apps",
@@ -518,6 +558,22 @@ export function getRelatedBlogPosts(
   return getRelatedPosts(currentSlug, limit);
 }
 
+// Get featured blog posts, or latest if not enough featured
+export function getFeaturedBlogPosts(limit = 3): BlogPost[] {
+  const featured = blogPosts.filter((post) => post.featured);
+  if (featured.length >= limit) {
+    return featured.slice(0, limit);
+  }
+  // Fill with latest posts if not enough featured
+  const latestPosts = blogPosts
+    .filter((post) => !post.featured)
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+    );
+  return [...featured, ...latestPosts].slice(0, limit);
+}
+
 // ============================================
 // CASE STUDIES DATA
 // ============================================
@@ -646,6 +702,33 @@ export function getFeaturedCaseStudies(): CaseStudy[] {
 
 export function getCaseStudiesByCategory(category: string): CaseStudy[] {
   return caseStudies.filter((c) => c.category === category);
+}
+
+export function getRelatedCaseStudies(
+  currentSlug: string,
+  limit = 3,
+): CaseStudy[] {
+  const current = getCaseStudyBySlug(currentSlug);
+  if (!current) return [];
+
+  // First, try to find case studies in the same category
+  const sameCategoryStudies = caseStudies.filter(
+    (c) => c.slug !== currentSlug && c.category === current.category,
+  );
+
+  // If not enough, add studies with overlapping services
+  if (sameCategoryStudies.length >= limit) {
+    return sameCategoryStudies.slice(0, limit);
+  }
+
+  const overlappingServices = caseStudies.filter(
+    (c) =>
+      c.slug !== currentSlug &&
+      c.category !== current.category &&
+      c.services.some((s) => current.services.includes(s)),
+  );
+
+  return [...sameCategoryStudies, ...overlappingServices].slice(0, limit);
 }
 
 // ============================================

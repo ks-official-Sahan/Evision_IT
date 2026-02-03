@@ -41,6 +41,7 @@ export function CaseStudiesPreview({
             caseStudy={caseStudy}
             variant="featured"
             index={index}
+            locale={locale}
           />
         ))}
       </div>

@@ -210,24 +210,25 @@ export function CursorFollower() {
       {/* Main cursor dot */}
       <div
         ref={cursorRef}
-        className="fixed top-0 left-0 w-3 h-3 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference hidden lg:block shadow-[0_0_20px_rgba(255,255,255,0.8)]"
+        className="fixed top-0 left-0 w-3 h-3 bg-white rounded-full pointer-events-none z-9999 mix-blend-difference hidden lg:block shadow-[0_0_20px_rgba(255,255,255,0.8)]"
         style={{ transform: "translate(-50%, -50%)" }}
       />
 
       {/* Follower ring */}
       <div
         ref={followerRef}
-        className="fixed top-0 left-0 w-10 h-10 border-2 border-white/30 rounded-full pointer-events-none z-[9998] mix-blend-difference hidden lg:block shadow-[0_0_30px_rgba(255,255,255,0.4)]"
+        className="fixed top-0 left-0 w-10 h-10 border-2 border-white/30 rounded-full pointer-events-none z-9998 mix-blend-difference hidden lg:block shadow-[0_0_30px_rgba(255,255,255,0.4)]"
         style={{ transform: "translate(-50%, -50%)" }}
       />
 
       {/* Trail dots */}
       {Array.from({ length: 5 }).map((_, index) => (
         <div
+          key={`trail-${index}`}
           ref={(el) => {
             if (el) trailRefs.current[index] = el;
-          }}          
-          className="fixed top-0 left-0 rounded-full pointer-events-none z-[9997] mix-blend-difference hidden lg:block"
+          }}
+          className="fixed top-0 left-0 rounded-full pointer-events-none z-9997 mix-blend-difference hidden lg:block"
           style={{
             width: `${8 - index}px`,
             height: `${8 - index}px`,
@@ -245,7 +246,7 @@ export function CursorFollower() {
           ref={(el) => {
             if (el) ribbonRefs.current[index] = el;
           }}
-          className="fixed top-0 left-0 pointer-events-none z-[9996] mix-blend-screen hidden lg:block"
+          className="fixed top-0 left-0 pointer-events-none z-9996 mix-blend-screen hidden lg:block"
           style={{
             width: `${2 + index * 0.5}px`,
             height: `${12 - index}px`,

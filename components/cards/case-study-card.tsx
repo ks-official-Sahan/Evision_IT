@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ImageOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import type { CaseStudy } from "@/lib/data";
@@ -13,6 +14,7 @@ interface CaseStudyCardProps {
   variant?: "default" | "featured";
   className?: string;
   index?: number;
+  locale?: string;
 }
 
 export function CaseStudyCard({
@@ -20,8 +22,10 @@ export function CaseStudyCard({
   variant = "default",
   className,
   index = 0,
+  locale = "en",
 }: CaseStudyCardProps) {
   const isFeatured = variant === "featured";
+  const [imageError, setImageError] = useState(false);
 
   return (
     <motion.div
@@ -34,17 +38,28 @@ export function CaseStudyCard({
         className,
       )}
     >
-      <Link href={`/case-studies/${caseStudy.slug}`} className="block h-full">
+      <Link
+        href={`/${locale}/case-studies/${caseStudy.slug}`}
+        className="block h-full"
+      >
         <div className="case-study-card group h-full">
           {/* Image Container */}
-          <div className="relative aspect-[16/10] overflow-hidden">
-            <Image
-              src={caseStudy.image || "/placeholder.svg"}
-              alt={caseStudy.title}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
+          <div className="relative aspect-16/10 overflow-hidden bg-muted">
+            {!imageError ? (
+              <Image
+                src={caseStudy.image || "/placeholder.svg"}
+                alt={caseStudy.title}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                onError={() => setImageError(true)}
+              />
+            ) : (
+              <div className="absolute inset-0 bg-linear-to-br from-accent/10 via-muted to-muted flex items-center justify-center">
+                <ImageOff className="w-10 h-10 text-muted-foreground/40" />
+                <span className="sr-only">Image unavailable</span>
+              </div>
+            )}
             {/* Gradient Overlay */}
             <div className="case-study-image-overlay" />
             {/* Glass Overlay on Hover */}

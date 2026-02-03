@@ -13,13 +13,19 @@ export function ClientEffects() {
     const prefersReducedMotion = matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    const coarse = matchMedia("(pointer: coarse)").matches;
+
+    // Check pointer type on mount
+    const checkCoarse = () => {
+      const isCoarse = matchMedia("(pointer: coarse)").matches;
+      setMods((prev) => ({ ...prev, isCoarse }));
+    };
+    checkCoarse();
 
     const load = async () => {
       const [{ CursorFollower }] = await Promise.all([
         import("@/components/motion/cursor-follower"),
       ]);
-      setMods({ CursorFollower });
+      setMods((prev) => ({ ...prev, CursorFollower }));
     };
 
     if (!prefersReducedMotion) {
@@ -63,20 +69,25 @@ export function ClientEffects() {
           passive: true,
         } as any),
       );
+
+      // Add resize listener to re-check coarse pointer if window changes (e.g. devtools device toggle)
+      window.addEventListener("resize", checkCoarse);
+
       return () => {
         removeListeners();
         if (scheduledCallbackId !== undefined) {
           cIC(scheduledCallbackId);
         }
+        window.removeEventListener("resize", checkCoarse);
       };
     }
   }, []);
 
-  const { CursorFollower } = mods;
+  const { CursorFollower, isCoarse } = mods as any; // Type assertion since we added isCoarse dynamically
   return (
     <>
       {/* cursor follower only on non-coarse pointers – handled inside the component */}
-      {CursorFollower ? <CursorFollower /> : null}
+      {CursorFollower && !isCoarse ? <CursorFollower /> : null}
     </>
   );
 }
